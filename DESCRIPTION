@@ -1,6 +1,6 @@
 Package: placeholder
 Type: Book
-Title: prioritizr workshop manual
+Title: PRIORITIZR WORKSHOP MANUAL
 Version: 0.0.1
 Imports:
   bookdown
