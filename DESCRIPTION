@@ -2,7 +2,7 @@ Package: placeholder
 Type: Book
 Title: prioritizr workshop manual
 Version: 0.0.1
-Imports: 
+Imports:
   bookdown
   sf
   raster
@@ -13,4 +13,3 @@ Imports:
   rsymphony
   prioritizr
   mapview
-
