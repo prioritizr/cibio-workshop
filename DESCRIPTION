@@ -10,7 +10,7 @@ Imports:
   plyr,
   sp,
   rgeos,
-  rsymphony,
+  Rsymphony,
   prioritizr,
   mapview
 Remotes: rstudio/bookdown
