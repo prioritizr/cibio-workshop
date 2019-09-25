@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Gap analysis | PRIORITIZR WORKSHOP MANUAL</title>
+  <title>Chapter 3 Data import and export | PRIORITIZR WORKSHOP MANUAL</title>
   <meta name="description" content="Manual for the prioritizr module of the Spatial Conservation Prioritization: Concepts, Methods and Application workshop held at CIBIO-InBIO, Vairão, Portugal." />
   <meta name="generator" content="bookdown 0.13.2 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 Gap analysis | PRIORITIZR WORKSHOP MANUAL" />
+  <meta property="og:title" content="Chapter 3 Data import and export | PRIORITIZR WORKSHOP MANUAL" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://prioritizr.github.io/cibio-workshop" />
   <meta property="og:image" content="https://prioritizr.github.io/cibio-workshopcover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="prioritizr/cibio-workshop" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Gap analysis | PRIORITIZR WORKSHOP MANUAL" />
+  <meta name="twitter:title" content="Chapter 3 Data import and export | PRIORITIZR WORKSHOP MANUAL" />
   
   <meta name="twitter:description" content="Manual for the prioritizr module of the Spatial Conservation Prioritization: Concepts, Methods and Application workshop held at CIBIO-InBIO, Vairão, Portugal." />
   <meta name="twitter:image" content="https://prioritizr.github.io/cibio-workshopcover.png" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="data-import-and-export.html"/>
-<link rel="next" href="min-set.html"/>
+<link rel="prev" href="introduction.html"/>
+<link rel="next" href="gap-analysis.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -140,9 +140,30 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="gap-analysis" class="section level1">
-<h1><span class="header-section-number">Chapter 4</span> Gap analysis</h1>
-<p>TODO</p>
+<div id="data-import-and-export" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> Data import and export</h1>
+<ul>
+<li>How can I verify that I have entered the correct file path?
+<ul>
+<li>You can check that a file exists on your computer using the <code>file.exists</code> function. For instance, to check that the file <code>data.txt</code> exists, you can use <code>file.exists(&quot;data.txt&quot;)</code>.</li>
+</ul></li>
+<li>I am having trouble importing data, even though I am specifying the folder?
+<ul>
+<li>When we specify file paths on Windows systems, we use the <code>\</code> character to delimit different folders. For instance, the complete file path for a file might be <code>C:\Users\kelly\Downloads\cost-data.tif</code>. However, R treats the <code>\</code> character as a special character. This means that if you want to use the <code>\</code> character, you need to specify it as <code>\\</code>. Thus if you want to refer to the file <code>C:\Users\kelly\Downloads\cost-data.tif</code> in an R environment, you need to specify it as <code>C:\\Users\\kelly\\Downloads\\cost-data.tif</code>.</li>
+</ul></li>
+<li>How can I import spatial raster data?
+<ul>
+<li>Spatial raster data (e.g. .asc and .tif files) can be imported using the <code>stack</code> function from the raster R packages. For example, if the file name for your raster data was called <code>cost-data.tif</code> then you could import it using <code>&quot;cost_data &lt;- stack(&quot;cost-data.tif&quot;)</code>. Note that you will probably need to specify the folder path for the file too. For example, if you downloaded the file to the Downloads folder on your computer, then you might need to use something like this <code>&quot;cost_data &lt;- stack(&quot;C:\\Users\\kelly\\Downloads\\cost-data.tif&quot;)&quot;</code> depending on your system user name.</li>
+</ul></li>
+<li>How can I import spatial vector data?
+<ul>
+<li>Spatial vector data (e.g. shapefiles) can be imported using the <code>readOGR</code> function in the rgdal R package. For example, if the file name for your shapefile was <code>animals.shp</code>, then you could import it using <code>animal_data &lt;- readOGR(&quot;animals.shp&quot;)</code>. Note that you will probably need to specify the folder path for the file too. For example, if you downloaded the file to the Downloads folder on your computer, then you might need to use something like this <code>&quot;cost_data &lt;- stack(&quot;C:\\Users\\frank\\Downloads\\animals.tif&quot;)&quot;</code> depending on your system user name.</li>
+</ul></li>
+<li><p>How can I import spreadsheet data?</p></li>
+<li><p>How can I export spatial raster data?</p></li>
+<li><p>How can I export spatial vector data?</p></li>
+<li><p>How can I export spreadsheet data?</p></li>
+</ul>
 
 </div>
             </section>
@@ -150,8 +171,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="data-import-and-export.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="min-set.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="gap-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -183,7 +204,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/prioritizr/cibio-workshop/edit/master/05-gap-analysis.Rmd",
+"link": "https://github.com/prioritizr/cibio-workshop/edit/master/02-data-import-export.Rmd",
 "text": "Edit"
 },
 "history": {
