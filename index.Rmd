@@ -34,7 +34,7 @@ The [R statistical computing environment](https://www.r-project.org/) can be dow
 
 [RStudio](https://www.rstudio.com/) is an integrated development environment (IDE). In other words, it is a program that is designed to make your R programming experience more pleasant. During this workshop, you will interact with R through RStudio---meaning that you will open RStudio when you wish interact with R. You can download the latest version of [RStudio](https://www.rstudio.com/) here: http://www.rstudio.com/download. RStudio is updated several times during the year, and it will tell you when an update is available. When you start RStudio, you will see two key parts of the user interface:
 
-![](https://d33wubrfki0l68.cloudfront.net/9a23d664f0f49bc2ef8e78bed6277dd48bd2b96d/af132/diagrams/rstudio-console.png)
+![](rstudio-console.png)
 
 You can type R code into the _Console_ part of the user interface and press the enter key to run them.
 

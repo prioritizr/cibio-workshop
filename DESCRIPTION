@@ -4,13 +4,14 @@ Title: Prioritizr Workshop Manual
 Version: 0.0.1
 Imports:
   bookdown,
-  sf,
   raster,
   dplyr,
   plyr,
   sp,
   rgeos,
+  rgdal,
   Rsymphony,
   prioritizr,
+  prioritizrdata,
   mapview
 Remotes: rstudio/bookdown

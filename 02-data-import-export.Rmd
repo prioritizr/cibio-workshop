@@ -1,3 +1,21 @@
-# Data import and export  {#data-import-export}
+# Data import and export
 
-TODO
+* How can I verify that I have entered the correct file path?
+    + You can check that a file exists on your computer using the `file.exists` function. For instance, to check that the file `data.txt` exists, you can use `file.exists("data.txt")`.
+
+* I am having trouble importing data, even though I am specifying the folder?
+    + When we specify file paths on Windows systems, we use the `\` character to delimit different folders. For instance, the complete file path for a file might be `C:\Users\kelly\Downloads\cost-data.tif`. However, R treats the `\` character as a special character. This means that if you want to use the `\` character, you need to specify it as `\\`. Thus if you want to refer to the file `C:\Users\kelly\Downloads\cost-data.tif` in an R environment, you need to specify it as `C:\\Users\\kelly\\Downloads\\cost-data.tif`.
+
+* How can I import spatial raster data?
+    + Spatial raster data (e.g. .asc and .tif files) can be imported using the `stack` function from the raster R packages. For example, if the file name for your raster data was called `cost-data.tif` then you could import it using `"cost_data <- stack("cost-data.tif")`. Note that you will probably need to specify the folder path for the file too. For example, if you downloaded the file to the Downloads folder on your computer, then you might need to use something like this `"cost_data <- stack("C:\\Users\\kelly\\Downloads\\cost-data.tif")"` depending on your system user name.
+
+* How can I import spatial vector data?
+    + Spatial vector data (e.g. shapefiles) can be imported using the `readOGR` function in the rgdal R package. For example, if the file name for your shapefile was `animals.shp`, then you could import it using `animal_data <- readOGR("animals.shp")`. Note that you will probably need to specify the folder path for the file too. For example, if you downloaded the file to the Downloads folder on your computer, then you might need to use something like this `"cost_data <- stack("C:\\Users\\frank\\Downloads\\animals.tif")"` depending on your system user name.
+
+* How can I import spreadsheet data?
+
+* How can I export spatial raster data?
+
+* How can I export spatial vector data?
+
+* How can I export spreadsheet data?
