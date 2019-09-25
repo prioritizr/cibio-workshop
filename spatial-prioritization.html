@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 11 Error glossary | PRIORITIZR WORKSHOP MANUAL</title>
+  <title>Chapter 9 Spatial prioritization | PRIORITIZR WORKSHOP MANUAL</title>
   <meta name="description" content="Manual for the prioritizr module of the Spatial Conservation Prioritization: Concepts, Methods and Application workshop held at CIBIO-InBIO, Vairão, Portugal." />
   <meta name="generator" content="bookdown 0.13.2 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 11 Error glossary | PRIORITIZR WORKSHOP MANUAL" />
+  <meta property="og:title" content="Chapter 9 Spatial prioritization | PRIORITIZR WORKSHOP MANUAL" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://prioritizr.github.io/cibio-workshop" />
   <meta property="og:image" content="https://prioritizr.github.io/cibio-workshopcover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="prioritizr/cibio-workshop" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 11 Error glossary | PRIORITIZR WORKSHOP MANUAL" />
+  <meta name="twitter:title" content="Chapter 9 Spatial prioritization | PRIORITIZR WORKSHOP MANUAL" />
   
   <meta name="twitter:description" content="Manual for the prioritizr module of the Spatial Conservation Prioritization: Concepts, Methods and Application workshop held at CIBIO-InBIO, Vairão, Portugal." />
   <meta name="twitter:image" content="https://prioritizr.github.io/cibio-workshopcover.png" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="irreplaceability.html"/>
-
+<link rel="prev" href="gap-analysis.html"/>
+<link rel="next" href="irreplaceability.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -145,26 +145,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="error-glossary" class="section level1">
-<h1><span class="header-section-number">Chapter 11</span> Error glossary</h1>
-<p>If you are having trouble running a specific line of code or a function, then one of the best ways to find help is to read (i) the error message and (ii) the documentation. Believe it or not, a human actually wrote the function that is throwing that (probably) annoying and (probably) indecipherable error message and they (almost always) genuinely want to help you. Instead of (or in addition to) getting frustrated at an error, you might choose to appreciate the fact that someone went to the trouble of writing additional code so that a description of what went wrong would be displayed. Indeed, since there are an unlimited numbers of ways that code can be incorrect, throwing a short and precise error message is actually helpful because it tells you <em>what went wrong</em> rather than <em>potentially incorrectly guessing what should be fixed</em>. After reading the error message, take the time to think about what it means. Debugging is the process of iterating through each and every assumption that you made until you identify which of your assumptions is incorrect. This is liberating because it means it is within your power to fix the code. When reading an error message, try to interpret each word individually – you might have to google technical terms to understand them, that’s OK – and then put them together to try to understand what they mean together. For instance, consider the code below:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.table</span>(<span class="st">&quot;fred.txt&quot;</span>)</code></pre></div>
-<pre><code>## Warning in file(file, &quot;rt&quot;): cannot open file &#39;fred.txt&#39;: No such file or
-## directory</code></pre>
-<pre><code>## Error in file(file, &quot;rt&quot;): cannot open the connection</code></pre>
-<p>This tells us that R <code>cannot open the connection</code> to the file <code>&quot;fred.txt&quot;</code> because <code>No such file or directory</code> was found. Now we have to think of all the reasons why this could be true. Is it possible that we have misspelled the filename? Perhaps we meant <code>&quot;fed.txt&quot;</code>, <code>&quot;fran.txt&quot;</code>, or <code>&quot;fred.csv&quot;</code>? Or perhaps we need to specify a folder name, such as <code>&quot;data/fred.txt&quot;</code>? Or maybe we forgot to save the data after entering it into Excel?</p>
-<p>Now let us consider another example:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="dv">1</span>
-b &lt;-<span class="st"> &quot;c&quot;</span>
-a <span class="op">+</span><span class="st"> </span>b</code></pre></div>
-<pre><code>## Error in a + b: non-numeric argument to binary operator</code></pre>
-<p>This error message is a bit more cryptic—but it mentions something about a <code>non-numeric argument</code>. This would indicate that something went wrong because something was not a number. If we look at the code, can we see something that is not a number? Yes, <code>c</code> is not a number. It is a character-type object (i.e. <code>&quot;k&quot;</code>). Does it make sense to add the letter “k” to the number 1? Well, not in R. If we wanted to create the character <code>&quot;c1&quot;</code> we would have to use a function designed for this purpose (e.g. <code>paste</code>). Alternatively, if we wanted to employ the hexadecimal numeral system, where letters count as numbers, then we would need to specify this.</p>
-<p>Let’s look at another example:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b, &quot;</span>c<span class="st">&quot;)</span></code></pre></div>
-<pre><code>## Error: &lt;text&gt;:1:18: unexpected symbol
-## 1: d &lt;- c(&quot;a&quot;, &quot;b, &quot;c
-##                      ^</code></pre>
-<p>This error message mentions an <code>unexpected symbol</code>. If a symbol is unexpected, then this would suggest that the our error is occurring because we have typed an additional symbol or are missing a symbol. If we carefully look at the code for missing symbols, we can see that we are missing a quote (<code>&quot;</code>) symbol after after the <code>b</code>.</p>
+<div id="spatial-prioritization" class="section level1">
+<h1><span class="header-section-number">Chapter 9</span> Spatial prioritization</h1>
+<p>TODO.</p>
 
 </div>
             </section>
@@ -172,8 +155,8 @@ a <span class="op">+</span><span class="st"> </span>b</code></pre></div>
           </div>
         </div>
       </div>
-<a href="irreplaceability.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="gap-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="irreplaceability.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -205,7 +188,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/prioritizr/cibio-workshop/edit/master/04-error-glossary.Rmd",
+"link": "https://github.com/prioritizr/cibio-workshop/edit/master/03-03-prioritization.Rmd",
 "text": "Edit"
 },
 "history": {

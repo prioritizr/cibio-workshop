@@ -156,6 +156,43 @@ cannot guarantee a reliable internet connection during the workshop, and
 so you may be unable to complete the workshop if you have not set up
 your computer beforehand.}
 
+\chapter{Introduction}\label{introduction}
+
+\section{Overview}\label{overview}
+
+The aim of this workshop is to help you get started with using the
+prioritizr R package for systematic conservation planning. It is not
+designed to give you a comprehensive overview and you will not become an
+expert after completing this workshop. Instead, we want to help you
+understand the core principles of conservation planning and guide you
+through some of the common tasks involved with generating
+prioritizations. Phrased provocatively, we want to give you the
+knowledge base and confidence needed to start applying systematic
+conservation planning to your own work.
+
+One of the best ways, perhaps, to learn something new is to just give it
+a go. As such, this workshop involves generating prioritizations for
+protected area establishment and performing analyses to understand them.
+This manual is divided into two main parts, the \textbf{Resources} part
+provides explanations and example R code for performing common
+prioritization tasks (e.g.~importing data, creating target data, solving
+conservation problems, calculating shortfalls) and the
+\textbf{Exercises} part contains a systematic conservation planning
+case-study. During this workshop, your aim is to work through the
+case-study in the \textbf{Exercise} part and complete the tasks and
+answer the questions. Since the \textbf{Exercise} part does not contain
+any R code, you will need to read the \textbf{Resources} part for
+information on performing the tasks. This means that all of the code
+needed to complete the \textbf{Exercise} part are in the
+\textbf{Resources} part---you just need to find them!
+
+Finally, you are not alone in this workshop. If you are having trouble,
+please put your hand up and one of the instructors will help you as soon
+as they can. You can also ask the people sitting next to you for help
+too. Please note that the first thing an instructor will ask you will
+(probably) be ``what have you tried so far?''. We can't help you if you
+haven't tried anything.
+
 \section{Setting up your computer}\label{setting-up-your-computer}
 
 You will need to have both \href{https://www.r-project.org/}{R} and
@@ -226,7 +263,7 @@ may take a while to complete.
 \end{Highlighting}
 \end{Shaded}
 
-\section{Getting help}\label{getting-help}
+\section{Further reading}\label{further-reading}
 
 There is a wealth of resources available for learning how to use R.
 Although not required for this workshop, I would highly recommend that
@@ -247,43 +284,10 @@ geospatial information system (GIS), I would recommend
 by Robin Lovelace, Jakub Nowosad, and Jannes Muenchow} which is also
 freely available online. I also recommend
 \href{https://www.springer.com/gp/book/9781461476177}{\emph{Applied
-Spatial Data Analysis} by Roger S. Bivand, Edzer Pebesmam and Virgilio
+Spatial Data Analysis} by Roger S. Bivand, Edzer Pebesma, and Virgilio
 Gómez-Rubio} too.
 
-\chapter{Introduction}\label{introduction}
-
-The aim of this workshop is to help you get started with using the
-prioritizr R package for systematic conservation planning. It is not
-designed to give you a comprehensive overview and you will not become an
-expert after completing this workshop. Instead, we want to help you
-understand the core principles of conservation planning and guide you
-through some of the common tasks involved with generating
-prioritizations. Phrased provocatively, we want to give you the
-knowledge base and confidence needed to start applying systematic
-conservation planning to your own work.
-
-One of the best ways, perhaps, to learn something new is to just give it
-a go. As such, this workshop involves generating prioritizations for
-protected area establishment and performing analyses to understand them.
-This manual is divided into two main sections, the \textbf{Help} section
-provides explanations and example R code for performing common
-prioritization tasks (e.g.~importing data, creating target data, solving
-conservation problems, calculating shortfalls) and the \textbf{Exercise}
-section contains a systematic conservation planning case-study. During
-this workshop, your aim is to work through the case-study in the
-\textbf{Exercise} section and complete the tasks and answer the
-questions. Since the \textbf{Exercise} section does not contain any R
-code, you will need to read the \textbf{Help} section for information on
-performing the tasks. This means that all of the code needed to complete
-the \textbf{Exercise} section are in the \textbf{Help} section---you
-just need to find them!
-
-Finally, you are not alone in this workshop. If you are having trouble,
-please put your hand up and one of the instructors will help you as soon
-as they can. You can also ask the people sitting next to you for help
-too. Please note that the first thing an instructor will ask you will
-(probably) be ``what have you tried so far?''. This means that we can't
-help you if you haven't tried anything.
+\part{Resources}\label{part-resources}
 
 \chapter{Data import and export}\label{data-import-and-export}
 
@@ -313,11 +317,10 @@ help you if you haven't tried anything.
     However, R treats the \texttt{\textbackslash{}} character as a
     special character. This means that if you want to use the
     \texttt{\textbackslash{}} character, you need to specify it as
-    \texttt{\textbackslash{}\textbackslash{}}. Thus if you want to refer
-    to the file
+    \texttt{/}. Thus if you want to refer to the file
     \texttt{C:\textbackslash{}Users\textbackslash{}kelly\textbackslash{}Downloads\textbackslash{}cost-data.tif}
     in an R environment, you need to specify it as
-    \texttt{C:\textbackslash{}\textbackslash{}Users\textbackslash{}\textbackslash{}kelly\textbackslash{}\textbackslash{}Downloads\textbackslash{}\textbackslash{}cost-data.tif}.
+    \texttt{C:/Users/kelly/Downloads/cost-data.tif}.
   \end{itemize}
 \item
   How can I import spatial raster data?
@@ -325,15 +328,16 @@ help you if you haven't tried anything.
   \begin{itemize}
   \tightlist
   \item
-    Spatial raster data (e.g. .asc and .tif files) can be imported using
-    the \texttt{stack} function from the raster R packages. For example,
-    if the file name for your raster data was called
-    \texttt{cost-data.tif} then you could import it using
+    Spatial raster data, such as ASCII (\texttt{.asc}) or GeoTIFF
+    (\texttt{.tif}) files, can be imported using the \texttt{stack}
+    function from the raster R packages. For example, if the file name
+    for your raster data was called \texttt{cost-data.tif} then you
+    could import it using
     \texttt{"cost\_data\ \textless{}-\ stack("cost-data.tif")}. Note
     that you will probably need to specify the folder path for the file
     too. For example, if you downloaded the file to the Downloads folder
     on your computer, then you might need to use something like this
-    \texttt{"cost\_data\ \textless{}-\ stack("C:\textbackslash{}\textbackslash{}Users\textbackslash{}\textbackslash{}kelly\textbackslash{}\textbackslash{}Downloads\textbackslash{}\textbackslash{}cost-data.tif")"}
+    \texttt{"cost\_data\ \textless{}-\ stack("C:/Users/kelly/Downloads/cost-data.tif")"}
     depending on your system user name.
   \end{itemize}
 \item
@@ -342,19 +346,33 @@ help you if you haven't tried anything.
   \begin{itemize}
   \tightlist
   \item
-    Spatial vector data (e.g.~shapefiles) can be imported using the
-    \texttt{readOGR} function in the rgdal R package. For example, if
-    the file name for your shapefile was \texttt{animals.shp}, then you
-    could import it using
+    Spatial vector data, such as shapefiles (\texttt{.shp}), can be
+    imported using the \texttt{readOGR} function in the rgdal R package.
+    For example, if the file name for your shapefile was
+    \texttt{animals.shp}, then you could import it using
     \texttt{animal\_data\ \textless{}-\ readOGR("animals.shp")}. Note
     that you will probably need to specify the folder path for the file
     too. For example, if you downloaded the file to the Downloads folder
     on your computer, then you might need to use something like this
-    \texttt{"cost\_data\ \textless{}-\ stack("C:\textbackslash{}\textbackslash{}Users\textbackslash{}\textbackslash{}frank\textbackslash{}\textbackslash{}Downloads\textbackslash{}\textbackslash{}animals.tif")"}
+    \texttt{"cost\_data\ \textless{}-\ stack("C:/Users/frank/Downloads/animals.tif")"}
     depending on your system user name.
   \end{itemize}
 \item
-  How can I import spreadsheet data?
+  How can I import tabular data?
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Tabular data, such as comma-separated (\texttt{.csv}) files, can be
+    imported using the readr R package. The \texttt{read\_csv} function
+    can be used to import files where comma characters have been used to
+    delimit different files (i.e. \texttt{.csv} files). Additionally,
+    the \texttt{read\_tsv} function can be used to import files where
+    tab characters have been used to delimit different files (i.e.
+    \texttt{.tsv} files). For example, you can import a comma-separated
+    file called \texttt{animal-names.csv} using
+    \texttt{animal\_name\_data\ \textless{}-\ read\_csv("animal-names.csv")}.
+  \end{itemize}
 \item
   How can I export spatial raster data?
 \item
@@ -363,29 +381,37 @@ help you if you haven't tried anything.
   How can I export spreadsheet data?
 \end{itemize}
 
+\chapter{Data manipulation}\label{data-manipulation}
+
+TODO.
+
+\chapter{Data visualization}\label{data-visualization}
+
+TODO.
+
+\chapter{Spatial prioritizations}\label{spatial-prioritizations}
+
+TODO.
+
+\part{Exercises}\label{part-exercises}
+
+\chapter{Data exploration}\label{data-exploration}
+
+TODO.
+
 \chapter{Gap analysis}\label{gap-analysis}
 
-TODO
+TODO.
 
-\chapter{Minimum set problem}\label{min-set}
+\chapter{Spatial prioritization}\label{spatial-prioritization}
 
-TODO
+TODO.
 
-\chapter{Minimum shortfalls problem}\label{min-shortfalls}
+\chapter{Irreplaceability}\label{irreplaceability}
 
-TODO
+TODO.
 
-\chapter{Maximum features problem}\label{max-features}
-
-TODO
-
-\chapter{Maximum phylogenetic diversity problem}\label{max-phylo-div}
-
-TODO
-
-\chapter{Tasks}\label{tasks}
-
-TODO
+\part{Appendix}\label{part-appendix}
 
 \chapter{Error glossary}\label{error-glossary}
 
