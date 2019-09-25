@@ -1,3 +1,0 @@
-# Maximum phylogenetic diversity problem {#max-phylo-div}
-
-TODO

@@ -1,3 +1,0 @@
-# Minimum set problem {#min-set}
-
-TODO

@@ -1,3 +1,0 @@
-# Minimum shortfalls problem {#min-shortfalls}
-
-TODO

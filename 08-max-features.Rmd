@@ -1,3 +1,0 @@
-# Maximum features problem {#max-features}
-
-TODO
