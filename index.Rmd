@@ -8,7 +8,7 @@ bibliography: references.bib
 biblio-style: apalike
 url: 'https\://prioritizr.github.io/cibio-workshop'
 link-citations: yes
-cover-image: cover.png
+cover-image: images/cover.png
 favicon: favicon.ico
 github-repo: prioritizr/cibio-workshop
 fontsize: 12pt
