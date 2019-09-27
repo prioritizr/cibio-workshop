@@ -1,3 +1,8 @@
+% load packages
+\usepackage{caption}
+\usepackage{float}
+
+% default bookdown preamble
 \usepackage{booktabs}
 \usepackage{amsthm}
 \makeatletter
@@ -6,3 +11,15 @@
   \thm@postskip=\thm@preskip
 }
 \makeatother
+
+% remove figure labelling
+\captionsetup[figure]{labelformat=empty,textfont=it}
+
+% make figures static
+\let\origfigure\figure
+\let\endorigfigure\endfigure
+\renewenvironment{figure}[1][2] {
+  \expandafter\origfigure\expandafter[H]
+} {
+  \endorigfigure
+}

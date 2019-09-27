@@ -3,7 +3,7 @@ bookdown::gitbook:
   config:
     toc:
       before: |
-        <li><a href="./">prioritizr workshop manual</a></li>
+        <li><a href="./">PRIORITIZR WORKSHOP MANUAL</a></li>
     edit: https://github.com/prioritizr/cibio-workshop/edit/master/%s
     download: pdf
 bookdown::pdf_book:
@@ -12,3 +12,4 @@ bookdown::pdf_book:
   latex_engine: xelatex
   citation_package: natbib
   keep_tex: yes
+  toc_depth: 1

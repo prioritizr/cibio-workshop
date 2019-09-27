@@ -14,7 +14,15 @@ data:
 site:
 	Rscript -e "bookdown::render_book('index.Rmd', 'bookdown::gitbook')"
 
-pdf:
+pdf: student_pdf teacher_pdf
+
+teacher_pdf:
+	export MANUALVERSION=TEACHER; \
+	Rscript -e "bookdown::render_book('index.Rmd', 'bookdown::pdf_book', config_file='_bookdown2.yml')"
+	rm -f prioritizr-workshop-manual-teacher.log
+
+student_pdf:
 	Rscript -e "bookdown::render_book('index.Rmd', 'bookdown::pdf_book')"
+	rm -f prioritizr-workshop-manual.log
 
 .PHONY: data clean website site data

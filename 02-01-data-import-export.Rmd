@@ -1,6 +1,6 @@
 # (PART) Resources {-}
 
-# Data import and export
+# Data import and export {#data-import-export}
 
 * How can I verify that I have entered the correct file path?
     + You can check that a file exists on your computer using the `file.exists` function. For instance, to check that the file `data.txt` exists, you can use `file.exists("data.txt")`.

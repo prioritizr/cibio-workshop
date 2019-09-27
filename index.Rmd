@@ -11,6 +11,9 @@ link-citations: yes
 cover-image: cover.png
 favicon: favicon.ico
 github-repo: prioritizr/cibio-workshop
+fontsize: 12pt
+urlcolor: blue
+geometry: "left=2.54cm, right=2.54cm, top=2.54cm, bottom=2.54cm"
 description: "Manual for the prioritizr module of the Spatial Conservation Prioritization: Concepts, Methods and Application workshop held at CIBIO-InBIO, Vairão, Portugal."
 ---
 
@@ -20,4 +23,8 @@ description: "Manual for the prioritizr module of the Spatial Conservation Prior
 cat("<img src=\"cover.png\" width=\"250\" height=\"250\" alt=\"Cover image\" align=\"right\" style=\"margin: 0 1em 0 1em\" />\n")
 ```
 
-Here you will find the manual for the prioritizr module of the [_Spatial Conservation Prioritization: Concepts, Methods and Application_ workshop](https://cibio.up.pt/workshops--courses/details/advanced-course-spatial-conservation-prioritization-) held at CIBIO-InBIO, Vairão, Portugal. This manual contains [instructions for setting up your computer](), [external resources](), [data used in the workshop](), and [teaching materials](). **Before you arrive at the workshop, you should make sure that you have correctly set up your computer for the workshop. We cannot guarantee a reliable internet connection during the workshop, and so you may be unable to complete the workshop if you have not set up your computer beforehand.**
+Here you will find the manual for the prioritizr module of the [_Spatial Conservation Prioritization: Concepts, Methods and Application_ workshop](https://cibio.up.pt/workshops--courses/details/advanced-course-spatial-conservation-prioritization-) held at CIBIO-InBIO, Vairão, Portugal. **Before you arrive at the workshop, you should make sure that you have correctly set up your computer for the workshop and you have [downloaded the data from here](https://github.com/prioritizr/cibio-workshop/raw/master/data.zip). We cannot guarantee a reliable internet connection during the workshop, and so you may be unable to complete the workshop if you have not set up your computer beforehand.**
+
+```{r, include = FALSE}
+show_answer <- isTRUE(identical(Sys.getenv("MANUALVERSION"), "TEACHER"))
+```
