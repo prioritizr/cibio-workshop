@@ -71,7 +71,7 @@ Now that we have generated the `rij_matrix_data` object, we can use it to perfor
 
 ```{r}
 # prepare table for gap analysis
-gap_data <- tibble(feature = colnames(rij_matrix_data),
+gap_data <- tibble(feature = rownames(rij_matrix_data),
                    amount_total = rowSums(rij_matrix_data))
 
 # print object class
@@ -91,7 +91,7 @@ Currently, the `gap_data` object contains two columns. The `feature` column cont
 # calculate the total extent of each vegetation class in km^2 and store
 # this in a new column called amount_total_km2,
 gap_data$amount_total_km2 <-
-  units(gap_data$amount_total * prod(res(veg_data)), m^2) %>%
+  set_units(gap_data$amount_total * prod(res(veg_data)), m^2) %>%
   set_units(km^2)
 
 # print data
