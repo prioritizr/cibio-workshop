@@ -76,6 +76,7 @@ veg_data <- stack("data/vegetation.tif")
 ## Planning unit data
 
 The planning unit data contains spatial data describing the geometry for each planning unit and attribute data with information about each planning unit (e.g. cost values). Let's investigate the `pu_data` object. The attribute data contains `r ncol(pu_data)` columns with contain the following information:
+
 * `id`: unique identifiers for each planning unit
 * `cost`: acquisition cost values for each planning unit
 * `status`: status information for each planning unit (only relevant with Marxan)

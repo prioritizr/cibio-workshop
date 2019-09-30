@@ -1,9 +1,13 @@
 all: clean data pdf site
 
 clean:
-	rm -rf _book
-	rm -rf _bookdown_files
-	rm -f data.zip
+	@rm -rf _book
+	@rm -rf _bookdown_files
+	@rm -f data.zip
+
+clean_temp:
+	@rm -f prioritizr-workshop-manual.Rmd
+	@rm -f prioritizr-workshop-manual-teaching.Rmd
 
 data:
 	mkdir -p data
@@ -11,17 +15,17 @@ data:
 	zip -r data.zip data
 	rm -rf data
 
-site:
+site: clean_temp
 	Rscript -e "bookdown::render_book('index.Rmd', 'bookdown::gitbook')"
 
 pdf: student_pdf teacher_pdf
 
-teacher_pdf:
+teacher_pdf: clean_temp
 	export MANUALVERSION=TEACHER; \
 	Rscript -e "bookdown::render_book('index.Rmd', 'bookdown::pdf_book', config_file='_bookdown2.yml')"
 	rm -f prioritizr-workshop-manual-teacher.log
 
-student_pdf:
+student_pdf: clean_temp
 	Rscript -e "bookdown::render_book('index.Rmd', 'bookdown::pdf_book')"
 	rm -f prioritizr-workshop-manual.log
 

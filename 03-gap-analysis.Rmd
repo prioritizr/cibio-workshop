@@ -4,155 +4,132 @@
 
 Before we begin to prioritize areas for protected area establishment, we should first understand how well existing protected areas are conserving our biodiversity features (i.e. native vegetation classes in Tasmania, Australia). This step is critical: we cannot develop plans to improve conservation of biodiversity if we don't understand how well existing policies are currently conserving biodiversity! To achieve this, we can perform a "gap analysis". A gap analysis involves calculating how well each of our biodiversity features (i.e. vegetation classes in this exercise) are represented (covered) by protected areas. Next, we compare current representation by protected areas of each feature (e.g. 5% of their spatial distribution covered by protected areas) to a target threshold (e.g. 20% of their spatial distribution covered by protected areas). This target threshold denotes the minimum amount (e.g. minimum proportion of spatial distribution) that we need of each feature to be represented in the protected area system. Ideally, targets should be based on an estimate of how much area or habitat is needed for ecosystem function or species persistence. In practice, targets are generally set using simple rules of thumb (e.g. 10% or 20%), policy (17%; https://www.cbd.int/sp/targets/rationale/target-11) or standard practices [e.g. setting targets for species based on range-size; @r1; @r2].
 
-## Preliminary data processing
+## Feature abundance
 
-Now we will perform some preliminary calculations for the gap analysis. First, we will calculate how much of each vegetation feature occurs inside each planning unit (using the `rij_matrix` function). Specifically, we will create  a matrix where each row corresponds to a different feature, each column corresponds to a different planning unit, and cell values indicate the amount of each feature in each planning unit. In prioritizr terminology, we call this the "_rij_ matrix" (pronounced "r-i-j matrix"). It serves a similar role as the `puvspr.dat` file for _Marxan_.
+Now we will perform some preliminary calculations for the gap analysis. First, we will calculate how much of each vegetation feature occurs inside each planning unit (i.e. the abundance of the features). To achieve this, we will use the `problem` function to create an empty conservation planning problem that only contains the planning unit and biodiversity data. We will then use the `feature_abundances` function to calculate the total amount of each feature in each planning unit.
 
 ```{r}
-# calculate the rij matrix
-rij_matrix_data <- rij_matrix(pu_data, veg_data)
+# create prioritizr problem with only the data
+p0 <- problem(pu_data, veg_data, cost_column = "cost")
 
-# print object class
-class(rij_matrix_data)
+# print empty problem,
+# we can see that only the cost and feature data are defined
+print(p0)
 
-# print number of rows in rij matrix
-nrow(rij_matrix_data)
+# calculate amount of each feature in each planning unit
+abundance_data <- feature_abundances(p0)
 
-# print number of columns in rij matrix
-ncol(rij_matrix_data)
+# print abundance data
+print(abundance_data)
 
-# print number of cell in rij matrix
-ncell(rij_matrix_data)
+# note that only the first ten rows are printed,
+# this is because the abundance_data object is a tibble (i.e. tbl_df) object
+# and not a standard data.frame object
+print(class(abundance_data))
 
-# extract the amount of the third feature in the fourth planning unit
-rij_matrix_data[3, 4]
-
-# calculate minimum value in the matrix
-max(rij_matrix_data)
-
-# calculate average value in the matrix
-mean(rij_matrix_data)
-
-# calculate maximum value in the matrix
-max(rij_matrix_data)
-
-# calculate the maximum amount of the second feature
-max(rij_matrix_data[2, ])
-
-# find planning unit containing the greatest amount of the second feature
-which.max(rij_matrix_data[2, ])
-
-# calculate the maximum amount of the third planning unit
-max(rij_matrix_data[, 3])
-
-# plot histogram of values in the matrix
-hist(rij_matrix_data@x)
+# we can print all of the rows in abundance_data like this
+print(abundance_data, n = Inf)
 ```
 
+The `abundance_data` object contains three columns. The `feature` column contains the name of each feature (derived from `names(veg_data`)), the `absolute_abundance` column contains the total amount of each feature in all the planning units, and the `relative_abundance` column contains the total amount of each feature in the planning units expressed as a proportion of the total amount in the underlying raster data. Since all the raster cells containing vegetation overlap with the planning units, all of the values in the `relative_abundance` column are equal to one (meaning 100%)---except for the 61st feature which has a value on `NaN` because it does not occur in the study area at all (i.e. all of its raster values are zeros). Now let's add a new column with the feature abundances expressed in aerial units (i.e. km^2^).
+
+```{r}
+# add new column with feature abundances in km^2
+abundance_data$absolute_abundance_km2 <-
+  (abundance_data$absolute_abundance * prod(res(veg_data))) %>%
+  set_units(m^2) %>%
+  set_units(km^2)
+
+# print abundance data
+print(abundance_data)
+```
+
+Now let's explore the abundance data.
+
+```{r}
+# calculate the average abundance of the features
+mean(abundance_data$absolute_abundance_km2)
+
+# plot histogram of the features' abundances
+hist(abundance_data$absolute_abundance_km2, main = "Feature abundances")
+
+# find the abundance of the feature with the largest abundance
+max(abundance_data$absolute_abundance_km2)
+
+# find the name of the feature with the largest abundance
+abundance_data$feature[which.max(abundance_data$absolute_abundance_km2)]
+```
+
+Now, try to answer the following questions.
+
 ```{block2, type="rmdquestion"}
-1. What is the amount of the 12th feature in the 100th planning unit?
-2. What is the maximum amount of any feature in any planning unit?
-3. What is the total amount of the 30th feature in all planning units?
-4. What is the average amount of the 60th feature in the first 100 planning unit (hint `rij_matrix_data[60, 1:100]`)?
+1. What is the median abundance of the features (hint: `median`)?
+2. What the abundance of the feature with smallest abundance?
+3. What the name of the feature with smallest abundance?
+4. What is the total abundance of all features in the planning units summed together?
+5. How many features have a total abundance greater than 100 km^2 (hint: `sum(abundance_values > set_units(threshold_value, km^2)`)?
 
 ```
 
 ```{block2, type="rmdanswer", include = show_answers}
-1. `rij_matrix_data[12, 100]`
-2. `max(rij_matrix_data)`
-3. `sum(rij_matrix_data[30, ])`
-4. `mean(rij_matrix_data[60, 1:100])`
+1. `median(abundance_data$absolute_abundance_km2)`
+2. `min(abundance_data$absolute_abundance_km2)`
+3. `abundance_data$feature[which.min(abundance_data$absolute_abundance_km2)]`
+4. `sum(abundance_data$absolute_abundance_km2)`
+5. `sum(abundance_data$absolute_abundance_km2 > set_units(100, km^2))`
 
 ```
 
-## Representation calculations
+## Feature representation by protected areas
 
-Now that we have generated the `rij_matrix_data` object, we can use it to perform the gap analysis. Let's calculate the total amount of each feature in the study area and store this information in a table.
+After calculating the total amount of each feature in the planning units (i.e. the features' abundances), we will now calculate the amount of each feature in the planning units that are covered by protected areas (i.e. feature representation by protected areas). We can complete this task using the `feature_representation` function. This function requires (i) a conservation problem object with the planning unit and biodiversity data and also (ii) an object representing a solution to the problem (i.e an object in the same format as the planning unit data with zeros and ones indicating if the planning units are contained in the prioritization problem or not). Since we already have our data in this format, we can use the code below.
 
 ```{r}
-# prepare table for gap analysis
-gap_data <- tibble(feature = rownames(rij_matrix_data),
-                   amount_total = rowSums(rij_matrix_data))
+# calculate feature representation by protected areas
+repr_data <- feature_representation(p0, pu_data[, "locked_in"])
 
-# print object class
-print(class(gap_data))
-
-# print data, note that we only see the first ten rows by default since
-# this is a tibble object and not a true data.frame object
-print(gap_data)
-
-# we can print the full table like this
-print(gap_data, n = Inf)
+# print feature representation data
+print(repr_data)
 ```
 
-Currently, the `gap_data` object contains two columns. The `feature` column contains the name of each feature and the `amount_total` column corresponds to the number of grid cells that contain a given feature (i.e. from the original `veg_data` object) and overlap with the planning units. Since these units are not especially helpful (i.e. number of grid cells isn't very informative), we should express these numbers using area-based units (e.g. km^2^). We can calculate the total extent of each feature in m^2^ by multiplying the number of grid cells that a given feature occupies by the resolution of the grid in meters (i.e. `r xres(veg_data)` m by `r yres(veg_data)` m), and then convert the units from m^2^ to km^2^.
+Similar to the abundance data before, the `repr_data` object contains three columns. The `feature` column contains the name of each feature, the `absolute_held` column shows the total amount of each feature held in the solution (i.e. the planning units covered by protected areas), and the `relative_held` column shows the proportion of each feature held in the solution (i.e. the proportion of each feature's spatial distribution held in protected areas). Since the `absolute_held` values correspond to the number of grid cells in the `veg_data` object with overlap with protected areas, let's convert them to aerial-based units (i.e. km^2^) so we can report them.
 
 ```{r}
-# calculate the total extent of each vegetation class in km^2 and store
-# this in a new column called amount_total_km2,
-gap_data$amount_total_km2 <-
-  set_units(gap_data$amount_total * prod(res(veg_data)), m^2) %>%
+# add new column with the areas represented in km^2
+repr_data$absolute_held_km2 <-
+  (repr_data$absolute_held * prod(res(veg_data))) %>%
+  set_units(m^2) %>%
   set_units(km^2)
 
-# print data
-print(gap_data)
+# print representation data
+print(repr_data)
 ```
 
-Now we will calculate the amount of each feature held in protected areas. Specifically, we can achieve this by (i) finding out which planning units overlap with protected areas, (ii) subsetting the rij matrix to only include columns for planning units that overlap with protected areas, and (iii) calculating the sum of the values in this subsetted matrix.
+Now let's investigate how well the species are represented.
 
-```{r}
-# find out which planning units overlap with protected areas
-pa_indices <- which(pu_data$status > 0.5)
+```{block2, type="rmdquestion"}
+1. What is the average proportion of the features held in protected areas (hint: `mean(x, na.rm = TRUE)`?
+2. What is the average amount of land in km^2^ that features are represented by protected areas?
+3. What is the name of the feature with the greatest proportionate coverage by protected areas?
+4. What is the name of the feature with the greatest aerial coverage by protected areas?
+5. Do questions two and three have the same answer? If not, why could this be?
+6. Is there a relationship between the total abundance of a feature and how well it is represented by protected areas (hint: `plot(abundances ~ relative_held)`)?
+7. Are any features entirely missing from protected areas (hint: `sum(x == 0)`)?
+8. If we set a target of 10% coverage by protected areas, how many features fail to meet this target (hint: `sum(relative_held >= target)`)?
+9. If we set a target of 20% coverage by protected areas, how many features fail to meet this target?
 
-# preview indices
-head(pa_indices)
-
-# number of planning units that overlap with protected areas
-length(pa_indices)
-
-# subset the rij matrix to only include planning units overlapping with
-# protected areas
-sub_rij_matrix_data <- rij_matrix_data[, pa_indices, drop = FALSE]
-
-# this should have the same number of rows as the original rij matrix data,
-# but only include columns for planning units which overlap with protected
-# areas
-gap_data$amount_held <- rowSums(sub_rij_matrix_data)
-
-# print data
-head(gap_data)
 ```
 
-Similar to before, we can now express the amount of each feature held in protected areas in aerial units (i.e. km^2^).
+```{block2, type="rmdanswer", include = show_answers}
+1. `mean(repr_data$relative_held, na.rm = TRUE)`
+2. `mean(repr_data$absolute_held_km2, na.rm = TRUE)`
+3. `repr_data$feature[which.max(repr_data$relative_held)]`
+4. `repr_data$feature[which.max(repr_data$absolute_held)]`
+5. No, just because a vegetation class is widespread does not necessarily mean that it has the greatest overlap with protected areas. In fact, due to biases in the establishment of protected areas this can often be the case.
+6. Yes, the largest protected areas tend to have the great representation (broadly speaking). \newline
+    See `plot(x = abundance_data$absolute_held, y = repr_data$relative_held)`
+7. `sum(repr_data$absolute_held < 1e-10)` (floating point errors)
+8. `sum(repr_data$relative_held > 0.1)`
+9. `sum(repr_data$relative_held > 0.2)`
 
-```{r}
-# calculate amount held in km^2
-gap_data$amount_held_km2 <-
-  units(gap_data$amount_held * prod(res(veg_data)), m^2) %>%
-  set_units(km^2)
-
-# print data
-print(gap_data)
 ```
-
-After performing all these calculations, we can now calculate the proportion of the spatial distribution of each feature that is held inside protected areas.
-
-```{r}
-# calculate proportion
-gap_data$prop_held <- gap_data$amount_held_km2 / gap_data$amount_total_km2
-
-# print data
-print(gap_data)
-```
-
-Let's explore the feature representation data.
-
-```{r}
-# TODO
-```
-
-## Interpreting the results
-
-
-
-## References
