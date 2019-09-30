@@ -1,3 +1,152 @@
 # Gap analysis {#gap-analysis}
 
-TODO.
+## Introduction
+
+Before we begin to prioritize areas for protected area establishment, we should first understand how well existing protected areas are conserving our biodiversity features (i.e. native vegetation classes in Tasmania, Australia). This step is critical: we cannot develop plans to improve conservation of biodiversity if we don't understand how well existing policies are currently conserving biodiversity! To achieve this, we can perform a "gap analysis". A gap analysis involves calculating how well each of our biodiversity features (i.e. vegetation classes in this exercise) are represented (covered) by protected areas. Next, we compare current representation by protected areas of each feature (e.g. 5% of their spatial distribution covered by protected areas) to a target threshold (e.g. 20% of their spatial distribution covered by protected areas). This target threshold denotes the minimum amount (e.g. minimum proportion of spatial distribution) that we need of each feature to be represented in the protected area system. Ideally, targets should be based on an estimate of how much area or habitat is needed for ecosystem function or species persistence. In practice, targets are generally set using simple rules of thumb (e.g. 10% or 20%), policy (17%; https://www.cbd.int/sp/targets/rationale/target-11) or standard practices [e.g. setting targets for species based on range-size; @r1; @r2].
+
+## Preliminary data processing
+
+Now we will perform some preliminary calculations for the gap analysis. First, we will calculate how much of each vegetation feature occurs inside each planning unit (using the `rij_matrix` function). Specifically, we will create  a matrix where each row corresponds to a different feature, each column corresponds to a different planning unit, and cell values indicate the amount of each feature in each planning unit. In prioritizr terminology, we call this the "_rij_ matrix" (pronounced "r-i-j matrix"). It serves a similar role to the `puvspr.dat` file in _Marxan_.
+
+```{r}
+# calculate the rij matrix
+rij_matrix_data <- rij_matrix(pu_data, veg_data)
+
+# print object class
+class(rij_matrix_data)
+
+# print number of rows in rij matrix
+nrow(rij_matrix_data)
+
+# print number of columns in rij matrix
+ncol(rij_matrix_data)
+
+# print number of cell in rij matrix
+ncell(rij_matrix_data)
+
+# extract the amount of the third feature in the fourth planning unit
+rij_matrix_data[3, 4]
+
+# calculate minimum value in the matrix
+max(rij_matrix_data)
+
+# calculate average value in the matrix
+mean(rij_matrix_data)
+
+# calculate maximum value in the matrix
+max(rij_matrix_data)
+
+# calculate the maximum amount of the second feature
+max(rij_matrix_data[2, ])
+
+# find planning unit containing the greatest amount of the second feature
+which.max(rij_matrix_data[2, ])
+
+# calculate the maximum amount of the third planning unit
+max(rij_matrix_data[, 3])
+
+# plot histogram of values in the matrix
+hist(rij_matrix_data@x)
+```
+
+```{block2, type="rmdquestion"}
+1. What is the amount of the 12th feature in the 100th planning unit?
+2. What is the maximum amount of any feature in any planning unit?
+3. What is the total amount of the 30th feature in all planning units?
+4. What is the average amount of the 60th feature in the first 100 planning unit (hint `rij_matrix_data[60, 1:100]`)?
+
+```
+
+```{block2, type="rmdanswer", include = show_answers}
+1. `rij_matrix_data[12, 100]`
+2. `max(rij_matrix_data)`
+3. `sum(rij_matrix_data[30, ])`
+4. `mean(rij_matrix_data[60, 1:100])`
+
+```
+
+## Representation calculations
+
+Now that we have generated the `rij_matrix_data` object, we can use it to perform the gap analysis. Let's calculate the total amount of each feature in the study area and store this information in a table.
+
+```{r}
+# prepare table for gap analysis
+gap_data <- tibble(feature = colnames(rij_matrix_data),
+                   amount_total = rowSums(rij_matrix_data))
+
+# print object class
+print(class(gap_data))
+
+# print data, note that we only see the first ten rows by default since
+# this is a tibble object and not a true data.frame object
+print(gap_data)
+
+# we can print the full table like this
+print(gap_data, n = Inf)
+```
+
+Currently, the `gap_data` object contains two columns. The `feature` column contains the name of each feature and the `amount_total` column corresponds to the number of grid cells that contain a given feature (i.e. from the original `veg_data` object) and overlap with the planning units. Since these units are not especially helpful (i.e. number of grid cells isn't very informative), we should express these numbers using in area-based units (i.e. km^2^). We can calculate the extent in m^2^ by multiplying the number of grid cells a feature occupies by the resolution of the grid in meters (i.e. `r xres(veg_data)` m by `r yres(veg_data)` m), and then convert the units from m^2^ to km^2^.
+
+```{r}
+# calculate the total extent of each vegetation class in km^2 and store
+# this in a new column called amount_total_km2,
+gap_data$amount_total_km2 <-
+  units(gap_data$amount_total * prod(res(veg_data)), m^2) %>%
+  set_units(km^2)
+
+# print data
+print(gap_data)
+```
+
+Now we will calculate the amount of each feature held in protected areas. Specifically, we can achieve this by (i) finding out which planning units overlap with protected areas, (ii) subsetting the rij matrix data to only include columns for planning units that overlap with protected areas, and (iii) calculating the sum of the values in this subsetted matrix.
+
+```{r}
+# find out which planning units overlap with protected areas
+pa_indices <- which(pu_data$status > 0.5)
+
+# preview indices
+head(pa_indices)
+
+# number of planning units that overlap with protected areas
+length(pa_indices)
+
+# subset the rij matrix to only include planning units overlapping with
+# protected areas
+sub_rij_matrix_data <- rij_matrix_data[, pa_indices, drop = FALSE]
+
+# this should have the same number of rows as the original rij matrix data,
+# but only include columns for planning units which overlap with protected
+# areas
+gap_data$amount_held <- rowSums(sub_rij_matrix_data)
+
+# print data
+head(gap_data)
+```
+
+Similar to before, we can now express the amount of each feature held in protected areas in aerial units (i.e. km^2^).
+
+```{r}
+# calculate amount held in km^2
+gap_data$amount_held_km2 <-
+  units(gap_data$amount_held * prod(res(veg_data)), m^2) %>%
+  set_units(km^2)
+
+# print data
+print(gap_data)
+```
+
+After performing all these calculations, we can now calculate the proportion of the spatial distribution of each feature that is held inside protected areas.
+
+```{r}
+# calculate proportion
+gap_data$prop_held <- gap_data$amount_held_km2 / gap_data$amount_total_km2
+
+# print data
+print(gap_data)
+```
+
+## Interpreting the results
+
+
+
+## References
