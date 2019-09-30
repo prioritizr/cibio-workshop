@@ -14,7 +14,8 @@ Imports:
   Rsymphony,
   prioritizr,
   prioritizrdata,
-  mapview
+  mapview,
+  units
 Remotes:
   rstudio/bookdown,
   prioritizr/prioritizr,

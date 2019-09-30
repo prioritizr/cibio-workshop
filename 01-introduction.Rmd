@@ -29,7 +29,7 @@ You can type R code into the _Console_ part of the interface and press the enter
 An R package is a collection of R code and documentation that can be installed to enhance the standard R environment with additional functionality. Currently, there are over ten thousand R packages available on CRAN. Each of these R packages (mostly) aim to serve a specific need, such as [reading Excel spreadsheets](https://cran.r-project.org/web/packages/readxl/index.html), [downloading satellite imagery data](https://cran.r-project.org/web/packages/MODIStsp/index.html), [downloading and cleaning protected area data](https://cran.r-project.org/web/packages/wdpar/index.html), or [fitting environmental niche models](https://cran.r-project.org/web/packages/ENMeval/index.html). In fact, R has such a diverse ecosystem of R packages, that the question is (generally) not "can I use R to do ...?" but "what R package can I use to ...?". During this workshop, we will use various R packages. To install these R packages, please run enter the code below in the _Console_ part of the RStudio interface and press enter. Please note that you will require an internet connection to install the packages and the installation process may take a while to complete.
 
 ```{r, eval = FALSE}
-install.packages(c("sf", "tidyverse", "sp", "rgeos", "rgdal", "raster",
+install.packages(c("sf", "tidyverse", "sp", "rgeos", "rgdal", "raster", "units",
                    "prioritizr", "prioritizrdata" "Rsymphony", "mapview"))
 ```
 
