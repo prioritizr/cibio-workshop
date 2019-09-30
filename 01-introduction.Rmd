@@ -4,25 +4,25 @@
 
 The aim of this workshop is to help you get started with using the prioritizr R package for systematic conservation planning. It is not designed to give you a comprehensive overview and you will not become an expert after completing this workshop. Instead, we want to help you understand the core principles of conservation planning and guide you through some of the common tasks involved with generating prioritizations. Phrased provocatively, we want to give you the knowledge base and confidence needed to start applying systematic conservation planning to your own work.
 
-One of the best ways, perhaps, to learn something new is to just give it a go. As such, this workshop involves generating prioritizations for protected area establishment and performing analyses to understand them. This manual is divided into two main parts, the **Resources** part provides explanations and example R code for performing common prioritization tasks (e.g. importing data, creating target data, solving conservation problems, calculating shortfalls) and the **Exercises** part contains a systematic conservation planning case study. During this workshop, your aim is to work through the case study in the **Exercise** part and complete the tasks and answer the questions. Since the **Exercise** part does not contain any R code, you will need to read the **Resources** part for information on performing the tasks. This means that all of the code needed to complete the **Exercise** part are in the **Resources** part---you just need to find them!
-
-Finally, you are not alone in this workshop. If you are having trouble, please put your hand up and one of the instructors will help you as soon as they can. You can also ask the people sitting next to you for help too. Please note that the first thing an instructor will ask you will (probably) be "what have you tried so far?". We can't help you if you haven't tried anything.
+You are not alone in this workshop. If you are having trouble, please put your hand up and one of the instructors will help you as soon as they can. You can also ask the people sitting next to you for help too. If you are having trouble with using the prioritizr R package, please consult the package website: https://prioritizr.net. It has plenty of examples and tutorials. Finally, please note that the first thing an instructor will ask you will (probably) be "what have you tried so far?". We can't help you if you haven't tried anything.
 
 ## Setting up your computer {#setup}
 
-You will need to have both [R](https://www.r-project.org) and [RStudio](https://www.rstudio.com/) installed on your computer to complete this workshop. Although it is not imperative that you have the latest version of RStudio installed, **you will need the latest version of R installed (i.e. version `r as.character(getRversion())`)**. After installing these programs, you will also need to install various R packages too.
+You will need to have both [R](https://www.r-project.org) and [RStudio](https://www.rstudio.com/) installed on your computer to complete this workshop. Although it is not imperative that you have the latest version of RStudio installed, **you will need the latest version of R installed (i.e. version `r as.character(getRversion())`)**. Please note that you meed need administrative permissions to complete install these programs. After installing them, you will also need to install various R packages too.
 
 ### R {#r}
 
-The [R statistical computing environment](https://www.r-project.org) can be downloaded from the Comprehensive R Archive Network (CRAN). You can download the latest version of R (version `r as.character(getRversion())`) from here: https://cloud.r-project.org. Please note that you will need to download the correct file for your operating system (i.e. Linux, Mac OSX, Windows). You may also require administrative permissions to complete the installation process.
+The [R statistical computing environment](https://www.r-project.org) can be downloaded from the Comprehensive R Archive Network (CRAN). You can download the latest version of R (version `r as.character(getRversion())`) from here: https://cloud.r-project.org. Please note that you will need to download the correct file for your operating system (i.e. Linux, Mac OSX, Windows).
 
 ### RStudio {#rstudio}
 
-[RStudio](https://www.rstudio.com) is an integrated development environment (IDE). In other words, it is a program that is designed to make your R programming experience more pleasant. During this workshop, you will interact with R through RStudio---meaning that you will open RStudio when you wish interact with R. You can download the latest version of [RStudio](https://www.rstudio.com/) here: http://www.rstudio.com/download. RStudio is updated several times during the year, and it will tell you when an update is available. When you start RStudio, you will see two key parts of the user interface:
+[RStudio](https://www.rstudio.com) is an integrated development environment (IDE). In other words, it is a program that is designed to make your R programming experience more enjoyable. During this workshop, you will interact with R through RStudio---meaning that you will open RStudio when you want to code in R. You can download the latest version of RStudio here: http://www.rstudio.com/download. When you start RStudio, you will see two main parts of the interface:
 
-![](images/rstudio-console.png)
+```{r, out.width = "90%", echo = FALSE}
+knitr::include_graphics("images/rstudio-console.png")
+```
 
-You can type R code into the _Console_ part of the user interface and press the enter key to run them.
+You can type R code into the _Console_ part of the interface and press the enter key to run the code.
 
 ### R packages {#r-packages}
 

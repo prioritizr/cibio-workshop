@@ -1,11 +1,18 @@
-.rmdcaution, .rmdimportant, .rmdnote, .rmdtip, .rmdwarning {
+.rmdcaution, .rmdimportant, .rmdnote, .rmdtip, .rmdwarning, .rmdquestion, .rmdanswer {
   padding: 1em 1em 1em 4em;
   margin-bottom: 10px;
   background: #f5f5f5 5px center/3em no-repeat;
 }
 .rmdcaution {
-  background-position: 1% 5%;
   background-image: url("../images/caution.png");
+}
+.rmdquestion {
+  background-position: 1% 5%;
+  background-image: url("../images/question.png");
+}
+.rmdanswer {
+  background-position: 1% 5%;
+  background-image: url("../images/answer.png");
 }
 .rmdimportant {
   background-image: url("../images/important.png");

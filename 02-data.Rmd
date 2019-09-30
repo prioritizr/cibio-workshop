@@ -2,7 +2,7 @@
 
 ## Starting out
 
-We will start out by opening RStudio. Ideally, you should have already installed this before the workshop. If you have not done this already, then please see the Setup section. After opening RStudio, we will start by entering code to attach some packages that will make our lives much easier.
+We will start by opening RStudio. Ideally, you will have already installed both R and Rstudio before the workshop. If you have not done this already, then please see the [Setting up your computer] section. After opening RStudio, enter the following R code to attach the R packages we will use in this workshop.
 
 ```{r, message = FALSE}
 # load packages
@@ -110,28 +110,46 @@ spplot(pu_data, "cost")
 mapview(pu_data, zcol = "cost")
 ```
 
+\clearpage
+
 Now, you can try and answer some questions about the planning unit data.
 
-```{block2, type="rmdcaution"}
+```{block2, type="rmdquestion"}
 1. How many planning units are in the planning unit data?
 2. What is the highest cost value?
 3. How many planning units are covered by the protected areas (hint: `sum(x)`)?
 4. What is the proportion of the planning units that are covered by the protected areas (hint: `mean(x)`)?
 5. How many planning units are dominated by anthropologically altered land (hint: `sum(x)`)?
-6. What is the proportion of planning units dominated by anthropologically altered land (hint: `sum(x)`)?
+6. What is the proportion of planning units dominated by anthropologically altered land (hint: `mean(x)`)?
 7. Can you verify that all values in the `locked_in` and `locked_out` columns are zero or one (hint: `min(x)` and `max(x)`)?.
 8. Can you verify that none of the planning units are missing cost values (hint: `all(is.finite(x))`)?.
-9. Can you very that none of the planning units have duplicated identifiers? (hint: `n_distinct(x)`)?
+9. Can you very that none of the planning units have duplicated identifiers? (hint: `sum(duplicated(x))`)?
 10. Is there a spatial pattern in the planning unit cost values (hint: make a map).
 11. Is there a spatial pattern in where most planning units are covered by protected areas (hint: make a map of `locked_in`).
 
 ```
 
+```{block2, type="rmdanswer", include = show_answers}
+1. `nrow(pu_data)`
+2. `max(pu_data$cost)`
+3. `sum(pu_data$locked_in)`
+4. `mean(pu_data$locked_in)`
+5. `sum(pu_data$locked_out)`
+6. `mean(pu_data$locked_out)`
+7. `min(c(pu_data$locked_in, pu_data$locked_out)) == 0` \newline
+      `max(c(pu_data$locked_in, pu_data$locked_out)) == 1`
+8. `all(is.finite(pu_data$cost))`
+9. `sum(duplicated(x)) == 0`
+10. Yes, the eastern side of Tasmania is generally much cheaper than the western side.
+11. Yes, most planning units covered by protected areas are located in the south-western side of Tasmania.
+
+```
+
 ## Vegetation data
 
-The vegetation data describes the spatial distribution of 62 vegetation classes in the study area. This data is in a raster format and so the data are organized using a regular spatial grid with square grid cells. In our case, our raster data contains multiple layers (also called "bands") and each layer has corresponds to a spatial grid with exactly the same area and has exactly the same dimensionality (i.e. number of rows, columns, and cells). In this dataset, there are 62 different regular spatial grids layered on top of each other -- with each layer corresponding to a different vegetation class -- and each of these layers contains a grid with `r nrow(veg_data)` columns, `r ncol(veg_data)` rows, and `r formatC(ncell(veg_data), big.mark=",")` cells. Within each layer, each cell corresponds to a `r xres(veg_data)/1000` by `r yres(veg_data)/1000` km square. The values associated with each grid cell contain values (i.e. one or zero) indicating the presence or absence of a given vegetation class in the cell.
+The vegetation data describes the spatial distribution of 62 vegetation classes in the study area. This data is in a raster format and so the data are organized using a regular spatial grid with square grid cells. In our case, our raster data contains multiple layers (also called "bands") and each layer has corresponds to a spatial grid with exactly the same area and has exactly the same dimensionality (i.e. number of rows, columns, and cells). In this dataset, there are 62 different regular spatial grids layered on top of each other -- with each layer corresponding to a different vegetation class -- and each of these layers contains a grid with `r nrow(veg_data)` columns, `r ncol(veg_data)` rows, and `r nrow(veg_data) * ncol(veg_data)` cells. Within each layer, each cell corresponds to a `r xres(veg_data)/1000` by `r yres(veg_data)/1000` km square. The values associated with each grid cell contain values (i.e. one or zero) indicating the presence or absence of a given vegetation class in the cell.
 
-![](images/rasterbands.gif)
+![](images/rasterbands.png)
 
 Let's explore the vegetation data.
 
@@ -149,14 +167,26 @@ mapview(veg_data[[36]])
 ```
 
 ```{r}
-# print information about the spatial grid
-nrow(veg_data)    # number of rows
-ncol(veg_data)    # number of columns
-ncell(veg_data)   # number of cells
-nlayers(veg_data) # number of layers
-xres(veg_data)    # resolution on the x-axis
-yres(veg_data)    # resolution on the y-axis
-extent(veg_data)  # spatial extent of the grid, i.e. coordinates for corners
+# print number of rows in the data
+nrow(veg_data)
+
+# print number of columns  in the data
+ncol(veg_data)
+
+# print number of cells in the data
+ncell(veg_data)
+
+# print number of layers in the data
+nlayers(veg_data)
+
+# print  resolution on the x-axis
+xres(veg_data)
+
+# print resolution on the y-axis
+yres(veg_data)
+
+# print spatial extent of the grid, i.e. coordinates for corners
+extent(veg_data)
 
 # print the coordinate reference system
 print(veg_data@crs)
@@ -189,13 +219,25 @@ data.frame(max = cellStats(veg_data, "max"))
 
 Now, you can try and answer some questions about the vegetation data.
 
-```{block2, type="rmdcaution"}
+```{block2, type="rmdquestion"}
 1. What part of the study area is the 51st vegetation class found in (hint: make a map)?
 2. How many rows does the 23rd layer contain?
 3. Is the third vegetation class present at the 400th cell?
 4. How many cells contain the 56th vegetation class?
 5. What proportion of cells contain the 12th vegetation class?
 6. Which vegetation class is present in the greatest number of cells?
-7. Make an new object by summing together all the layer values into a single grid (i.e. `sum_veg_data <- sum(veg_data)`) and make a map showing this data (i.e. `plot(sum_veg_data)`). What does it mean if cells contain zeros in this new object? Look at the spatial pattern of the cells containing zeros, can you think of a biological explanation for their location?
+7. Make an new object by summing together all the layer values into a single grid (i.e. `sum_veg_data <- sum(veg_data)`) and make a map showing this data (i.e. `plot(sum_veg_data)`). What does it mean if cells contain zeros in this new object? What reasons could there be to explain why some cells in this new object contain zeros?
+
+```
+
+```{block2, type="rmdanswer", include = show_answers}
+1. Central-north Tasmania
+2. `nrow(veg_data[[23]])`
+3. `veg_data[[3]][400])`
+4. `ncell(veg_data[[56]])`
+5. `cellStats(veg_data[[12]], "mean")`
+6. `names(veg_data)[which.max(cellStats(veg_data, "sum"))]`
+7. Cells which do not contain habitat in any of the layers are denoted with a
+   zero in `sum_veg_data`. These zero cells occur in places which do not contain any remnant vegetation (e.g. due to habitat destruction) or they occur in the ocean (i.e. because terrestrial vegetation does not occur in the ocean).
 
 ```
