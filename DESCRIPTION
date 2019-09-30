@@ -15,4 +15,6 @@ Imports:
   prioritizr,
   prioritizrdata,
   mapview
-Remotes: rstudio/bookdown
+Remotes:
+  rstudio/bookdown,
+  prioritizr/prioritizr,
