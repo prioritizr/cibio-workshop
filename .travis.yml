@@ -18,3 +18,8 @@ before_script:
 script:
   - ./_build.sh
   - ./_deploy.sh
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
