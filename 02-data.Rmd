@@ -2,7 +2,34 @@
 
 ## Starting out
 
-We will start by opening RStudio. Ideally, you will have already installed both R and Rstudio before the workshop. If you have not done this already, then please see the [Setting up your computer] section. After opening RStudio, enter the following R code to attach the R packages we will use in this workshop.
+We will start by opening RStudio. Ideally, you will have already installed both R and Rstudio before the workshop. If you have not done this already, then please see the [Setting up your computer] section. **During this workshop, please do not copy and paste code from the workshop manual into RStudio. Instead, please write it out yourself in an R script.** When programming, you will spend a lot of time fixing coding mistakes -- that is, debugging your code -- so it is best to get used to making mistakes now when you have people here to help you. You can create a new R script by clicking on _File_ in the RStudio menu bar and then _R Script_.
+
+```{r, out.width = "90%", echo = FALSE}
+knitr::include_graphics("images/rstudio-new-script.png")
+```
+
+After creating a new script, you will notice that a new _Source_ panel has appeared. In this new _Source_ panel, you can type and edit code. You can run code in the _Source_ panel by placing the cursor (i.e. the blinking line) on the desired line of code and pressing `Control + Enter` on your keyboard (or `CMD + Enter` if you are using an Apple computer). You can save the code in the _Source_ panel by pressing `Control + s` on your keyboard (or `CMD + s` if you are using an Apple computer).
+
+```{r, out.width = "90%", echo = FALSE}
+knitr::include_graphics("images/rstudio-source.png")
+```
+
+You can also make notes and write your answers to the workshop questions inside the _Source_ panel. When writing notes and answers, add a `#` symbol so that the text following the `#` symbol is treated as a comment and not code. This means that you don't have to worry about highlighting specific parts of the script to avoid errors.
+
+```{r}
+# this is a comment and R will ignore this text if you run it
+# R will run the code below because it does not start with a # symbol
+print("this is not a comment")
+
+# you can also add comments to the same line of R code too
+print("this is also not a comment") # but this is a comment
+```
+
+**Remember to save your script regularly to ensure that you don't lose anything in the event that RStudio crashes (e.g. using `Control + s` or `CMD + s`)!**
+
+## Attaching packages
+
+Now we will setup our R session for the workshop. Specifically, enter the following R code to attach the R packages used in this workshop.
 
 ```{r, message = FALSE}
 # load packages
@@ -17,7 +44,7 @@ You should have already downloaded the data for the prioritizr module of this wo
 
 ![](images/rstudio-wd.png)
 
-Now navigate to the folder where you unzipped the data and select _Open_. You can verify that you have correctly set the working directory using the following R code. You should see the output `TRUE`.
+Now navigate to the folder where you unzipped the data and select _Open_. You can verify that you have correctly set the working directory using the following R code. You should see the output `TRUE` in the _Console_ panel.
 
 ```{r, include = FALSE}
 if (!file.exists("data/pu.shp"))
@@ -214,7 +241,7 @@ cellStats(veg_data[[1]], "min")
 cellStats(veg_data[[1]], "mean")
 
 # calculate the maximum value in each layer
-data.frame(max = cellStats(veg_data, "max"))
+as_tibble(data.frame(max = cellStats(veg_data, "max")))
 ```
 
 Now, you can try and answer some questions about the vegetation data.
