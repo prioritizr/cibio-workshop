@@ -7,3 +7,5 @@ _bookdown_files
 rsconnect
 .directory
 data/*
+prioritizr-workshop-manual.Rmd
+prioritizr-workshop-manual-teaching.Rmd
