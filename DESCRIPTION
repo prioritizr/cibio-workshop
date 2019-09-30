@@ -4,6 +4,7 @@ Title: Prioritizr Workshop Manual
 Version: 0.0.1
 Imports:
   bookdown,
+  tidyverse,
   raster,
   dplyr,
   plyr,
