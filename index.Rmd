@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: references.bib
-biblio-style: apalike
+csl: reference-style.csl
 url: 'https\://prioritizr.github.io/cibio-workshop'
 link-citations: yes
 cover-image: images/cover.png
