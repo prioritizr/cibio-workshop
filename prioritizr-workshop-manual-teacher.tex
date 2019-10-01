@@ -565,7 +565,7 @@ contain the following information:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-13-1} \end{center}
+\begin{center}\includegraphics{prioritizr-workshop-manual-teacher_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -765,7 +765,7 @@ contain the following information:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-15-1} \end{center}
+\begin{center}\includegraphics{prioritizr-workshop-manual-teacher_files/figure-latex/unnamed-chunk-15-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -817,6 +817,40 @@ Now, you can try and answer some questions about the planning unit data.
 \end{enumerate}
 \EndKnitrBlock{rmdquestion}
 
+\BeginKnitrBlock{rmdanswer}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \texttt{nrow(pu\_data)}
+\item
+  \texttt{max(pu\_data\$cost)}
+\item
+  \texttt{sum(pu\_data\$locked\_in)}
+\item
+  \texttt{mean(pu\_data\$locked\_in)}
+\item
+  \texttt{sum(pu\_data\$locked\_out)}
+\item
+  \texttt{mean(pu\_data\$locked\_out)}
+\item
+  \texttt{assert\_that(min(c(pu\_data\$locked\_in,\ pu\_data\$locked\_out))\ ==\ 0)}
+  \newline
+
+  \texttt{assert\_that(max(c(pu\_data\$locked\_in,\ pu\_data\$locked\_out))\ ==\ 1)}
+\item
+  \texttt{all(is.finite(pu\_data\$cost))}
+\item
+  \texttt{assert\_that(sum(duplicated(pu\_data\$id))\ ==\ 0)}
+\item
+  Yes, the eastern side of Tasmania is generally much cheaper than the
+  western side.
+\item
+  Yes, most planning units covered by protected areas are located in the
+  south-western side of Tasmania.
+\end{enumerate}
+\EndKnitrBlock{rmdanswer}
+
 \section{Vegetation data}\label{vegetation-data}
 
 The vegetation data describes the spatial distribution of 62 vegetation
@@ -867,7 +901,7 @@ Let's explore the vegetation data.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-19-1} \end{center}
+\begin{center}\includegraphics{prioritizr-workshop-manual-teacher_files/figure-latex/unnamed-chunk-19-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1111,6 +1145,31 @@ Now, you can try and answer some questions about the vegetation data.
 \end{enumerate}
 \EndKnitrBlock{rmdquestion}
 
+\BeginKnitrBlock{rmdanswer}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Central-north Tasmania
+\item
+  \texttt{nrow(veg\_data{[}{[}23{]}{]})}
+\item
+  \texttt{veg\_data{[}{[}3{]}{]}{[}400{]}}
+\item
+  \texttt{ncell(veg\_data{[}{[}56{]}{]})}
+\item
+  \texttt{cellStats(veg\_data{[}{[}12{]}{]},\ "mean")}
+\item
+  \texttt{names(veg\_data){[}which.max(cellStats(veg\_data,\ "sum")){]}}
+\item
+  Cells which do not contain habitat in any of the layers are denoted
+  with a zero in \texttt{sum\_veg\_data}. These zero cells occur in
+  places which do not contain any remnant vegetation (e.g.~due to
+  habitat destruction) or they occur in the ocean (i.e.~because
+  terrestrial vegetation does not occur in the ocean).
+\end{enumerate}
+\EndKnitrBlock{rmdanswer}
+
 \chapter{Gap analysis}\label{gap-analysis}
 
 \section{Introduction}\label{introduction-1}
@@ -1352,7 +1411,7 @@ Now let's explore the abundance data.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-27-1} \end{center}
+\begin{center}\includegraphics{prioritizr-workshop-manual-teacher_files/figure-latex/unnamed-chunk-27-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1397,6 +1456,23 @@ Now, try to answer the following questions.
   \texttt{sum(abundance\_values\ \textgreater{}\ set\_units(threshold\_value,\ km\^{}2)})?
 \end{enumerate}
 \EndKnitrBlock{rmdquestion}
+
+\BeginKnitrBlock{rmdanswer}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \texttt{median(abundance\_data\$absolute\_abundance\_km2)}
+\item
+  \texttt{min(abundance\_data\$absolute\_abundance\_km2)}
+\item
+  \texttt{abundance\_data\$feature{[}which.min(abundance\_data\$absolute\_abundance\_km2){]}}
+\item
+  \texttt{sum(abundance\_data\$absolute\_abundance\_km2)}
+\item
+  \texttt{sum(abundance\_data\$absolute\_abundance\_km2\ \textgreater{}\ set\_units(100,\ km\^{}2))}
+\end{enumerate}
+\EndKnitrBlock{rmdanswer}
 
 \section{Feature representation by protected
 areas}\label{feature-representation-by-protected-areas}
@@ -1519,6 +1595,38 @@ Now let's investigate how well the species are represented.
   features fail to meet this target?
 \end{enumerate}
 \EndKnitrBlock{rmdquestion}
+
+\BeginKnitrBlock{rmdanswer}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \texttt{mean(repr\_data\$relative\_held,\ na.rm\ =\ TRUE)}
+\item
+  \texttt{mean(repr\_data\$absolute\_held\_km2,\ na.rm\ =\ TRUE)}
+\item
+  \texttt{repr\_data\$feature{[}which.max(repr\_data\$relative\_held){]}}
+\item
+  \texttt{repr\_data\$feature{[}which.max(repr\_data\$absolute\_held){]}}
+\item
+  No, just because a vegetation class is widespread does not necessarily
+  mean that it has the greatest overlap with protected areas. In fact,
+  due to biases in the establishment of protected areas this can often
+  be the case.
+\item
+  Yes, the largest protected areas tend to have the great representation
+  (broadly speaking). \newline
+  See
+  \texttt{plot(x\ =\ abundance\_data\$absolute\_abundance,\ y\ =\ repr\_data\$relative\_held)}
+\item
+  \texttt{sum(repr\_data\$absolute\_held\ \textless{}\ 1e-10)} (floating
+  point errors)
+\item
+  \texttt{sum(repr\_data\$relative\_held\ \textgreater{}\ 0.1)}
+\item
+  \texttt{sum(repr\_data\$relative\_held\ \textgreater{}\ 0.2)}
+\end{enumerate}
+\EndKnitrBlock{rmdanswer}
 
 \chapter{Spatial prioritizations}\label{spatial-prioritizations}
 
