@@ -8,16 +8,14 @@ Before we begin to prioritize areas for protected area establishment, we should 
 
 Now we will perform some preliminary calculations for the gap analysis. First, we will calculate how much of each vegetation feature occurs inside each planning unit (i.e. the abundance of the features). To achieve this, we will use the `problem` function to create an empty conservation planning problem that only contains the planning unit and biodiversity data. We will then use the `feature_abundances` function to calculate the total amount of each feature in each planning unit.
 
-```{r "gap-analysis-1"}
+```{r}
 # create prioritizr problem with only the data
 p0 <- problem(pu_data, veg_data, cost_column = "cost")
 
 # print empty problem,
 # we can see that only the cost and feature data are defined
 print(p0)
-```
 
-```{r "gap-analysis-1-1"}
 # calculate amount of each feature in each planning unit
 abundance_data <- feature_abundances(p0)
 
@@ -35,7 +33,7 @@ print(abundance_data, n = Inf)
 
 The `abundance_data` object contains three columns. The `feature` column contains the name of each feature (derived from `names(veg_data`)), the `absolute_abundance` column contains the total amount of each feature in all the planning units, and the `relative_abundance` column contains the total amount of each feature in the planning units expressed as a proportion of the total amount in the underlying raster data. Since all the raster cells containing vegetation overlap with the planning units, all of the values in the `relative_abundance` column are equal to one (meaning 100%)---except for the 61st feature which has a value on `NaN` because it does not occur in the study area at all (i.e. all of its raster values are zeros). Now let's add a new column with the feature abundances expressed in aerial units (i.e. km^2^).
 
-```{r "gap-analysis-2"}
+```{r}
 # add new column with feature abundances in km^2
 abundance_data$absolute_abundance_km2 <-
   (abundance_data$absolute_abundance * prod(res(veg_data))) %>%
@@ -48,7 +46,7 @@ print(abundance_data)
 
 Now let's explore the abundance data.
 
-```{r "gap-analysis-3"}
+```{r}
 # calculate the average abundance of the features
 mean(abundance_data$absolute_abundance_km2)
 
@@ -86,7 +84,7 @@ Now, try to answer the following questions.
 
 After calculating the total amount of each feature in the planning units (i.e. the features' abundances), we will now calculate the amount of each feature in the planning units that are covered by protected areas (i.e. feature representation by protected areas). We can complete this task using the `feature_representation` function. This function requires (i) a conservation problem object with the planning unit and biodiversity data and also (ii) an object representing a solution to the problem (i.e an object in the same format as the planning unit data with zeros and ones indicating if the planning units are contained in the prioritization problem or not). Since we already have our data in this format, we can use the code below.
 
-```{r "gap-analysis-4"}
+```{r}
 # calculate feature representation by protected areas
 repr_data <- feature_representation(p0, pu_data[, "locked_in"])
 
@@ -96,7 +94,7 @@ print(repr_data)
 
 Similar to the abundance data before, the `repr_data` object contains three columns. The `feature` column contains the name of each feature, the `absolute_held` column shows the total amount of each feature held in the solution (i.e. the planning units covered by protected areas), and the `relative_held` column shows the proportion of each feature held in the solution (i.e. the proportion of each feature's spatial distribution held in protected areas). Since the `absolute_held` values correspond to the number of grid cells in the `veg_data` object with overlap with protected areas, let's convert them to aerial-based units (i.e. km^2^) so we can report them.
 
-```{r "gap-analysis-5"}
+```{r}
 # add new column with the areas represented in km^2
 repr_data$absolute_held_km2 <-
   (repr_data$absolute_held * prod(res(veg_data))) %>%

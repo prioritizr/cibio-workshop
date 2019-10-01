@@ -15,7 +15,8 @@ Imports:
   prioritizr,
   prioritizrdata,
   mapview,
-  units
+  units,
+  velox
 Remotes:
   rstudio/bookdown,
   prioritizr/prioritizr,
