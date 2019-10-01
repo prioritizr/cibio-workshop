@@ -24,7 +24,7 @@
 <meta name="author" content="Jeffrey O. Hanson" />
 
 
-<meta name="date" content="2019-09-30" />
+<meta name="date" content="2019-10-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -118,11 +118,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="3" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>3</b> Data</a><ul>
 <li class="chapter" data-level="3.1" data-path="data.html"><a href="data.html#starting-out"><i class="fa fa-check"></i><b>3.1</b> Starting out</a></li>
-<li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#data-import"><i class="fa fa-check"></i><b>3.2</b> Data import</a></li>
-<li class="chapter" data-level="3.3" data-path="data.html"><a href="data.html#planning-unit-data"><i class="fa fa-check"></i><b>3.3</b> Planning unit data</a></li>
-<li class="chapter" data-level="3.4" data-path="data.html"><a href="data.html#vegetation-data"><i class="fa fa-check"></i><b>3.4</b> Vegetation data</a></li>
+<li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#attaching-packages"><i class="fa fa-check"></i><b>3.2</b> Attaching packages</a></li>
+<li class="chapter" data-level="3.3" data-path="data.html"><a href="data.html#data-import"><i class="fa fa-check"></i><b>3.3</b> Data import</a></li>
+<li class="chapter" data-level="3.4" data-path="data.html"><a href="data.html#planning-unit-data"><i class="fa fa-check"></i><b>3.4</b> Planning unit data</a></li>
+<li class="chapter" data-level="3.5" data-path="data.html"><a href="data.html#vegetation-data"><i class="fa fa-check"></i><b>3.5</b> Vegetation data</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="gap-analysis.html"><a href="gap-analysis.html"><i class="fa fa-check"></i><b>4</b> Gap analysis</a></li>
+<li class="chapter" data-level="4" data-path="gap-analysis.html"><a href="gap-analysis.html"><i class="fa fa-check"></i><b>4</b> Gap analysis</a><ul>
+<li class="chapter" data-level="4.1" data-path="gap-analysis.html"><a href="gap-analysis.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="gap-analysis.html"><a href="gap-analysis.html#feature-abundance"><i class="fa fa-check"></i><b>4.2</b> Feature abundance</a></li>
+<li class="chapter" data-level="4.3" data-path="gap-analysis.html"><a href="gap-analysis.html#feature-representation-by-protected-areas"><i class="fa fa-check"></i><b>4.3</b> Feature representation by protected areas</a></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="spatial-prioritizations.html"><a href="spatial-prioritizations.html"><i class="fa fa-check"></i><b>5</b> Spatial prioritizations</a></li>
 <li class="chapter" data-level="6" data-path="irreplaceability.html"><a href="irreplaceability.html"><i class="fa fa-check"></i><b>6</b> Irreplaceability</a></li>
 <li class="chapter" data-level="7" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>7</b> Acknowledgements</a></li>
@@ -147,24 +152,42 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">Chapter 3</span> Data</h1>
 <div id="starting-out" class="section level2">
 <h2><span class="header-section-number">3.1</span> Starting out</h2>
-<p>We will start by opening RStudio. Ideally, you will have already installed both R and Rstudio before the workshop. If you have not done this already, then please see the <a href="introduction.html#setup">Setting up your computer</a> section. After opening RStudio, enter the following R code to attach the R packages we will use in this workshop.</p>
+<p>We will start by opening RStudio. Ideally, you will have already installed both R and Rstudio before the workshop. If you have not done this already, then please see the <a href="introduction.html#setup">Setting up your computer</a> section. <strong>During this workshop, please do not copy and paste code from the workshop manual into RStudio. Instead, please write it out yourself in an R script.</strong> When programming, you will spend a lot of time fixing coding mistakes – that is, debugging your code – so it is best to get used to making mistakes now when you have people here to help you. You can create a new R script by clicking on <em>File</em> in the RStudio menu bar and then <em>R Script</em>.</p>
+<p><img src="images/rstudio-new-script.png" width="90%" style="display: block; margin: auto;" /></p>
+<p>After creating a new script, you will notice that a new <em>Source</em> panel has appeared. In this new <em>Source</em> panel, you can type and edit code. You can run code in the <em>Source</em> panel by placing the cursor (i.e. the blinking line) on the desired line of code and pressing <code>Control + Enter</code> on your keyboard (or <code>CMD + Enter</code> if you are using an Apple computer). You can save the code in the <em>Source</em> panel by pressing <code>Control + s</code> on your keyboard (or <code>CMD + s</code> if you are using an Apple computer).</p>
+<p><img src="images/rstudio-source.png" width="90%" style="display: block; margin: auto;" /></p>
+<p>You can also make notes and write your answers to the workshop questions inside the <em>Source</em> panel. When writing notes and answers, add a <code>#</code> symbol so that the text following the <code>#</code> symbol is treated as a comment and not code. This means that you don’t have to worry about highlighting specific parts of the script to avoid errors.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this is a comment and R will ignore this text if you run it</span>
+<span class="co"># R will run the code below because it does not start with a # symbol</span>
+<span class="kw">print</span>(<span class="st">&quot;this is not a comment&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;this is not a comment&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># you can also add comments to the same line of R code too</span>
+<span class="kw">print</span>(<span class="st">&quot;this is also not a comment&quot;</span>) <span class="co"># but this is a comment</span></code></pre></div>
+<pre><code>## [1] &quot;this is also not a comment&quot;</code></pre>
+<p><strong>Remember to save your script regularly to ensure that you don’t lose anything in the event that RStudio crashes (e.g. using <code>Control + s</code> or <code>CMD + s</code>)!</strong></p>
+</div>
+<div id="attaching-packages" class="section level2">
+<h2><span class="header-section-number">3.2</span> Attaching packages</h2>
+<p>Now we will setup our R session for the workshop. Specifically, enter the following R code to attach the R packages used in this workshop.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load packages</span>
 <span class="kw">library</span>(tidyverse)
 <span class="kw">library</span>(prioritizr)
 <span class="kw">library</span>(rgdal)
 <span class="kw">library</span>(raster)
-<span class="kw">library</span>(mapview)</code></pre></div>
+<span class="kw">library</span>(mapview)
+<span class="kw">library</span>(units)
+<span class="kw">library</span>(assertthat)</code></pre></div>
 <p>You should have already downloaded the data for the prioritizr module of this workshop. If you have not already done so, you can download it from here: <a href="https://github.com/prioritizr/cibio-workshop/raw/master/data.zip" class="uri">https://github.com/prioritizr/cibio-workshop/raw/master/data.zip</a>. After downloading the data, you can unzip the data into a new folder. Next, you will need to set the working directory to this new folder. To achieve this, click on the <em>Session</em> button on the RStudio menu bar, then click <em>Set working directory</em>, and then <em>Choose Directory</em>.</p>
 <div class="figure">
 <img src="images/rstudio-wd.png" />
 
 </div>
-<p>Now navigate to the folder where you unzipped the data and select <em>Open</em>. You can verify that you have correctly set the working directory using the following R code. You should see the output <code>TRUE</code>.</p>
+<p>Now navigate to the folder where you unzipped the data and select <em>Open</em>. You can verify that you have correctly set the working directory using the following R code. You should see the output <code>TRUE</code> in the <em>Console</em> panel.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">file.exists</span>(<span class="st">&quot;data/pu.shp&quot;</span>)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 </div>
 <div id="data-import" class="section level2">
-<h2><span class="header-section-number">3.2</span> Data import</h2>
+<h2><span class="header-section-number">3.3</span> Data import</h2>
 <p>Now that we have downloaded the dataset, we will need to import it into our R session. Specifically, this data was obtained from the “Introduction to Marxan” course and was originally a subset of a larger spatial prioritization project performed under contract to Australia’s Department of Environment and Water Resources. It contains vector-based planning unit data (<code>pu.shp</code>)and the raster-based data describing the spatial distributions of 62 vegetation classes (<code>vegetation.tif</code>) in Tasmania, Australia. We can import the data into our R session using the following code.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># import planning unit data</span>
 pu_data &lt;-<span class="st"> </span><span class="kw">readOGR</span>(<span class="st">&quot;data/pu.shp&quot;</span>)</code></pre></div>
@@ -176,8 +199,15 @@ pu_data &lt;-<span class="st"> </span><span class="kw">readOGR</span>(<span clas
 veg_data &lt;-<span class="st"> </span><span class="kw">stack</span>(<span class="st">&quot;data/vegetation.tif&quot;</span>)</code></pre></div>
 </div>
 <div id="planning-unit-data" class="section level2">
-<h2><span class="header-section-number">3.3</span> Planning unit data</h2>
-<p>The planning unit data contains spatial data describing the geometry for each planning unit and attribute data with information about each planning unit (e.g. cost values). Let’s investigate the <code>pu_data</code> object. The attribute data contains 5 columns with contain the following information: * <code>id</code>: unique identifiers for each planning unit * <code>cost</code>: acquisition cost values for each planning unit * <code>status</code>: status information for each planning unit (only relevant with Marxan) * <code>locked_in</code>: binary values (i.e. one or zero) indicating if planning units are covered by protected areas or not. * <code>locked_out</code>: binary values (i.e. one or zero) indicating if planning units cannot be managed as a protected area because they contain too much anthropologically altered land.</p>
+<h2><span class="header-section-number">3.4</span> Planning unit data</h2>
+<p>The planning unit data contains spatial data describing the geometry for each planning unit and attribute data with information about each planning unit (e.g. cost values). Let’s investigate the <code>pu_data</code> object. The attribute data contains 5 columns with contain the following information:</p>
+<ul>
+<li><code>id</code>: unique identifiers for each planning unit</li>
+<li><code>cost</code>: acquisition cost values for each planning unit</li>
+<li><code>status</code>: status information for each planning unit (only relevant with Marxan)</li>
+<li><code>locked_in</code>: binary values (i.e. one or zero) indicating if planning units are covered by protected areas or not.</li>
+<li><code>locked_out</code>: binary values (i.e. one or zero) indicating if planning units cannot be managed as a protected area because they contain too much anthropologically altered land.</li>
+</ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># print a short summary of the data</span>
 <span class="kw">print</span>(pu_data)</code></pre></div>
 <pre><code>## class       : SpatialPolygonsDataFrame 
@@ -190,7 +220,7 @@ veg_data &lt;-<span class="st"> </span><span class="kw">stack</span>(<span class
 ## max values  : 1130,  61.9272727272727,      2,         1,          0</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the planning unit data</span>
 <span class="kw">plot</span>(pu_data)</code></pre></div>
-<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot an interactive map of the planning unit data</span>
 <span class="kw">mapview</span>(pu_data)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># print the structure of object</span>
@@ -291,7 +321,7 @@ pu_data<span class="op">@</span>polygons[[<span class="dv">80</span>]]</code></p
 <pre><code>## [1] 25.13536</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot a map of the planning unit cost data</span>
 <span class="kw">spplot</span>(pu_data, <span class="st">&quot;cost&quot;</span>)</code></pre></div>
-<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot an interactive map of the planning unit cost data</span>
 <span class="kw">mapview</span>(pu_data, <span class="dt">zcol =</span> <span class="st">&quot;cost&quot;</span>)</code></pre></div>
 
@@ -315,7 +345,7 @@ pu_data<span class="op">@</span>polygons[[<span class="dv">80</span>]]</code></p
 
 </div>
 <div id="vegetation-data" class="section level2">
-<h2><span class="header-section-number">3.4</span> Vegetation data</h2>
+<h2><span class="header-section-number">3.5</span> Vegetation data</h2>
 <p>The vegetation data describes the spatial distribution of 62 vegetation classes in the study area. This data is in a raster format and so the data are organized using a regular spatial grid with square grid cells. In our case, our raster data contains multiple layers (also called “bands”) and each layer has corresponds to a spatial grid with exactly the same area and has exactly the same dimensionality (i.e. number of rows, columns, and cells). In this dataset, there are 62 different regular spatial grids layered on top of each other – with each layer corresponding to a different vegetation class – and each of these layers contains a grid with 343 columns, 320 rows, and 109760 cells. Within each layer, each cell corresponds to a 1 by 1 km square. The values associated with each grid cell contain values (i.e. one or zero) indicating the presence or absence of a given vegetation class in the cell.</p>
 <div class="figure">
 <img src="images/rasterbands.png" />
@@ -334,7 +364,7 @@ pu_data<span class="op">@</span>polygons[[<span class="dv">80</span>]]</code></p
 ## max values :            1,            1,            1,            1,            1,            1,            1,            1,            1,             1,             1,             1,             1,             1,             1, ...</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot a map of the 36th vegetation class</span>
 <span class="kw">plot</span>(veg_data[[<span class="dv">36</span>]])</code></pre></div>
-<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot an interactive map of the 36th vegetation class</span>
 <span class="kw">mapview</span>(veg_data[[<span class="dv">36</span>]])</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># print number of rows in the data</span>
@@ -400,70 +430,21 @@ pu_data<span class="op">@</span>polygons[[<span class="dv">80</span>]]</code></p
 <span class="kw">cellStats</span>(veg_data[[<span class="dv">1</span>]], <span class="st">&quot;mean&quot;</span>)</code></pre></div>
 <pre><code>## [1] 0.0003279883</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the maximum value in each layer</span>
-<span class="kw">data.frame</span>(<span class="dt">max =</span> <span class="kw">cellStats</span>(veg_data, <span class="st">&quot;max&quot;</span>))</code></pre></div>
-<pre><code>##    max
-## 1    1
-## 2    1
-## 3    1
-## 4    1
-## 5    1
-## 6    1
-## 7    1
-## 8    1
-## 9    1
-## 10   1
-## 11   1
-## 12   1
-## 13   1
-## 14   1
-## 15   1
-## 16   1
-## 17   1
-## 18   1
-## 19   1
-## 20   1
-## 21   1
-## 22   1
-## 23   1
-## 24   1
-## 25   1
-## 26   1
-## 27   1
-## 28   1
-## 29   1
-## 30   1
-## 31   1
-## 32   1
-## 33   1
-## 34   1
-## 35   1
-## 36   1
-## 37   1
-## 38   1
-## 39   1
-## 40   1
-## 41   1
-## 42   1
-## 43   1
-## 44   1
-## 45   1
-## 46   1
-## 47   1
-## 48   1
-## 49   1
-## 50   1
-## 51   1
-## 52   1
-## 53   1
-## 54   1
-## 55   1
-## 56   1
-## 57   1
-## 58   1
-## 59   1
-## 60   1
-## 61   1
-## 62   1</code></pre>
+<span class="kw">as_tibble</span>(<span class="kw">data.frame</span>(<span class="dt">max =</span> <span class="kw">cellStats</span>(veg_data, <span class="st">&quot;max&quot;</span>)))</code></pre></div>
+<pre><code>## # A tibble: 62 x 1
+##      max
+##    &lt;dbl&gt;
+##  1     1
+##  2     1
+##  3     1
+##  4     1
+##  5     1
+##  6     1
+##  7     1
+##  8     1
+##  9     1
+## 10     1
+## # … with 52 more rows</code></pre>
 <p>Now, you can try and answer some questions about the vegetation data.</p>
 
 <div class="rmdquestion">

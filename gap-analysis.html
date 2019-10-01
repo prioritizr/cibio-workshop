@@ -24,7 +24,7 @@
 <meta name="author" content="Jeffrey O. Hanson" />
 
 
-<meta name="date" content="2019-09-30" />
+<meta name="date" content="2019-10-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -118,11 +118,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="3" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>3</b> Data</a><ul>
 <li class="chapter" data-level="3.1" data-path="data.html"><a href="data.html#starting-out"><i class="fa fa-check"></i><b>3.1</b> Starting out</a></li>
-<li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#data-import"><i class="fa fa-check"></i><b>3.2</b> Data import</a></li>
-<li class="chapter" data-level="3.3" data-path="data.html"><a href="data.html#planning-unit-data"><i class="fa fa-check"></i><b>3.3</b> Planning unit data</a></li>
-<li class="chapter" data-level="3.4" data-path="data.html"><a href="data.html#vegetation-data"><i class="fa fa-check"></i><b>3.4</b> Vegetation data</a></li>
+<li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#attaching-packages"><i class="fa fa-check"></i><b>3.2</b> Attaching packages</a></li>
+<li class="chapter" data-level="3.3" data-path="data.html"><a href="data.html#data-import"><i class="fa fa-check"></i><b>3.3</b> Data import</a></li>
+<li class="chapter" data-level="3.4" data-path="data.html"><a href="data.html#planning-unit-data"><i class="fa fa-check"></i><b>3.4</b> Planning unit data</a></li>
+<li class="chapter" data-level="3.5" data-path="data.html"><a href="data.html#vegetation-data"><i class="fa fa-check"></i><b>3.5</b> Vegetation data</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="gap-analysis.html"><a href="gap-analysis.html"><i class="fa fa-check"></i><b>4</b> Gap analysis</a></li>
+<li class="chapter" data-level="4" data-path="gap-analysis.html"><a href="gap-analysis.html"><i class="fa fa-check"></i><b>4</b> Gap analysis</a><ul>
+<li class="chapter" data-level="4.1" data-path="gap-analysis.html"><a href="gap-analysis.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="gap-analysis.html"><a href="gap-analysis.html#feature-abundance"><i class="fa fa-check"></i><b>4.2</b> Feature abundance</a></li>
+<li class="chapter" data-level="4.3" data-path="gap-analysis.html"><a href="gap-analysis.html#feature-representation-by-protected-areas"><i class="fa fa-check"></i><b>4.3</b> Feature representation by protected areas</a></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="spatial-prioritizations.html"><a href="spatial-prioritizations.html"><i class="fa fa-check"></i><b>5</b> Spatial prioritizations</a></li>
 <li class="chapter" data-level="6" data-path="irreplaceability.html"><a href="irreplaceability.html"><i class="fa fa-check"></i><b>6</b> Irreplaceability</a></li>
 <li class="chapter" data-level="7" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>7</b> Acknowledgements</a></li>
@@ -145,8 +150,242 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="gap-analysis" class="section level1">
 <h1><span class="header-section-number">Chapter 4</span> Gap analysis</h1>
-<p>TODO.</p>
+<div id="introduction-1" class="section level2">
+<h2><span class="header-section-number">4.1</span> Introduction</h2>
+<p>Before we begin to prioritize areas for protected area establishment, we should first understand how well existing protected areas are conserving our biodiversity features (i.e. native vegetation classes in Tasmania, Australia). This step is critical: we cannot develop plans to improve conservation of biodiversity if we don’t understand how well existing policies are currently conserving biodiversity! To achieve this, we can perform a “gap analysis”. A gap analysis involves calculating how well each of our biodiversity features (i.e. vegetation classes in this exercise) are represented (covered) by protected areas. Next, we compare current representation by protected areas of each feature (e.g. 5% of their spatial distribution covered by protected areas) to a target threshold (e.g. 20% of their spatial distribution covered by protected areas). This target threshold denotes the minimum amount (e.g. minimum proportion of spatial distribution) that we need of each feature to be represented in the protected area system. Ideally, targets should be based on an estimate of how much area or habitat is needed for ecosystem function or species persistence. In practice, targets are generally set using simple rules of thumb (e.g. 10% or 20%), policy (17%; <a href="https://www.cbd.int/sp/targets/rationale/target-11" class="uri">https://www.cbd.int/sp/targets/rationale/target-11</a>) or standard practices <span class="citation">(e.g. setting targets for species based on range-size; Butchart et al. <a href="#ref-r1">2015</a>; Rodrigues et al. <a href="#ref-r2">2004</a>)</span>.</p>
+</div>
+<div id="feature-abundance" class="section level2">
+<h2><span class="header-section-number">4.2</span> Feature abundance</h2>
+<p>Now we will perform some preliminary calculations for the gap analysis. First, we will calculate how much of each vegetation feature occurs inside each planning unit (i.e. the abundance of the features). To achieve this, we will use the <code>problem</code> function to create an empty conservation planning problem that only contains the planning unit and biodiversity data. We will then use the <code>feature_abundances</code> function to calculate the total amount of each feature in each planning unit.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># create prioritizr problem with only the data</span>
+p0 &lt;-<span class="st"> </span><span class="kw">problem</span>(pu_data, veg_data, <span class="dt">cost_column =</span> <span class="st">&quot;cost&quot;</span>)
 
+<span class="co"># print empty problem,</span>
+<span class="co"># we can see that only the cost and feature data are defined</span>
+<span class="kw">print</span>(p0)</code></pre></div>
+<pre><code>## Conservation Problem
+##   planning units: SpatialPolygonsDataFrame (1130 units)
+##   cost:           min: 0.19249, max: 61.92727
+##   features:       vegetation.1, vegetation.2, vegetation.3, ... (62 features)
+##   objective:      none
+##   targets:        none
+##   decisions:      default
+##   constraints:    &lt;none&gt;
+##   penalties:      &lt;none&gt;
+##   portfolio:      default
+##   solver:         default</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate amount of each feature in each planning unit</span>
+abundance_data &lt;-<span class="st"> </span><span class="kw">feature_abundances</span>(p0)
+
+<span class="co"># print abundance data</span>
+<span class="kw">print</span>(abundance_data)</code></pre></div>
+<pre><code>## # A tibble: 62 x 3
+##    feature       absolute_abundance relative_abundance
+##    &lt;chr&gt;                      &lt;dbl&gt;              &lt;dbl&gt;
+##  1 vegetation.1                  33                  1
+##  2 vegetation.2                 173                  1
+##  3 vegetation.3                  24                  1
+##  4 vegetation.4                  31                  1
+##  5 vegetation.5                  23                  1
+##  6 vegetation.6                  22                  1
+##  7 vegetation.7                  15                  1
+##  8 vegetation.8                  45                  1
+##  9 vegetation.9                 384                  1
+## 10 vegetation.10                 14                  1
+## # … with 52 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># note that only the first ten rows are printed,</span>
+<span class="co"># this is because the abundance_data object is a tibble (i.e. tbl_df) object</span>
+<span class="co"># and not a standard data.frame object</span>
+<span class="kw">print</span>(<span class="kw">class</span>(abundance_data))</code></pre></div>
+<pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># we can print all of the rows in abundance_data like this</span>
+<span class="kw">print</span>(abundance_data, <span class="dt">n =</span> <span class="ot">Inf</span>)</code></pre></div>
+<pre><code>## # A tibble: 62 x 3
+##    feature       absolute_abundance relative_abundance
+##    &lt;chr&gt;                      &lt;dbl&gt;              &lt;dbl&gt;
+##  1 vegetation.1                  33                  1
+##  2 vegetation.2                 173                  1
+##  3 vegetation.3                  24                  1
+##  4 vegetation.4                  31                  1
+##  5 vegetation.5                  23                  1
+##  6 vegetation.6                  22                  1
+##  7 vegetation.7                  15                  1
+##  8 vegetation.8                  45                  1
+##  9 vegetation.9                 384                  1
+## 10 vegetation.10                 14                  1
+## 11 vegetation.11                 39                  1
+## 12 vegetation.12                 26                  1
+## 13 vegetation.13                 20                  1
+## 14 vegetation.14                123                  1
+## 15 vegetation.15                 18                  1
+## 16 vegetation.16                 11                  1
+## 17 vegetation.17                 24                  1
+## 18 vegetation.18                 19                  1
+## 19 vegetation.19                 24                  1
+## 20 vegetation.20                895                  1
+## 21 vegetation.21                258                  1
+## 22 vegetation.22                  8                  1
+## 23 vegetation.23                 10                  1
+## 24 vegetation.24                 21                  1
+## 25 vegetation.25                 13                  1
+## 26 vegetation.26                  9                  1
+## 27 vegetation.27                 15                  1
+## 28 vegetation.28                660                  1
+## 29 vegetation.29                 30                  1
+## 30 vegetation.30                 26                  1
+## 31 vegetation.31                 52                  1
+## 32 vegetation.32                 30                  1
+## 33 vegetation.33                312                  1
+## 34 vegetation.34                 36                  1
+## 35 vegetation.35                173                  1
+## 36 vegetation.36                714                  1
+## 37 vegetation.37                 26                  1
+## 38 vegetation.38                 17                  1
+## 39 vegetation.39                 18                  1
+## 40 vegetation.40                 28                  1
+## 41 vegetation.41                 59                  1
+## 42 vegetation.42                  9                  1
+## 43 vegetation.43                 80                  1
+## 44 vegetation.44                139                  1
+## 45 vegetation.45                 40                  1
+## 46 vegetation.46                 25                  1
+## 47 vegetation.47                 24                  1
+## 48 vegetation.48                224                  1
+## 49 vegetation.49                  4                  1
+## 50 vegetation.50                 41                  1
+## 51 vegetation.51                223                  1
+## 52 vegetation.52                  2                  1
+## 53 vegetation.53                  4                  1
+## 54 vegetation.54                  5                  1
+## 55 vegetation.55                  7                  1
+## 56 vegetation.56                  8                  1
+## 57 vegetation.57                 18                  1
+## 58 vegetation.58                  4                  1
+## 59 vegetation.59                 36                  1
+## 60 vegetation.60                  2                  1
+## 61 vegetation.61                  0                NaN
+## 62 vegetation.62                  1                  1</code></pre>
+<p>The <code>abundance_data</code> object contains three columns. The <code>feature</code> column contains the name of each feature (derived from <code>names(veg_data</code>)), the <code>absolute_abundance</code> column contains the total amount of each feature in all the planning units, and the <code>relative_abundance</code> column contains the total amount of each feature in the planning units expressed as a proportion of the total amount in the underlying raster data. Since all the raster cells containing vegetation overlap with the planning units, all of the values in the <code>relative_abundance</code> column are equal to one (meaning 100%)—except for the 61st feature which has a value on <code>NaN</code> because it does not occur in the study area at all (i.e. all of its raster values are zeros). Now let’s add a new column with the feature abundances expressed in aerial units (i.e. km<sup>2</sup>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># add new column with feature abundances in km^2</span>
+abundance_data<span class="op">$</span>absolute_abundance_km2 &lt;-
+<span class="st">  </span>(abundance_data<span class="op">$</span>absolute_abundance <span class="op">*</span><span class="st"> </span><span class="kw">prod</span>(<span class="kw">res</span>(veg_data))) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">set_units</span>(m<span class="op">^</span><span class="dv">2</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">set_units</span>(km<span class="op">^</span><span class="dv">2</span>)
+
+<span class="co"># print abundance data</span>
+<span class="kw">print</span>(abundance_data)</code></pre></div>
+<pre><code>## # A tibble: 62 x 4
+##    feature       absolute_abundance relative_abundan… absolute_abundance_k…
+##    &lt;chr&gt;                      &lt;dbl&gt;             &lt;dbl&gt;                [km^2]
+##  1 vegetation.1                  33                 1                    33
+##  2 vegetation.2                 173                 1                   173
+##  3 vegetation.3                  24                 1                    24
+##  4 vegetation.4                  31                 1                    31
+##  5 vegetation.5                  23                 1                    23
+##  6 vegetation.6                  22                 1                    22
+##  7 vegetation.7                  15                 1                    15
+##  8 vegetation.8                  45                 1                    45
+##  9 vegetation.9                 384                 1                   384
+## 10 vegetation.10                 14                 1                    14
+## # … with 52 more rows</code></pre>
+<p>Now let’s explore the abundance data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the average abundance of the features</span>
+<span class="kw">mean</span>(abundance_data<span class="op">$</span>absolute_abundance_km2)</code></pre></div>
+<pre><code>## 86.67742 [km^2]</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot histogram of the features&#39; abundances</span>
+<span class="kw">hist</span>(abundance_data<span class="op">$</span>absolute_abundance_km2, <span class="dt">main =</span> <span class="st">&quot;Feature abundances&quot;</span>)</code></pre></div>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-27-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># find the abundance of the feature with the largest abundance</span>
+<span class="kw">max</span>(abundance_data<span class="op">$</span>absolute_abundance_km2)</code></pre></div>
+<pre><code>## 895 [km^2]</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># find the name of the feature with the largest abundance</span>
+abundance_data<span class="op">$</span>feature[<span class="kw">which.max</span>(abundance_data<span class="op">$</span>absolute_abundance_km2)]</code></pre></div>
+<pre><code>## [1] &quot;vegetation.20&quot;</code></pre>
+<p>Now, try to answer the following questions.</p>
+
+<div class="rmdquestion">
+<ol style="list-style-type: decimal">
+<li>What is the median abundance of the features (hint: <code>median</code>)?</li>
+<li>What the abundance of the feature with smallest abundance?</li>
+<li>What the name of the feature with smallest abundance?</li>
+<li>What is the total abundance of all features in the planning units summed together?</li>
+<li>How many features have a total abundance greater than 100 km^2 (hint: <code>sum(abundance_values &gt; set_units(threshold_value, km^2)</code>)?</li>
+</ol>
+</div>
+
+</div>
+<div id="feature-representation-by-protected-areas" class="section level2">
+<h2><span class="header-section-number">4.3</span> Feature representation by protected areas</h2>
+<p>After calculating the total amount of each feature in the planning units (i.e. the features’ abundances), we will now calculate the amount of each feature in the planning units that are covered by protected areas (i.e. feature representation by protected areas). We can complete this task using the <code>feature_representation</code> function. This function requires (i) a conservation problem object with the planning unit and biodiversity data and also (ii) an object representing a solution to the problem (i.e an object in the same format as the planning unit data with zeros and ones indicating if the planning units are contained in the prioritization problem or not). Since we already have our data in this format, we can use the code below.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate feature representation by protected areas</span>
+repr_data &lt;-<span class="st"> </span><span class="kw">feature_representation</span>(p0, pu_data[, <span class="st">&quot;locked_in&quot;</span>])
+
+<span class="co"># print feature representation data</span>
+<span class="kw">print</span>(repr_data)</code></pre></div>
+<pre><code>## # A tibble: 62 x 3
+##    feature       absolute_held relative_held
+##    &lt;chr&gt;                 &lt;dbl&gt;         &lt;dbl&gt;
+##  1 vegetation.1              1        0.0303
+##  2 vegetation.2             14        0.0809
+##  3 vegetation.3              2        0.0833
+##  4 vegetation.4              1        0.0323
+##  5 vegetation.5              0        0     
+##  6 vegetation.6              0        0     
+##  7 vegetation.7              0        0     
+##  8 vegetation.8              6        0.133 
+##  9 vegetation.9             20        0.0521
+## 10 vegetation.10             0        0     
+## # … with 52 more rows</code></pre>
+<p>Similar to the abundance data before, the <code>repr_data</code> object contains three columns. The <code>feature</code> column contains the name of each feature, the <code>absolute_held</code> column shows the total amount of each feature held in the solution (i.e. the planning units covered by protected areas), and the <code>relative_held</code> column shows the proportion of each feature held in the solution (i.e. the proportion of each feature’s spatial distribution held in protected areas). Since the <code>absolute_held</code> values correspond to the number of grid cells in the <code>veg_data</code> object with overlap with protected areas, let’s convert them to aerial-based units (i.e. km<sup>2</sup>) so we can report them.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># add new column with the areas represented in km^2</span>
+repr_data<span class="op">$</span>absolute_held_km2 &lt;-
+<span class="st">  </span>(repr_data<span class="op">$</span>absolute_held <span class="op">*</span><span class="st"> </span><span class="kw">prod</span>(<span class="kw">res</span>(veg_data))) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">set_units</span>(m<span class="op">^</span><span class="dv">2</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">set_units</span>(km<span class="op">^</span><span class="dv">2</span>)
+
+<span class="co"># print representation data</span>
+<span class="kw">print</span>(repr_data)</code></pre></div>
+<pre><code>## # A tibble: 62 x 4
+##    feature       absolute_held relative_held absolute_held_km2
+##    &lt;chr&gt;                 &lt;dbl&gt;         &lt;dbl&gt;            [km^2]
+##  1 vegetation.1              1        0.0303                 1
+##  2 vegetation.2             14        0.0809                14
+##  3 vegetation.3              2        0.0833                 2
+##  4 vegetation.4              1        0.0323                 1
+##  5 vegetation.5              0        0                      0
+##  6 vegetation.6              0        0                      0
+##  7 vegetation.7              0        0                      0
+##  8 vegetation.8              6        0.133                  6
+##  9 vegetation.9             20        0.0521                20
+## 10 vegetation.10             0        0                      0
+## # … with 52 more rows</code></pre>
+<p>Now let’s investigate how well the species are represented.</p>
+
+<div class="rmdquestion">
+<ol style="list-style-type: decimal">
+<li>What is the average proportion of the features held in protected areas (hint: <code>mean(x, na.rm = TRUE)</code>?</li>
+<li>What is the average amount of land in km<sup>2</sup> that features are represented by protected areas?</li>
+<li>What is the name of the feature with the greatest proportionate coverage by protected areas?</li>
+<li>What is the name of the feature with the greatest aerial coverage by protected areas?</li>
+<li>Do questions two and three have the same answer? If not, why could this be?</li>
+<li>Is there a relationship between the total abundance of a feature and how well it is represented by protected areas (hint: <code>plot(abundances ~ relative_held)</code>)?</li>
+<li>Are any features entirely missing from protected areas (hint: <code>sum(x == 0)</code>)?</li>
+<li>If we set a target of 10% coverage by protected areas, how many features fail to meet this target (hint: <code>sum(relative_held &gt;= target)</code>)?</li>
+<li>If we set a target of 20% coverage by protected areas, how many features fail to meet this target?</li>
+</ol>
+</div>
+
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-r1">
+<p>Butchart, Stuart H.M., Martin Clarke, Robert J. Smith, Rachel E. Sykes, Jörn P.W. Scharlemann, Mike Harfoot, Graeme M. Buchanan, et al. 2015. “Shortfalls and Solutions for Meeting National and Global Conservation Area Targets.” <em>Conservation Letters</em> 8 (5). Wiley Online Library: 329–37.</p>
+</div>
+<div id="ref-r2">
+<p>Rodrigues, Ana S. L., H. Resit Akçakaya, Sandy J. Andelman, Mohamed I. Bakarr, Luigi Boitani, Thomas M. Brooks, Janice S. Chanson, et al. 2004. “Global Gap Analysis: Priority Regions for Expanding the Global Protected-Area Network.” <em>BioScience</em> 54 (12). American Institute of Biological Sciences: 1092–1100.</p>
+</div>
 </div>
             </section>
 

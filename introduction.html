@@ -24,7 +24,7 @@
 <meta name="author" content="Jeffrey O. Hanson" />
 
 
-<meta name="date" content="2019-09-30" />
+<meta name="date" content="2019-10-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -118,11 +118,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="3" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>3</b> Data</a><ul>
 <li class="chapter" data-level="3.1" data-path="data.html"><a href="data.html#starting-out"><i class="fa fa-check"></i><b>3.1</b> Starting out</a></li>
-<li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#data-import"><i class="fa fa-check"></i><b>3.2</b> Data import</a></li>
-<li class="chapter" data-level="3.3" data-path="data.html"><a href="data.html#planning-unit-data"><i class="fa fa-check"></i><b>3.3</b> Planning unit data</a></li>
-<li class="chapter" data-level="3.4" data-path="data.html"><a href="data.html#vegetation-data"><i class="fa fa-check"></i><b>3.4</b> Vegetation data</a></li>
+<li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#attaching-packages"><i class="fa fa-check"></i><b>3.2</b> Attaching packages</a></li>
+<li class="chapter" data-level="3.3" data-path="data.html"><a href="data.html#data-import"><i class="fa fa-check"></i><b>3.3</b> Data import</a></li>
+<li class="chapter" data-level="3.4" data-path="data.html"><a href="data.html#planning-unit-data"><i class="fa fa-check"></i><b>3.4</b> Planning unit data</a></li>
+<li class="chapter" data-level="3.5" data-path="data.html"><a href="data.html#vegetation-data"><i class="fa fa-check"></i><b>3.5</b> Vegetation data</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="gap-analysis.html"><a href="gap-analysis.html"><i class="fa fa-check"></i><b>4</b> Gap analysis</a></li>
+<li class="chapter" data-level="4" data-path="gap-analysis.html"><a href="gap-analysis.html"><i class="fa fa-check"></i><b>4</b> Gap analysis</a><ul>
+<li class="chapter" data-level="4.1" data-path="gap-analysis.html"><a href="gap-analysis.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="gap-analysis.html"><a href="gap-analysis.html#feature-abundance"><i class="fa fa-check"></i><b>4.2</b> Feature abundance</a></li>
+<li class="chapter" data-level="4.3" data-path="gap-analysis.html"><a href="gap-analysis.html#feature-representation-by-protected-areas"><i class="fa fa-check"></i><b>4.3</b> Feature representation by protected areas</a></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="spatial-prioritizations.html"><a href="spatial-prioritizations.html"><i class="fa fa-check"></i><b>5</b> Spatial prioritizations</a></li>
 <li class="chapter" data-level="6" data-path="irreplaceability.html"><a href="irreplaceability.html"><i class="fa fa-check"></i><b>6</b> Irreplaceability</a></li>
 <li class="chapter" data-level="7" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>7</b> Acknowledgements</a></li>
@@ -166,8 +171,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="r-packages" class="section level3">
 <h3><span class="header-section-number">2.2.3</span> R packages</h3>
 <p>An R package is a collection of R code and documentation that can be installed to enhance the standard R environment with additional functionality. Currently, there are over ten thousand R packages available on CRAN. Each of these R packages (mostly) aim to serve a specific need, such as <a href="https://cran.r-project.org/web/packages/readxl/index.html">reading Excel spreadsheets</a>, <a href="https://cran.r-project.org/web/packages/MODIStsp/index.html">downloading satellite imagery data</a>, <a href="https://cran.r-project.org/web/packages/wdpar/index.html">downloading and cleaning protected area data</a>, or <a href="https://cran.r-project.org/web/packages/ENMeval/index.html">fitting environmental niche models</a>. In fact, R has such a diverse ecosystem of R packages, that the question is (generally) not “can I use R to do …?” but “what R package can I use to …?”. During this workshop, we will use various R packages. To install these R packages, please run enter the code below in the <em>Console</em> part of the RStudio interface and press enter. Please note that you will require an internet connection to install the packages and the installation process may take a while to complete.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">&quot;sf&quot;</span>, <span class="st">&quot;tidyverse&quot;</span>, <span class="st">&quot;sp&quot;</span>, <span class="st">&quot;rgeos&quot;</span>, <span class="st">&quot;rgdal&quot;</span>, <span class="st">&quot;raster&quot;</span>,
-                   <span class="st">&quot;prioritizr&quot;</span>, <span class="st">&quot;prioritizrdata&quot;</span> <span class="st">&quot;Rsymphony&quot;</span>, <span class="st">&quot;mapview&quot;</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">&quot;sf&quot;</span>, <span class="st">&quot;tidyverse&quot;</span>, <span class="st">&quot;sp&quot;</span>, <span class="st">&quot;rgeos&quot;</span>, <span class="st">&quot;rgdal&quot;</span>, <span class="st">&quot;raster&quot;</span>, <span class="st">&quot;units&quot;</span>,
+                   <span class="st">&quot;prioritizr&quot;</span>, <span class="st">&quot;prioritizrdata&quot;</span> <span class="st">&quot;Rsymphony&quot;</span>, <span class="st">&quot;mapview&quot;</span>,
+                   <span class="st">&quot;assertthat&quot;</span>, <span class="st">&quot;velox&quot;</span>))</code></pre></div>
 </div>
 </div>
 <div id="further-reading" class="section level2">
