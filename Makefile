@@ -1,9 +1,10 @@
-all: clean data pdf site
+all: clean data test pdf site
 
 clean:
 	@rm -rf _book
 	@rm -rf _bookdown_files
 	@rm -f data.zip
+	@rm -rf data
 
 clean_temp:
 	@rm -f prioritizr-workshop-manual.Rmd
@@ -29,4 +30,7 @@ student_pdf: clean_temp
 	Rscript -e "bookdown::render_book('index.Rmd', 'bookdown::pdf_book')"
 	rm -f prioritizr-workshop-manual.log
 
-.PHONY: data clean website site data
+test:
+	R -e "source('verify-solutions.R')"
+
+.PHONY: data clean test website site data

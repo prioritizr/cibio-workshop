@@ -165,10 +165,10 @@ Now, you can try and answer some questions about the planning unit data.
 4. `mean(pu_data$locked_in)`
 5. `sum(pu_data$locked_out)`
 6. `mean(pu_data$locked_out)`
-7. `min(c(pu_data$locked_in, pu_data$locked_out)) == 0` \newline
-      `max(c(pu_data$locked_in, pu_data$locked_out)) == 1`
+7. `assert_that(min(c(pu_data$locked_in, pu_data$locked_out)) == 0)` \newline
+      `assert_that(max(c(pu_data$locked_in, pu_data$locked_out)) == 1)`
 8. `all(is.finite(pu_data$cost))`
-9. `sum(duplicated(x)) == 0`
+9. `assert_that(sum(duplicated(x)) == 0)`
 10. Yes, the eastern side of Tasmania is generally much cheaper than the western side.
 11. Yes, most planning units covered by protected areas are located in the south-western side of Tasmania.
 
@@ -262,7 +262,7 @@ Now, you can try and answer some questions about the vegetation data.
 ```{block2, type="rmdanswer", include = show_answers}
 1. Central-north Tasmania
 2. `nrow(veg_data[[23]])`
-3. `veg_data[[3]][400])`
+3. `veg_data[[3]][400]`
 4. `ncell(veg_data[[56]])`
 5. `cellStats(veg_data[[12]], "mean")`
 6. `names(veg_data)[which.max(cellStats(veg_data, "sum"))]`
