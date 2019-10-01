@@ -32,5 +32,6 @@ student_pdf: clean_temp
 
 test:
 	R -e "source('verify-solutions.R')"
+	rm -f Rplots.pdf
 
 .PHONY: data clean test website site data
