@@ -127,7 +127,7 @@ Now let's investigate how well the species are represented.
 4. `repr_data$feature[which.max(repr_data$absolute_held)]`
 5. No, just because a vegetation class is widespread does not necessarily mean that it has the greatest overlap with protected areas. In fact, due to biases in the establishment of protected areas this can often be the case.
 6. Yes, the largest protected areas tend to have the great representation (broadly speaking). \newline
-    See `plot(x = abundance_data$absolute_held, y = repr_data$relative_held)`
+    See `plot(x = abundance_data$absolute_abundance, y = repr_data$relative_held)`
 7. `sum(repr_data$absolute_held < 1e-10)` (floating point errors)
 8. `sum(repr_data$relative_held > 0.1)`
 9. `sum(repr_data$relative_held > 0.2)`
