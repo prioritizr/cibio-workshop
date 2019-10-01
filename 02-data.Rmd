@@ -16,7 +16,7 @@ knitr::include_graphics("images/rstudio-source.png")
 
 You can also make notes and write your answers to the workshop questions inside the _Source_ panel. When writing notes and answers, add a `#` symbol so that the text following the `#` symbol is treated as a comment and not code. This means that you don't have to worry about highlighting specific parts of the script to avoid errors.
 
-```{r}
+```{r "data-1"}
 # this is a comment and R will ignore this text if you run it
 # R will run the code below because it does not start with a # symbol
 print("this is not a comment")
@@ -31,7 +31,7 @@ print("this is also not a comment") # but this is a comment
 
 Now we will setup our R session for the workshop. Specifically, enter the following R code to attach the R packages used in this workshop.
 
-```{r, message = FALSE}
+```{r "data-2", message = FALSE}
 # load packages
 library(tidyverse)
 library(prioritizr)
@@ -48,17 +48,17 @@ You should have already downloaded the data for the prioritizr module of this wo
 
 Now navigate to the folder where you unzipped the data and select _Open_. You can verify that you have correctly set the working directory using the following R code. You should see the output `TRUE` in the _Console_ panel.
 
-```{r, include = FALSE}
+```{r "data-3", include = FALSE}
 if (!file.exists("data/pu.shp"))
   unzip("data.zip")
 setwd("data")
 ```
 
-```{r}
+```{r "data-4"}
 file.exists("data/pu.shp")
 ```
 
-```{r, include = FALSE}
+```{r "data-5", include = FALSE}
 setwd("..")
 ```
 
@@ -66,7 +66,7 @@ setwd("..")
 
 Now that we have downloaded the dataset, we will need to import it into our R session. Specifically, this data was obtained from the "Introduction to Marxan" course and was originally a subset of a larger spatial prioritization project performed under contract to Australia’s Department of Environment and Water Resources. It contains vector-based planning unit data (`pu.shp`)and the raster-based data describing the spatial distributions of 62 vegetation classes (`vegetation.tif`) in Tasmania, Australia. We can import the data into our R session using the following code.
 
-```{r}
+```{r "data-6"}
 # import planning unit data
 pu_data <- readOGR("data/pu.shp")
 
@@ -84,7 +84,7 @@ The planning unit data contains spatial data describing the geometry for each pl
 * `locked_in`: binary values (i.e. one or zero) indicating if planning units are covered by protected areas or not.
 * `locked_out`: binary values (i.e. one or zero) indicating if planning units cannot be managed as a protected area because they contain too much anthropologically altered land.
 
-```{r}
+```{r "data-7"}
 # print a short summary of the data
 print(pu_data)
 
@@ -92,12 +92,12 @@ print(pu_data)
 plot(pu_data)
 ```
 
-```{r, eval = FALSE}
+```{r "data-8", eval = FALSE}
 # plot an interactive map of the planning unit data
 mapview(pu_data)
 ```
 
-```{r}
+```{r "data-9"}
 # print the structure of object
 str(pu_data, max.level = 2)
 
@@ -135,7 +135,7 @@ mean(pu_data$cost)
 spplot(pu_data, "cost")
 ```
 
-```{r, eval = FALSE}
+```{r "data-10", eval = FALSE}
 # plot an interactive map of the planning unit cost data
 mapview(pu_data, zcol = "cost")
 ```
@@ -183,7 +183,7 @@ The vegetation data describes the spatial distribution of 62 vegetation classes 
 
 Let's explore the vegetation data.
 
-```{r}
+```{r "data-11"}
 # print a short summary of the data
 print(veg_data)
 
@@ -191,12 +191,12 @@ print(veg_data)
 plot(veg_data[[36]])
 ```
 
-```{r, eval = FALSE}
+```{r "data-12", eval = FALSE}
 # plot an interactive map of the 36th vegetation class
 mapview(veg_data[[36]])
 ```
 
-```{r}
+```{r "data-13"}
 # print number of rows in the data
 nrow(veg_data)
 
