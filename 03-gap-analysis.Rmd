@@ -15,7 +15,9 @@ p0 <- problem(pu_data, veg_data, cost_column = "cost")
 # print empty problem,
 # we can see that only the cost and feature data are defined
 print(p0)
+```
 
+```{r "gap-analysis-1-1"}
 # calculate amount of each feature in each planning unit
 abundance_data <- feature_abundances(p0)
 
