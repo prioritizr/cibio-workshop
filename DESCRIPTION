@@ -21,3 +21,4 @@ Imports:
 Remotes:
   rstudio/bookdown,
   prioritizr/prioritizr,
+  bioc::release/Biobase
