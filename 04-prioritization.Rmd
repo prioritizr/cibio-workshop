@@ -30,9 +30,11 @@ s1 <- solve(p1)
 # indicating if a planning unit was selected as a (1) priority area or (0) not
 print(s1)
 
-# calculate total cost of the prioritization,
-# i.e. number of selected planning units in the solution
+# calculate number of planning units selected in the prioritization
 sum(s1$solution_1)
+
+# calculate total cost of the prioritization
+sum(s1$solution_1 * s1$cost)
 
 # plot solution
 spplot(s1, "solution_1", col = c("white", "darkgreen"), main = "s1")
@@ -77,18 +79,17 @@ print(p2)
 s2 <- solve(p2)
 
 # plot solution
-spplot(s2, "solution_2", col = c("white", "darkgreen"), main = "s2")
+spplot(s2, "solution_1", col = c("white", "darkgreen"), main = "s2")
 ```
 
-Next, let's lock out areas with high anthropogenic land-use.
+Let's pretend we talked to an expert on the vegetation communities in our study system and they recommended that a 20% target was needed. So, now let's set the targets to 20% of their total distribution in the study area.
 
 ```{r}
 # make prioritization problem
 p3 <- problem(pu_data, veg_data, cost_column = "cost") %>%
       add_min_set_objective() %>%
-      add_relative_targets(0.05) %>%
+      add_relative_targets(0.2) %>%
       add_locked_in_constraints("locked_in") %>%
-      add_locked_out_constraints("locked_out") %>%
       add_binary_decisions() %>%
       add_lpsymphony_solver(verbose = FALSE)
 
@@ -99,10 +100,10 @@ print(p3)
 s3 <- solve(p3)
 
 # plot solution
-spplot(s3, "solution_3", col = c("white", "darkgreen"), main = "s3")
+spplot(s3, "solution_1", col = c("white", "darkgreen"), main = "s3")
 ```
 
-Finally, let's increase the targets for each vegetation class to 20% of their total extent in the study area.
+Next, let's lock out highly degraded areas.
 
 ```{r}
 # make prioritization problem
@@ -124,14 +125,50 @@ s4 <- solve(p4)
 spplot(s4, "solution_4", col = c("white", "darkgreen"), main = "s4")
 ```
 
-Now, let's explore some of these solutions.
+Now, let's compare the solutions.
 
 ```{block2, type="rmdquestion"}
-1. TODO.
+1. What is the cost of the planning units selected in `s2`, `s3`, and `s4`?
+2. How many planning units are in `s2`, `s3`, and `s4`?
+3. Do the solutions with more planning units have a greater cost? Why or why not?
+4. Why does the first solution (`s1`) cost less than the second solution with protected areas locked into the solution (`s2`)?
+5. Why does the third solution (`s3`) cost less than the fourth solution solution with highly degraded areas locked out (`s4`)?
+6. What happens if you specify targets that exceed the total amount of vegetation in the study area? You can do this by rerunning the code to make `p4` with `add_absolute_targets(1000)` instead of `add_relative_targets(0.2)` and generating a new solution?
 
 ```
 
 ```{block2, type="rmdanswer", include = show_answers}
-1. TODO.
+1. `sum(s2$cost * s2$solution_1)` \newline
+   `sum(s3$cost * s3$solution_1)` \newline
+   `sum(s4$cost * s4$solution_1)`
+2. `sum(s2$solution_1)` \newline
+   `sum(s3$solution_1)` \newline
+   `sum(s4$solution_1)`
+3. No, just because a solution a solution has more planning units does not mean that it will cost less.
+4. This is because the planning units covered by existing protected areas have a non-zero cost and locking in these planning units introduces inefficiencies into the solution. This is very common in real-world conservation prioritizations because existing protected areas are often in places that do little to benefit biodiversity [@r3].
+5. This is because some of the planning units that are highly degraded -- based on just the planning unit costs and vegetation data -- provide cost-efficient opportunities for meeting the targets and excluding them from the reserve selection process means that other more costly planning units are needed to meet the targets.
+6. We get an error message stating the the problem is infeasible because there is no valid solution---even if we selected all the planning units the study area we would still not meet the targets.
 
 ```
+
+# Budget limited prioritizations
+
+The Conventional on Biological Diversity (https://www.cbd.int) mandates that signatories -- including Australia -- should have at least 17% of their land and 10% of their oceans covered by protected areas (or other effective area-based conservation measures) by 2020. But is 17% coverage enough to adequately conserve biodiversity? Well, let's calculate the percentage of land secured in priority areas.
+
+```{r}
+# calculate area for each planning unit
+pu_data$area <- gArea(pu_data, byid = TRUE)
+
+
+# calculate proportion of land covered by existing protected areas
+mean(pu_data$locked_in * pu_data$area)
+
+# calculate proportion of land covered by prioritization
+mean(s4$solution_1 * pu_data$area)
+```
+
+We can see that the answer is no. If protected areas were established to expand the existing protected area system in the most cost-effective places to ensure adequate representation of the 62 vegetation communities, then we would need at least `r mean(s4$solution_1 * pu_data$area) * 100`% of Tasmania covered by protected areas. So, one question could be where should the Australian government establish new protected areas to increase representation of vegetation 
+
+ what if the Australian government
+
+ If the Australian government wanted to expand the protected area system to increase protected area coverage of as many vegetation communities as possible without exceeding the 17% threshold,
