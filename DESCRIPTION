@@ -16,7 +16,8 @@ Imports:
   prioritizrdata,
   mapview,
   units,
-  velox
+  velox,
+  lpsymphony
 Remotes:
   rstudio/bookdown,
   prioritizr/prioritizr,

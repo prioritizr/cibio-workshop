@@ -31,7 +31,8 @@ An R package is a collection of R code and documentation that can be installed t
 ```{r, eval = FALSE}
 install.packages(c("sf", "tidyverse", "sp", "rgeos", "rgdal", "raster", "units",
                    "prioritizr", "prioritizrdata" "Rsymphony", "mapview",
-                   "assertthat", "velox"))
+                   "assertthat", "velox", "remotes"))
+remotes::install_bioc("lpsymphony")
 ```
 
 ## Further reading {#further-reading}
