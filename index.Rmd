@@ -23,7 +23,7 @@ description: "Manual for the prioritizr module of the Spatial Conservation Prior
 cat("<img src=\"cover.png\" width=\"250\" height=\"250\" alt=\"Cover image\" align=\"right\" style=\"margin: 0 1em 0 1em\" />\n")
 ```
 
-Here you will find the manual for the prioritizr module of the [_Spatial Conservation Prioritization: Concepts, Methods and Application_ workshop](https://cibio.up.pt/workshops--courses/details/advanced-course-spatial-conservation-prioritization-) held at CIBIO-InBIO, Vairão, Portugal. **Before you arrive at the workshop, you should make sure that you have correctly [set up your computer for the workshop][Setting up your computer] and you have [downloaded the data from here](https://github.com/prioritizr/cibio-workshop/raw/master/data.zip). We cannot guarantee a reliable internet connection during the workshop, and so you may be unable to complete the workshop if you have not set up your computer beforehand.**
+Here you will find the manual for the prioritizr module of the [_Spatial Conservation Prioritization: Concepts, Methods and Application_ workshop](https://cibio.up.pt/workshops--courses/details/advanced-course-spatial-conservation-prioritization-) held at CIBIO-InBIO, Vairão, Portugal. **Before you arrive at the workshop, you should make sure that you have correctly [set up your computer for the workshop][Setting up your computer] and you have [downloaded the data from here](https://github.com/prioritizr/cibio-workshop/raw/master/data.zip). We cannot guarantee a reliable Internet connection during the workshop, and so you may be unable to complete the workshop if you have not set up your computer beforehand.**
 
 ```{r, include = FALSE}
 # set knitr options
