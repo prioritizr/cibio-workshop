@@ -70,6 +70,10 @@ Now that we have downloaded the dataset, we will need to import it into our R se
 # import planning unit data
 pu_data <- readOGR("data/pu.shp")
 
+# format planning unit data
+pu_data$locked_in <- as.logical(pu_data$locked_in)
+pu_data$locked_out <- as.logical(pu_data$locked_out)
+
 # import vegetation data
 veg_data <- stack("data/vegetation.tif")
 ```
@@ -81,8 +85,8 @@ The planning unit data contains spatial data describing the geometry for each pl
 * `id`: unique identifiers for each planning unit
 * `cost`: acquisition cost values for each planning unit
 * `status`: status information for each planning unit (only relevant with Marxan)
-* `locked_in`: binary values (i.e. one or zero) indicating if planning units are covered by protected areas or not.
-* `locked_out`: binary values (i.e. one or zero) indicating if planning units cannot be managed as a protected area because they contain too much anthropologically altered land.
+* `locked_in`: logical values (i.e. `TRUE`/`FALSE`) indicating if planning units are covered by protected areas or not.
+* `locked_out`: logical values (i.e. `TRUE`/`FALSE`) indicating if planning units cannot be managed as a protected area because they contain too much anthropologically altered land.
 
 ```{r}
 # print a short summary of the data
