@@ -1,3 +1,137 @@
 # Spatial prioritizations {#spatial-prioritizations}
 
-TODO.
+## Introduction
+
+Here we will develop prioritizations to identify priority areas for protected area establishment. Its worth noting that prioritizr, Marxan, and Zonation are all decision _support_ tools. This means that these tools are all designed to _help_ you make decisions---they can't make decisions for you.
+
+## Starting out simple
+
+To start things off, let's keep things simple. Let's create a prioritization using the minimum set problem formulation of the reserve selection problem. This problem will have 5% targets for each vegetation class. We will use the lpsymphony R package to solve the problem and rely on default settings.
+
+```{r}
+# print planning unit data
+print(pu_data)
+
+# make prioritization problem
+p1 <- problem(pu_data, veg_data, cost_column = "cost") %>%
+      add_min_set_objective() %>%
+      add_relative_targets(0.05) %>% # 5% representation targets
+      add_binary_decisions() %>%
+      add_lpsymphony_solver(verbose = FALSE)
+
+# print problem
+print(p1)
+
+# solve problem
+s1 <- solve(p1)
+
+# print solution,
+# the solution_1 column contains the solution values with binary values
+# indicating if a planning unit was selected as a (1) priority area or (0) not
+print(s1)
+
+# calculate total cost of the prioritization,
+# i.e. number of selected planning units in the solution
+sum(s1$solution_1)
+
+# plot solution
+spplot(s1, "solution_1", col = c("white", "darkgreen"), main = "s1")
+```
+
+Now let's examine the solution.
+
+```{block2, type="rmdquestion"}
+1. How many planing units were selected in the prioritization? What proportion of planning units were selected in the prioritization?
+2. Is there a pattern in the spatial distribution of the priority areas?
+3. Can you verify that all of the targets were met in the prioritization (hint: `feature_representation(p1, s1[, "solution_1"])`)?
+4. What are limitations of this prioritization?
+
+```
+
+```{block2, type="rmdanswer", include = show_answers}
+1. `sum(s1$solution_1)` \newline
+   `mean(s1$solution_1)`
+2. Yes, the planning units are generally spread out across most of the study area and they are not biased towards specific areas.
+3. `all(feature_representation(p1, s1[, "solution_1"])$relative_held >= 0.2)`
+4. This prioritization (i) does not account for existing protected areas, (ii) does not account for the spatial fragmentation of priority areas, or (iii) is not likely conserve enough habitat for each vegetation type (i.e. 5% is pretty small).
+
+```
+
+## Adding complexity
+
+Our first prioritization suffers many limitations, so let's add additional constraints to the problem to make it more useful. First, let's lock in planing units that are already inside protected areas.
+
+```{r}
+# make prioritization problem
+p2 <- problem(pu_data, veg_data, cost_column = "cost") %>%
+      add_min_set_objective() %>%
+      add_relative_targets(0.05) %>%
+      add_locked_in_constraints("locked_in") %>%
+      add_binary_decisions() %>%
+      add_lpsymphony_solver(verbose = FALSE)
+
+# print problem
+print(p2)
+
+# solve problem
+s2 <- solve(p2)
+
+# plot solution
+spplot(s2, "solution_2", col = c("white", "darkgreen"), main = "s2")
+```
+
+Next, let's lock out areas with high anthropogenic land-use.
+
+```{r}
+# make prioritization problem
+p3 <- problem(pu_data, veg_data, cost_column = "cost") %>%
+      add_min_set_objective() %>%
+      add_relative_targets(0.05) %>%
+      add_locked_in_constraints("locked_in") %>%
+      add_locked_out_constraints("locked_out") %>%
+      add_binary_decisions() %>%
+      add_lpsymphony_solver(verbose = FALSE)
+
+# print problem
+print(p3)
+
+# solve problem
+s3 <- solve(p3)
+
+# plot solution
+spplot(s3, "solution_3", col = c("white", "darkgreen"), main = "s3")
+```
+
+Finally, let's increase the targets for each vegetation class to 20% of their total extent in the study area.
+
+```{r}
+# make prioritization problem
+p4 <- problem(pu_data, veg_data, cost_column = "cost") %>%
+      add_min_set_objective() %>%
+      add_relative_targets(0.05) %>%
+      add_locked_in_constraints("locked_in") %>%
+      add_locked_out_constraints("locked_out") %>%
+      add_binary_decisions() %>%
+      add_lpsymphony_solver(verbose = FALSE)
+
+# print problem
+print(p4)
+
+# solve problem
+s4 <- solve(p4)
+
+# plot solution
+spplot(s4, "solution_4", col = c("white", "darkgreen"), main = "s4")
+```
+
+Now, let's explore some of these solutions.
+
+```{block2, type="rmdquestion"}
+1. TODO.
+
+```
+
+```{block2, type="rmdanswer", include = show_answers}
+1. TODO.
+
+```
