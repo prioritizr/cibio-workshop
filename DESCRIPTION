@@ -2,6 +2,7 @@ Package: placeholder
 Type: Book
 Title: Prioritizr Workshop Manual
 Version: 0.0.1
+biocViews:
 Imports:
   bookdown,
   tidyverse,
@@ -20,5 +21,4 @@ Imports:
   lpsymphony
 Remotes:
   rstudio/bookdown,
-  prioritizr/prioritizr,
-  bioc::release/Biobase
+  prioritizr/prioritizr
