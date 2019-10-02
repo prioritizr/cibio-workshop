@@ -12,7 +12,7 @@ clean_temp:
 
 data:
 	mkdir -p data
-	Rscript -e "library(prioritizrdata);library(raster);data(tas_pu,tas_features);rgdal::writeOGR(tas_pu,'data','pu',overwrite=TRUE,driver='ESRI Shapefile');writeRaster(tas_features,'data/vegetation.tif',NAflag=-9999)"
+	Rscript -e "library(prioritizrdata);library(raster);data(tas_pu,tas_features);tas_pu[['locked_out']]<-as.numeric((tas_pu[['cost']] > quantile(tas_pu[['cost']], 0.95)[[1]]) & !tas_pu[['locked_in']]); rgdal::writeOGR(tas_pu,'data','pu',overwrite=TRUE,driver='ESRI Shapefile');writeRaster(tas_features,'data/vegetation.tif',overwrite=TRUE,NAflag=-9999)"
 	zip -r data.zip data
 	rm -rf data
 
