@@ -64,8 +64,8 @@ Now, try to answer the following questions.
 
 ```{block2, type="rmdquestion"}
 1. What is the median abundance of the features (hint: `median`)?
-2. What the abundance of the feature with smallest abundance?
-3. What the name of the feature with smallest abundance?
+2. What is the abundance of the feature with smallest abundance?
+3. What is the name of the feature with smallest abundance?
 4. What is the total abundance of all features in the planning units summed together?
 5. How many features have a total abundance greater than 100 km^2 (hint: `sum(abundance_values > set_units(threshold_value, km^2)`)?
 

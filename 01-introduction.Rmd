@@ -2,9 +2,9 @@
 
 ## Overview {#overview}
 
-The aim of this workshop is to help you get started with using the prioritizr R package for systematic conservation planning. It is not designed to give you a comprehensive overview and you will not become an expert after completing this workshop. Instead, we want to help you understand the core principles of conservation planning and guide you through some of the common tasks involved with generating prioritizations. Phrased provocatively, we want to give you the knowledge base and confidence needed to start applying systematic conservation planning to your own work.
+The aim of this workshop is to help you get started with using the prioritizr R package for systematic conservation planning. It is not designed to give you a comprehensive overview and you will not become an expert after completing this workshop. Instead, we want to help you understand the core principles of conservation planning and guide you through some of the common tasks involved with developing prioritizations. In other words, we want to give you the knowledge base and confidence needed to start applying systematic conservation planning to your own work.
 
-You are not alone in this workshop. If you are having trouble, please put your hand up and one of the instructors will help you as soon as they can. You can also ask the people sitting next to you for help too. If you are having trouble with using the prioritizr R package, please consult the package website: https://prioritizr.net. It has plenty of examples and tutorials. Finally, please note that the first thing an instructor will ask you will (probably) be "what have you tried so far?". We can't help you if you haven't tried anything.
+You are not alone in this workshop. If you are having trouble, please put your hand up and one of the instructors will help you as soon as they can. You can also ask the people sitting next to you for help too. **Most importantly, the code needed to answer the questions in this workshop are almost always located in the same section as the question. So if you are stuck, try rereading the example code and see if you can modify it to answer the question.** Please note that the first thing an instructor will ask you will (probably) be "what have you tried so far?". We can't help you if you haven't tried anything.
 
 ## Setting up your computer {#setup}
 
