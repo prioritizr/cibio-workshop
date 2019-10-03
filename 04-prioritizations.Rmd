@@ -2,11 +2,11 @@
 
 ## Introduction
 
-Here we will develop prioritizations to identify priority areas for protected area establishment. Its worth noting that prioritizr, Marxan, and Zonation are all decision _support_ tools. This means that these tools are all designed to _help_ you make decisions---they can't make decisions for you.
+Here we will develop prioritizations to identify priority areas for protected area establishment. Its worth noting that [prioritizr](https://prioritizr.net/), [Marxan](http://marxan.org/), and [Zonation](https://www.helsinki.fi/en/researchgroups/digital-geography-lab/software-developed-in-cbig#section-52992) are all decision _support_ tools. This means that these tools are all designed to _help_ you make decisions---they can't make decisions for you.
 
 ## Starting out simple
 
-To start things off, let's keep things simple. Let's create a prioritization using the minimum set problem formulation of the reserve selection problem. This problem will have 5% targets for each vegetation class and use the data in the `cost` column to specify acquisition costs. Although we strongly recommend using Gurobi to solve problems (`add_gurobi_solver`), we will use the lpsymphony solver in this workshop since it is much easier to install. The Gurobi solver is the fastest solver that prioritizr can use to generate solutions and is much, much, much faster than the lpsymphony solver ([see here for Gurobi installation instructions](https://prioritizr.net/articles/gurobi_installation.html)).
+To start things off, let's keep things simple. Let's create a prioritization using the [minimum set problem formulation of the reserve selection problem](https://prioritizr.net/reference/add_min_set_objective.html). This problem will have 5% targets for each vegetation class and use the data in the `cost` column to specify acquisition costs. Although we strongly recommend using [Gurobi](https://www.gurobi.com/) to solve problems (with [`add_gurobi_solver`](https://prioritizr.net/reference/add_gurobi_solver.html)), we will use the [lpsymphony solver](https://prioritizr.net/reference/add_lsymphony_solver.html) in this workshop since it is much easier to install. The Gurobi solver is the fastest solver that prioritizr can use to generate solutions and it is much, much, much faster than the lpsymphony solver ([see here for Gurobi installation instructions](https://prioritizr.net/articles/gurobi_installation.html)).
 
 ```{r}
 # print planning unit data
@@ -182,6 +182,10 @@ s5 <- solve(p5)
 
 # plot solution
 spplot(s5, "solution_1", col.regions = c("white", "darkgreen"), main = "s5")
+
+# find out which features have their targets met
+r5 <- feature_representation(p5, s5[, "solution_1"])
+print(r5$feature[r5$relative_held > 0.2])
 ```
 
 We can also add weights to specify that it is more important to meet the targets for certain features and less important for other features. A common approach for weighting features is to assign a greater importance to features with smaller spatial distributions. The rationale behind this weighting method is that features with smaller spatial distributions are at greater risk of extinction. So, let's calculate some weights for our vegetation communities and see how weighting the features changes our prioritization.
@@ -190,7 +194,13 @@ We can also add weights to specify that it is more important to meet the targets
 # calculate weights as the inverse number of grid cells that each vegetation
 # class occupies, rescaled between 1 and 100
 wts <- 1 / cellStats(veg_data, "sum")
-wts <- rescale(wts, to = c(1, 100))
+wts <- rescale(wts, to = c(1, 10))
+
+# print the name of the feature with smallest weight
+names(veg_data)[wich.min(wts)]
+
+# print the name of the feature with greatest weight
+names(veg_data)[which.max(wts)]
 
 # plot histogram of weights
 hist(wts, main = "feature weights")
@@ -213,4 +223,21 @@ s6 <- solve(p6)
 
 # plot solution
 spplot(s6, "solution_1", col.regions = c("white", "darkgreen"), main = "s6")
+
+# find out which features have their targets met when we add weights
+r6 <- feature_representation(p6, s6[, "solution_1"])
+print(r6$feature[r6$relative_held > 0.2])
+```
+
+```{block2, type="rmdquestion"}
+1. What is the name of the feature with the smallest weight?
+2. What is the cost of the fifth (`s5`) and sixth (`s6`) solutions?
+3. Is there a difference between which features are adequately represented in the fifth (`s5`) and sixth (`s6`) solutions?
+```
+
+```{block2, type="rmdanswer", include = show_answers}
+1. `names(veg_data)[wich.min(wts)]`
+2. `sum(s5$cost * s5$solution_1)` \newline
+   `sum(s6$cost * s6$solution_1)`
+3. Yes, TODO.
 ```
