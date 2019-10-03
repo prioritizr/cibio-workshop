@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Introduction | PRIORITIZR WORKSHOP MANUAL</title>
+  <title>Chapter 6 Budget limited prioritizations | PRIORITIZR WORKSHOP MANUAL</title>
   <meta name="description" content="Manual for the prioritizr module of the Spatial Conservation Prioritization: Concepts, Methods and Application workshop held at CIBIO-InBIO, Vairão, Portugal." />
   <meta name="generator" content="bookdown 0.14.1 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Introduction | PRIORITIZR WORKSHOP MANUAL" />
+  <meta property="og:title" content="Chapter 6 Budget limited prioritizations | PRIORITIZR WORKSHOP MANUAL" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://prioritizr.github.io/cibio-workshop" />
   <meta property="og:image" content="https://prioritizr.github.io/cibio-workshopimages/cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="prioritizr/cibio-workshop" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Introduction | PRIORITIZR WORKSHOP MANUAL" />
+  <meta name="twitter:title" content="Chapter 6 Budget limited prioritizations | PRIORITIZR WORKSHOP MANUAL" />
   
   <meta name="twitter:description" content="Manual for the prioritizr module of the Spatial Conservation Prioritization: Concepts, Methods and Application workshop held at CIBIO-InBIO, Vairão, Portugal." />
   <meta name="twitter:image" content="https://prioritizr.github.io/cibio-workshopimages/cover.png" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="index.html"/>
-<link rel="next" href="data.html"/>
+<link rel="prev" href="spatial-prioritizations.html"/>
+<link rel="next" href="irreplaceability.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -153,48 +153,34 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduction" class="section level1">
-<h1><span class="header-section-number">Chapter 2</span> Introduction</h1>
-<div id="overview" class="section level2">
-<h2><span class="header-section-number">2.1</span> Overview</h2>
-<p>The aim of this workshop is to help you get started with using the prioritizr R package for systematic conservation planning. It is not designed to give you a comprehensive overview and you will not become an expert after completing this workshop. Instead, we want to help you understand the core principles of conservation planning and guide you through some of the common tasks involved with generating prioritizations. Phrased provocatively, we want to give you the knowledge base and confidence needed to start applying systematic conservation planning to your own work.</p>
-<p>You are not alone in this workshop. If you are having trouble, please put your hand up and one of the instructors will help you as soon as they can. You can also ask the people sitting next to you for help too. If you are having trouble with using the prioritizr R package, please consult the package website: <a href="https://prioritizr.net" class="uri">https://prioritizr.net</a>. It has plenty of examples and tutorials. Finally, please note that the first thing an instructor will ask you will (probably) be “what have you tried so far?”. We can’t help you if you haven’t tried anything.</p>
-</div>
-<div id="setup" class="section level2">
-<h2><span class="header-section-number">2.2</span> Setting up your computer</h2>
-<p>You will need to have both <a href="https://www.r-project.org">R</a> and <a href="https://www.rstudio.com/">RStudio</a> installed on your computer to complete this workshop. Although it is not imperative that you have the latest version of RStudio installed, <strong>you will need the latest version of R installed (i.e. version 3.6.1)</strong>. Please note that you meed need administrative permissions to complete install these programs. After installing them, you will also need to install various R packages too.</p>
-<div id="r" class="section level3">
-<h3><span class="header-section-number">2.2.1</span> R</h3>
-<p>The <a href="https://www.r-project.org">R statistical computing environment</a> can be downloaded from the Comprehensive R Archive Network (CRAN). You can download the latest version of R (version 3.6.1) from here: <a href="https://cloud.r-project.org" class="uri">https://cloud.r-project.org</a>. Please note that you will need to download the correct file for your operating system (i.e. Linux, Mac OSX, Windows).</p>
-</div>
-<div id="rstudio" class="section level3">
-<h3><span class="header-section-number">2.2.2</span> RStudio</h3>
-<p><a href="https://www.rstudio.com">RStudio</a> is an integrated development environment (IDE). In other words, it is a program that is designed to make your R programming experience more enjoyable. During this workshop, you will interact with R through RStudio—meaning that you will open RStudio when you want to code in R. You can download the latest version of RStudio here: <a href="http://www.rstudio.com/download" class="uri">http://www.rstudio.com/download</a>. When you start RStudio, you will see two main parts of the interface:</p>
-<p><img src="images/rstudio-console.png" width="90%" style="display: block; margin: auto;" /></p>
-<p>You can type R code into the <em>Console</em> part of the interface and press the enter key to run the code.</p>
-</div>
-<div id="r-packages" class="section level3">
-<h3><span class="header-section-number">2.2.3</span> R packages</h3>
-<p>An R package is a collection of R code and documentation that can be installed to enhance the standard R environment with additional functionality. Currently, there are over ten thousand R packages available on CRAN. Each of these R packages (mostly) aim to serve a specific need, such as <a href="https://cran.r-project.org/web/packages/readxl/index.html">reading Excel spreadsheets</a>, <a href="https://cran.r-project.org/web/packages/MODIStsp/index.html">downloading satellite imagery data</a>, <a href="https://cran.r-project.org/web/packages/wdpar/index.html">downloading and cleaning protected area data</a>, or <a href="https://cran.r-project.org/web/packages/ENMeval/index.html">fitting environmental niche models</a>. In fact, R has such a diverse ecosystem of R packages, that the question is (generally) not “can I use R to do …?” but “what R package can I use to …?”. During this workshop, we will use various R packages. To install these R packages, please run enter the code below in the <em>Console</em> part of the RStudio interface and press enter. Please note that you will require an internet connection to install the packages and the installation process may take a while to complete.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">&quot;sf&quot;</span>, <span class="st">&quot;tidyverse&quot;</span>, <span class="st">&quot;sp&quot;</span>, <span class="st">&quot;rgeos&quot;</span>, <span class="st">&quot;rgdal&quot;</span>, <span class="st">&quot;raster&quot;</span>, <span class="st">&quot;units&quot;</span>,
-                   <span class="st">&quot;prioritizr&quot;</span>, <span class="st">&quot;prioritizrdata&quot;</span> <span class="st">&quot;Rsymphony&quot;</span>, <span class="st">&quot;mapview&quot;</span>,
-                   <span class="st">&quot;assertthat&quot;</span>, <span class="st">&quot;velox&quot;</span>, <span class="st">&quot;remotes&quot;</span>))
-remotes<span class="op">::</span><span class="kw">install_bioc</span>(<span class="st">&quot;lpsymphony&quot;</span>)</code></pre></div>
-</div>
-</div>
-<div id="further-reading" class="section level2">
-<h2><span class="header-section-number">2.3</span> Further reading</h2>
-<p>There is a wealth of resources available for learning how to use R. Although not required for this workshop, I would highly recommend that you read <a href="https://r4ds.had.co.nz/"><em>R for Data Science</em> by Garrett Grolemund and Hadley Wickham</a>. <strong>This veritable trove of R goodness is freely available online.</strong> If you spend a week going through this book then you will save months debugging and rerunning incorrect code. I would urge any and all ecologists – especially those working on Masters or PhD degrees – to read this book. I even bought this book as a Christmas present for my sister—and, yes, she was happy to receive it! For intermediate users looking to skill-up, I would recommend the <a href="http://shop.oreilly.com/product/9781593273842.do"><em>The Art of R Programming: A Tour of Statistical Software Design</em> by Norman Matloff</a> and <a href="https://adv-r.hadley.nz/"><em>Advanced R</em> by Hadley Wickham</a>. Finally, if you wish to learn more about using R as a geospatial information system (GIS), I would recommend <a href="https://geocompr.robinlovelace.net/"><em>Geocomputation with R</em> by Robin Lovelace, Jakub Nowosad, and Jannes Muenchow</a> which is also freely available online. I also recommend <a href="https://www.springer.com/gp/book/9781461476177"><em>Applied Spatial Data Analysis</em> by Roger S. Bivand, Edzer Pebesma, and Virgilio Gómez-Rubio</a> too.</p>
+<div id="budget-limited-prioritizations" class="section level1">
+<h1><span class="header-section-number">Chapter 6</span> Budget limited prioritizations</h1>
+<p>The Conventional on Biological Diversity (<a href="https://www.cbd.int" class="uri">https://www.cbd.int</a>) mandates that signatories – including Australia – should have at least 17% of their land and 10% of their oceans covered by protected areas (or other effective area-based conservation measures) by 2020. But is 17% coverage enough to adequately conserve biodiversity? Well, let’s calculate the percentage of land secured in priority areas.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate area for each planning unit in km^2</span>
+pu_data<span class="op">$</span>area_km2 &lt;-
+<span class="st">  </span>pu_data <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gArea</span>(<span class="dt">byid =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">set_units</span>(m<span class="op">^</span><span class="dv">2</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">set_units</span>(km<span class="op">^</span><span class="dv">2</span>)
 
-</div>
+<span class="co"># calculate proportion of land covered by existing protected areas</span>
+<span class="kw">sum</span>(pu_data<span class="op">$</span>pa_status <span class="op">*</span><span class="st"> </span>pu_data<span class="op">$</span>area_km2) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(pu_data<span class="op">$</span>area_km2)</code></pre></div>
+<pre><code>## 0.2220554 [1]</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate proportion of land covered by prioritization</span>
+<span class="kw">sum</span>(s4<span class="op">$</span>solution_<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>pu_data<span class="op">$</span>area_km2) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(pu_data<span class="op">$</span>area_km2)</code></pre></div>
+<pre><code>## 0.2395804 [1]</code></pre>
+<p>We can see that the answer is no. If additional protected areas were established to ensure adequate representation of the 62 vegetation communities for minimal cost, then we would need at least 23.96% of Tasmania covered by protected areas. So, one question could be where should the Australian government establish new protected areas to increase representation of vegetation</p>
+<p>what if the Australian government</p>
+<p>If the Australian government wanted to expand the protected area system to increase protected area coverage of as many vegetation communities as possible without exceeding the 17% threshold,</p>
+
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="spatial-prioritizations.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="irreplaceability.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -226,7 +212,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/prioritizr/cibio-workshop/edit/master/01-introduction.Rmd",
+"link": "https://github.com/prioritizr/cibio-workshop/edit/master/04-prioritization.Rmd",
 "text": "Edit"
 },
 "history": {

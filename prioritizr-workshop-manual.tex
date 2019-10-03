@@ -129,7 +129,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2019-10-01}
+    \date{2019-10-03}
 
 % load packages
 \usepackage{caption}
@@ -254,7 +254,7 @@ arrive at the workshop, you should make sure that you have correctly
 \protect\hyperlink{setup}{set up your computer for the workshop} and you
 have
 \href{https://github.com/prioritizr/cibio-workshop/raw/master/data.zip}{downloaded
-the data from here}. We cannot guarantee a reliable internet connection
+the data from here}. We cannot guarantee a reliable Internet connection
 during the workshop, and so you may be unable to complete the workshop
 if you have not set up your computer beforehand.}
 
@@ -343,7 +343,8 @@ may take a while to complete.
 \begin{Highlighting}[]
 \KeywordTok{install.packages}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"sf"}\NormalTok{, }\StringTok{"tidyverse"}\NormalTok{, }\StringTok{"sp"}\NormalTok{, }\StringTok{"rgeos"}\NormalTok{, }\StringTok{"rgdal"}\NormalTok{, }\StringTok{"raster"}\NormalTok{, }\StringTok{"units"}\NormalTok{,}
                    \StringTok{"prioritizr"}\NormalTok{, }\StringTok{"prioritizrdata"} \StringTok{"Rsymphony"}\NormalTok{, }\StringTok{"mapview"}\NormalTok{,}
-                   \StringTok{"assertthat"}\NormalTok{, }\StringTok{"velox"}\NormalTok{))}
+                   \StringTok{"assertthat"}\NormalTok{, }\StringTok{"velox"}\NormalTok{, }\StringTok{"remotes"}\NormalTok{))}
+\NormalTok{remotes}\OperatorTok{::}\KeywordTok{install_bioc}\NormalTok{(}\StringTok{"lpsymphony"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -444,6 +445,7 @@ the following R code to attach the R packages used in this workshop.
 \KeywordTok{library}\NormalTok{(prioritizr)}
 \KeywordTok{library}\NormalTok{(rgdal)}
 \KeywordTok{library}\NormalTok{(raster)}
+\KeywordTok{library}\NormalTok{(rgeos)}
 \KeywordTok{library}\NormalTok{(mapview)}
 \KeywordTok{library}\NormalTok{(units)}
 \KeywordTok{library}\NormalTok{(assertthat)}
@@ -509,6 +511,10 @@ into our R session using the following code.
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{# format planning unit data}
+\NormalTok{pu_data}\OperatorTok{$}\NormalTok{locked_in <-}\StringTok{ }\KeywordTok{as.logical}\NormalTok{(pu_data}\OperatorTok{$}\NormalTok{locked_in)}
+\NormalTok{pu_data}\OperatorTok{$}\NormalTok{locked_out <-}\StringTok{ }\KeywordTok{as.logical}\NormalTok{(pu_data}\OperatorTok{$}\NormalTok{locked_out)}
+
 \CommentTok{# import vegetation data}
 \NormalTok{veg_data <-}\StringTok{ }\KeywordTok{stack}\NormalTok{(}\StringTok{"data/vegetation.tif"}\NormalTok{)}
 \end{Highlighting}
@@ -532,12 +538,14 @@ contain the following information:
   \texttt{status}: status information for each planning unit (only
   relevant with Marxan)
 \item
-  \texttt{locked\_in}: binary values (i.e.~one or zero) indicating if
-  planning units are covered by protected areas or not.
+  \texttt{locked\_in}: logical values (i.e.
+  \texttt{TRUE}/\texttt{FALSE}) indicating if planning units are covered
+  by protected areas or not.
 \item
-  \texttt{locked\_out}: binary values (i.e.~one or zero) indicating if
-  planning units cannot be managed as a protected area because they
-  contain too much anthropologically altered land.
+  \texttt{locked\_out}: logical values (i.e.
+  \texttt{TRUE}/\texttt{FALSE}) indicating if planning units cannot be
+  managed as a protected area because they contain too much
+  anthropologically altered land.
 \end{itemize}
 
 \begin{Shaded}
@@ -555,7 +563,7 @@ contain the following information:
 ## variables   : 5
 ## names       :   id,              cost, status, locked_in, locked_out 
 ## min values  :    1, 0.192488262910798,      0,         0,          0 
-## max values  : 1130,  61.9272727272727,      2,         1,          0
+## max values  : 1130,  61.9272727272727,      2,         1,          1
 \end{verbatim}
 
 \begin{Shaded}
@@ -706,12 +714,12 @@ contain the following information:
 
 \begin{verbatim}
 ##   id     cost status locked_in locked_out
-## 0  1 60.24638      0         0          0
-## 1  2 19.86301      0         0          0
-## 2  3 59.68051      0         0          0
-## 3  4 32.41614      0         0          0
-## 4  5 26.17706      0         0          0
-## 5  6 51.26218      0         0          0
+## 0  1 60.24638      0     FALSE       TRUE
+## 1  2 19.86301      0     FALSE      FALSE
+## 2  3 59.68051      0     FALSE       TRUE
+## 3  4 32.41614      0     FALSE      FALSE
+## 4  5 26.17706      0     FALSE      FALSE
+## 5  6 51.26218      0     FALSE       TRUE
 \end{verbatim}
 
 \begin{Shaded}
@@ -1410,13 +1418,16 @@ requires (i) a conservation problem object with the planning unit and
 biodiversity data and also (ii) an object representing a solution to the
 problem (i.e an object in the same format as the planning unit data with
 zeros and ones indicating if the planning units are contained in the
-prioritization problem or not). Since we already have our data in this
-format, we can use the code below.
+prioritization problem or not).
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{# create column in planning unit data with binary values (zeros and ones)}
+\CommentTok{# indicating if a planning unit is covered by protected areas or not}
+\NormalTok{pu_data}\OperatorTok{$}\NormalTok{pa_status <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(pu_data}\OperatorTok{$}\NormalTok{locked_in)}
+
 \CommentTok{# calculate feature representation by protected areas}
-\NormalTok{repr_data <-}\StringTok{ }\KeywordTok{feature_representation}\NormalTok{(p0, pu_data[, }\StringTok{"locked_in"}\NormalTok{])}
+\NormalTok{repr_data <-}\StringTok{ }\KeywordTok{feature_representation}\NormalTok{(p0, pu_data[, }\StringTok{"pa_status"}\NormalTok{])}
 
 \CommentTok{# print feature representation data}
 \KeywordTok{print}\NormalTok{(repr_data)}
@@ -1522,7 +1533,366 @@ Now let's investigate how well the species are represented.
 
 \chapter{Spatial prioritizations}\label{spatial-prioritizations}
 
-TODO.
+\section{Introduction}\label{introduction-2}
+
+Here we will develop prioritizations to identify priority areas for
+protected area establishment. Its worth noting that prioritizr, Marxan,
+and Zonation are all decision \emph{support} tools. This means that
+these tools are all designed to \emph{help} you make decisions---they
+can't make decisions for you.
+
+\section{Starting out simple}\label{starting-out-simple}
+
+To start things off, let's keep things simple. Let's create a
+prioritization using the minimum set problem formulation of the reserve
+selection problem. This problem will have 5\% targets for each
+vegetation class and use the data in the \texttt{cost} column to specify
+acquisition costs. Although we strongly recommend using Gurobi to solve
+problems (\texttt{add\_gurobi\_solver}), we will use the lpsymphony
+solver in this workshop since it is much easier to install. The Gurobi
+solver is the fastest solver that prioritizr can use to generate
+solutions and is much, much, much faster than the lpsymphony solver
+(\href{https://prioritizr.net/articles/gurobi_installation.html}{see
+here for Gurobi installation instructions}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# print planning unit data}
+\KeywordTok{print}\NormalTok{(pu_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## class       : SpatialPolygonsDataFrame 
+## features    : 1130 
+## extent      : 1080623, 1399989, -4840595, -4497092  (xmin, xmax, ymin, ymax)
+## crs         : +proj=aea +lat_1=-18 +lat_2=-36 +lat_0=0 +lon_0=132 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs 
+## variables   : 6
+## names       :   id,              cost, status, locked_in, locked_out, pa_status 
+## min values  :    1, 0.192488262910798,      0,         0,          0,         0 
+## max values  : 1130,  61.9272727272727,      2,         1,          1,         1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# make prioritization problem}
+\NormalTok{p1 <-}\StringTok{ }\KeywordTok{problem}\NormalTok{(pu_data, veg_data, }\DataTypeTok{cost_column =} \StringTok{"cost"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_min_set_objective}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_relative_targets}\NormalTok{(}\FloatTok{0.05}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\CommentTok{# 5% representation targets}
+\StringTok{      }\KeywordTok{add_binary_decisions}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_lpsymphony_solver}\NormalTok{(}\DataTypeTok{verbose =} \OtherTok{FALSE}\NormalTok{)}
+
+\CommentTok{# print problem}
+\KeywordTok{print}\NormalTok{(p1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Conservation Problem
+##   planning units: SpatialPolygonsDataFrame (1130 units)
+##   cost:           min: 0.19249, max: 61.92727
+##   features:       vegetation.1, vegetation.2, vegetation.3, ... (62 features)
+##   objective:      Minimum set objective 
+##   targets:        Relative targets [targets (min: 0.05, max: 0.05)]
+##   decisions:      Binary decision 
+##   constraints:    <none>
+##   penalties:      <none>
+##   portfolio:      default
+##   solver:         Lpsymphony [first_feasible (0), gap (0.1), time_limit (-1), verbose (0)]
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# solve problem}
+\NormalTok{s1 <-}\StringTok{ }\KeywordTok{solve}\NormalTok{(p1)}
+
+\CommentTok{# print solution,}
+\CommentTok{# the solution_1 column contains the solution values with binary values}
+\CommentTok{# indicating if a planning unit was selected as a (1) priority area or (0) not}
+\KeywordTok{print}\NormalTok{(s1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## class       : SpatialPolygonsDataFrame 
+## features    : 1130 
+## extent      : 1080623, 1399989, -4840595, -4497092  (xmin, xmax, ymin, ymax)
+## crs         : +proj=aea +lat_1=-18 +lat_2=-36 +lat_0=0 +lon_0=132 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs 
+## variables   : 7
+## names       :   id,              cost, status, locked_in, locked_out, pa_status, solution_1 
+## min values  :    1, 0.192488262910798,      0,         0,          0,         0,          0 
+## max values  : 1130,  61.9272727272727,      2,         1,          1,         1,          1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculate number of planning units selected in the prioritization}
+\KeywordTok{sum}\NormalTok{(s1}\OperatorTok{$}\NormalTok{solution_}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 36
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculate total cost of the prioritization}
+\KeywordTok{sum}\NormalTok{(s1}\OperatorTok{$}\NormalTok{solution_}\DecValTok{1} \OperatorTok{*}\StringTok{ }\NormalTok{s1}\OperatorTok{$}\NormalTok{cost)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 806.2393
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# plot solution}
+\KeywordTok{spplot}\NormalTok{(s1, }\StringTok{"solution_1"}\NormalTok{, }\DataTypeTok{col =} \KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{), }\DataTypeTok{main =} \StringTok{"s1"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-34-1} \end{center}
+
+Now let's examine the solution.
+
+\BeginKnitrBlock{rmdquestion}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  How many planing units were selected in the prioritization? What
+  proportion of planning units were selected in the prioritization?
+\item
+  Is there a pattern in the spatial distribution of the priority areas?
+\item
+  Can you verify that all of the targets were met in the prioritization
+  (hint:
+  \texttt{feature\_representation(p1,\ s1{[},\ "solution\_1"{]})})?
+\item
+  What are limitations of this prioritization?
+\end{enumerate}
+\EndKnitrBlock{rmdquestion}
+
+\section{Adding complexity}\label{adding-complexity}
+
+Our first prioritization suffers many limitations, so let's add
+additional constraints to the problem to make it more useful. First,
+let's lock in planing units that are already inside protected areas.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# make prioritization problem}
+\NormalTok{p2 <-}\StringTok{ }\KeywordTok{problem}\NormalTok{(pu_data, veg_data, }\DataTypeTok{cost_column =} \StringTok{"cost"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_min_set_objective}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_relative_targets}\NormalTok{(}\FloatTok{0.05}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_locked_in_constraints}\NormalTok{(}\StringTok{"locked_in"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_binary_decisions}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_lpsymphony_solver}\NormalTok{(}\DataTypeTok{verbose =} \OtherTok{FALSE}\NormalTok{)}
+
+\CommentTok{# print problem}
+\KeywordTok{print}\NormalTok{(p2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Conservation Problem
+##   planning units: SpatialPolygonsDataFrame (1130 units)
+##   cost:           min: 0.19249, max: 61.92727
+##   features:       vegetation.1, vegetation.2, vegetation.3, ... (62 features)
+##   objective:      Minimum set objective 
+##   targets:        Relative targets [targets (min: 0.05, max: 0.05)]
+##   decisions:      Binary decision 
+##   constraints:    <Locked in planning units [257 locked units]>
+##   penalties:      <none>
+##   portfolio:      default
+##   solver:         Lpsymphony [first_feasible (0), gap (0.1), time_limit (-1), verbose (0)]
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# solve problem}
+\NormalTok{s2 <-}\StringTok{ }\KeywordTok{solve}\NormalTok{(p2)}
+
+\CommentTok{# plot solution}
+\KeywordTok{spplot}\NormalTok{(s2, }\StringTok{"solution_1"}\NormalTok{, }\DataTypeTok{col =} \KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{), }\DataTypeTok{main =} \StringTok{"s2"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-37-1} \end{center}
+
+Let's pretend we talked to an expert on the vegetation communities in
+our study system and they recommended that a 20\% target was needed. So,
+now let's set the targets to 20\% of their total distribution in the
+study area.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# make prioritization problem}
+\NormalTok{p3 <-}\StringTok{ }\KeywordTok{problem}\NormalTok{(pu_data, veg_data, }\DataTypeTok{cost_column =} \StringTok{"cost"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_min_set_objective}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_relative_targets}\NormalTok{(}\FloatTok{0.2}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_locked_in_constraints}\NormalTok{(}\StringTok{"locked_in"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_binary_decisions}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_lpsymphony_solver}\NormalTok{(}\DataTypeTok{verbose =} \OtherTok{FALSE}\NormalTok{)}
+
+\CommentTok{# print problem}
+\KeywordTok{print}\NormalTok{(p3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Conservation Problem
+##   planning units: SpatialPolygonsDataFrame (1130 units)
+##   cost:           min: 0.19249, max: 61.92727
+##   features:       vegetation.1, vegetation.2, vegetation.3, ... (62 features)
+##   objective:      Minimum set objective 
+##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
+##   decisions:      Binary decision 
+##   constraints:    <Locked in planning units [257 locked units]>
+##   penalties:      <none>
+##   portfolio:      default
+##   solver:         Lpsymphony [first_feasible (0), gap (0.1), time_limit (-1), verbose (0)]
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# solve problem}
+\NormalTok{s3 <-}\StringTok{ }\KeywordTok{solve}\NormalTok{(p3)}
+
+\CommentTok{# plot solution}
+\KeywordTok{spplot}\NormalTok{(s3, }\StringTok{"solution_1"}\NormalTok{, }\DataTypeTok{col =} \KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{), }\DataTypeTok{main =} \StringTok{"s3"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-38-1} \end{center}
+
+Next, let's lock out highly degraded areas.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# make prioritization problem}
+\NormalTok{p4 <-}\StringTok{ }\KeywordTok{problem}\NormalTok{(pu_data, veg_data, }\DataTypeTok{cost_column =} \StringTok{"cost"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_min_set_objective}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_relative_targets}\NormalTok{(}\FloatTok{0.05}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_locked_in_constraints}\NormalTok{(}\StringTok{"locked_in"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_locked_out_constraints}\NormalTok{(}\StringTok{"locked_out"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_binary_decisions}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_lpsymphony_solver}\NormalTok{(}\DataTypeTok{verbose =} \OtherTok{FALSE}\NormalTok{)}
+
+\CommentTok{# print problem}
+\KeywordTok{print}\NormalTok{(p4)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Conservation Problem
+##   planning units: SpatialPolygonsDataFrame (1130 units)
+##   cost:           min: 0.19249, max: 61.92727
+##   features:       vegetation.1, vegetation.2, vegetation.3, ... (62 features)
+##   objective:      Minimum set objective 
+##   targets:        Relative targets [targets (min: 0.05, max: 0.05)]
+##   decisions:      Binary decision 
+##   constraints:    <Locked in planning units [257 locked units]
+##                    Locked out planning units [51 locked units]>
+##   penalties:      <none>
+##   portfolio:      default
+##   solver:         Lpsymphony [first_feasible (0), gap (0.1), time_limit (-1), verbose (0)]
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# solve problem}
+\NormalTok{s4 <-}\StringTok{ }\KeywordTok{solve}\NormalTok{(p4)}
+
+\CommentTok{# plot solution}
+\KeywordTok{spplot}\NormalTok{(s4, }\StringTok{"solution_1"}\NormalTok{, }\DataTypeTok{col =} \KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{), }\DataTypeTok{main =} \StringTok{"s4"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-39-1} \end{center}
+
+Now, let's compare the solutions.
+
+\BeginKnitrBlock{rmdquestion}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  What is the cost of the planning units selected in \texttt{s2},
+  \texttt{s3}, and \texttt{s4}?
+\item
+  How many planning units are in \texttt{s2}, \texttt{s3}, and
+  \texttt{s4}?
+\item
+  Do the solutions with more planning units have a greater cost? Why or
+  why not?
+\item
+  Why does the first solution (\texttt{s1}) cost less than the second
+  solution with protected areas locked into the solution (\texttt{s2})?
+\item
+  Why does the third solution (\texttt{s3}) cost less than the fourth
+  solution solution with highly degraded areas locked out (\texttt{s4})?
+\item
+  What happens if you specify targets that exceed the total amount of
+  vegetation in the study area? You can do this by rerunning the code to
+  make \texttt{p4} with \texttt{add\_absolute\_targets(1000)} instead of
+  \texttt{add\_relative\_targets(0.2)} and generating a new solution?
+\end{enumerate}
+\EndKnitrBlock{rmdquestion}
+
+\chapter{Budget limited
+prioritizations}\label{budget-limited-prioritizations}
+
+The Conventional on Biological Diversity (\url{https://www.cbd.int})
+mandates that signatories -- including Australia -- should have at least
+17\% of their land and 10\% of their oceans covered by protected areas
+(or other effective area-based conservation measures) by 2020. But is
+17\% coverage enough to adequately conserve biodiversity? Well, let's
+calculate the percentage of land secured in priority areas.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculate area for each planning unit in km^2}
+\NormalTok{pu_data}\OperatorTok{$}\NormalTok{area_km2 <-}
+\StringTok{  }\NormalTok{pu_data }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{gArea}\NormalTok{(}\DataTypeTok{byid =} \OtherTok{TRUE}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{set_units}\NormalTok{(m}\OperatorTok{^}\DecValTok{2}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{set_units}\NormalTok{(km}\OperatorTok{^}\DecValTok{2}\NormalTok{)}
+
+\CommentTok{# calculate proportion of land covered by existing protected areas}
+\KeywordTok{sum}\NormalTok{(pu_data}\OperatorTok{$}\NormalTok{pa_status }\OperatorTok{*}\StringTok{ }\NormalTok{pu_data}\OperatorTok{$}\NormalTok{area_km2) }\OperatorTok{/}\StringTok{ }\KeywordTok{sum}\NormalTok{(pu_data}\OperatorTok{$}\NormalTok{area_km2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 0.2220554 [1]
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculate proportion of land covered by prioritization}
+\KeywordTok{sum}\NormalTok{(s4}\OperatorTok{$}\NormalTok{solution_}\DecValTok{1} \OperatorTok{*}\StringTok{ }\NormalTok{pu_data}\OperatorTok{$}\NormalTok{area_km2) }\OperatorTok{/}\StringTok{ }\KeywordTok{sum}\NormalTok{(pu_data}\OperatorTok{$}\NormalTok{area_km2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 0.2395804 [1]
+\end{verbatim}
+
+We can see that the answer is no. If additional protected areas were
+established to ensure adequate representation of the 62 vegetation
+communities for minimal cost, then we would need at least 23.96\% of
+Tasmania covered by protected areas. So, one question could be where
+should the Australian government establish new protected areas to
+increase representation of vegetation
+
+what if the Australian government
+
+If the Australian government wanted to expand the protected area system
+to increase protected area coverage of as many vegetation communities as
+possible without exceeding the 17\% threshold,
 
 \chapter{Irreplaceability}\label{irreplaceability}
 

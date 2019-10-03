@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Data | PRIORITIZR WORKSHOP MANUAL</title>
   <meta name="description" content="Manual for the prioritizr module of the Spatial Conservation Prioritization: Concepts, Methods and Application workshop held at CIBIO-InBIO, Vairão, Portugal." />
-  <meta name="generator" content="bookdown 0.13.2 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.14.1 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Data | PRIORITIZR WORKSHOP MANUAL" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Jeffrey O. Hanson" />
 
 
-<meta name="date" content="2019-10-01" />
+<meta name="date" content="2019-10-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -128,9 +128,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.2" data-path="gap-analysis.html"><a href="gap-analysis.html#feature-abundance"><i class="fa fa-check"></i><b>4.2</b> Feature abundance</a></li>
 <li class="chapter" data-level="4.3" data-path="gap-analysis.html"><a href="gap-analysis.html#feature-representation-by-protected-areas"><i class="fa fa-check"></i><b>4.3</b> Feature representation by protected areas</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="spatial-prioritizations.html"><a href="spatial-prioritizations.html"><i class="fa fa-check"></i><b>5</b> Spatial prioritizations</a></li>
-<li class="chapter" data-level="6" data-path="irreplaceability.html"><a href="irreplaceability.html"><i class="fa fa-check"></i><b>6</b> Irreplaceability</a></li>
-<li class="chapter" data-level="7" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>7</b> Acknowledgements</a></li>
+<li class="chapter" data-level="5" data-path="spatial-prioritizations.html"><a href="spatial-prioritizations.html"><i class="fa fa-check"></i><b>5</b> Spatial prioritizations</a><ul>
+<li class="chapter" data-level="5.1" data-path="spatial-prioritizations.html"><a href="spatial-prioritizations.html#introduction-2"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
+<li class="chapter" data-level="5.2" data-path="spatial-prioritizations.html"><a href="spatial-prioritizations.html#starting-out-simple"><i class="fa fa-check"></i><b>5.2</b> Starting out simple</a></li>
+<li class="chapter" data-level="5.3" data-path="spatial-prioritizations.html"><a href="spatial-prioritizations.html#adding-complexity"><i class="fa fa-check"></i><b>5.3</b> Adding complexity</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="budget-limited-prioritizations.html"><a href="budget-limited-prioritizations.html"><i class="fa fa-check"></i><b>6</b> Budget limited prioritizations</a></li>
+<li class="chapter" data-level="7" data-path="irreplaceability.html"><a href="irreplaceability.html"><i class="fa fa-check"></i><b>7</b> Irreplaceability</a></li>
+<li class="chapter" data-level="8" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>8</b> Acknowledgements</a></li>
 </ul>
 
       </nav>
@@ -174,6 +179,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">library</span>(prioritizr)
 <span class="kw">library</span>(rgdal)
 <span class="kw">library</span>(raster)
+<span class="kw">library</span>(rgeos)
 <span class="kw">library</span>(mapview)
 <span class="kw">library</span>(units)
 <span class="kw">library</span>(assertthat)</code></pre></div>
@@ -195,7 +201,11 @@ pu_data &lt;-<span class="st"> </span><span class="kw">readOGR</span>(<span clas
 ## Source: &quot;/home/travis/build/prioritizr/cibio-workshop/data/pu.shp&quot;, layer: &quot;pu&quot;
 ## with 1130 features
 ## It has 5 fields</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># import vegetation data</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># format planning unit data</span>
+pu_data<span class="op">$</span>locked_in &lt;-<span class="st"> </span><span class="kw">as.logical</span>(pu_data<span class="op">$</span>locked_in)
+pu_data<span class="op">$</span>locked_out &lt;-<span class="st"> </span><span class="kw">as.logical</span>(pu_data<span class="op">$</span>locked_out)
+
+<span class="co"># import vegetation data</span>
 veg_data &lt;-<span class="st"> </span><span class="kw">stack</span>(<span class="st">&quot;data/vegetation.tif&quot;</span>)</code></pre></div>
 </div>
 <div id="planning-unit-data" class="section level2">
@@ -205,8 +215,8 @@ veg_data &lt;-<span class="st"> </span><span class="kw">stack</span>(<span class
 <li><code>id</code>: unique identifiers for each planning unit</li>
 <li><code>cost</code>: acquisition cost values for each planning unit</li>
 <li><code>status</code>: status information for each planning unit (only relevant with Marxan)</li>
-<li><code>locked_in</code>: binary values (i.e. one or zero) indicating if planning units are covered by protected areas or not.</li>
-<li><code>locked_out</code>: binary values (i.e. one or zero) indicating if planning units cannot be managed as a protected area because they contain too much anthropologically altered land.</li>
+<li><code>locked_in</code>: logical values (i.e. <code>TRUE</code>/<code>FALSE</code>) indicating if planning units are covered by protected areas or not.</li>
+<li><code>locked_out</code>: logical values (i.e. <code>TRUE</code>/<code>FALSE</code>) indicating if planning units cannot be managed as a protected area because they contain too much anthropologically altered land.</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># print a short summary of the data</span>
 <span class="kw">print</span>(pu_data)</code></pre></div>
@@ -217,7 +227,7 @@ veg_data &lt;-<span class="st"> </span><span class="kw">stack</span>(<span class
 ## variables   : 5
 ## names       :   id,              cost, status, locked_in, locked_out 
 ## min values  :    1, 0.192488262910798,      0,         0,          0 
-## max values  : 1130,  61.9272727272727,      2,         1,          0</code></pre>
+## max values  : 1130,  61.9272727272727,      2,         1,          1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the planning unit data</span>
 <span class="kw">plot</span>(pu_data)</code></pre></div>
 <p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -301,12 +311,12 @@ pu_data<span class="op">@</span>polygons[[<span class="dv">80</span>]]</code></p
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># print the first six rows in the attribute data</span>
 <span class="kw">head</span>(pu_data<span class="op">@</span>data)</code></pre></div>
 <pre><code>##   id     cost status locked_in locked_out
-## 0  1 60.24638      0         0          0
-## 1  2 19.86301      0         0          0
-## 2  3 59.68051      0         0          0
-## 3  4 32.41614      0         0          0
-## 4  5 26.17706      0         0          0
-## 5  6 51.26218      0         0          0</code></pre>
+## 0  1 60.24638      0     FALSE       TRUE
+## 1  2 19.86301      0     FALSE      FALSE
+## 2  3 59.68051      0     FALSE       TRUE
+## 3  4 32.41614      0     FALSE      FALSE
+## 4  5 26.17706      0     FALSE      FALSE
+## 5  6 51.26218      0     FALSE       TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># print the first six values in the cost column of the attribute data</span>
 <span class="kw">head</span>(pu_data<span class="op">$</span>cost)</code></pre></div>
 <pre><code>## [1] 60.24638 19.86301 59.68051 32.41614 26.17706 51.26218</code></pre>
