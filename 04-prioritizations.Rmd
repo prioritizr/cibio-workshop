@@ -197,7 +197,7 @@ wts <- 1 / cellStats(veg_data, "sum")
 wts <- rescale(wts, to = c(1, 10))
 
 # print the name of the feature with smallest weight
-names(veg_data)[wich.min(wts)]
+names(veg_data)[which.min(wts)]
 
 # print the name of the feature with greatest weight
 names(veg_data)[which.max(wts)]
@@ -236,7 +236,7 @@ print(r6$feature[r6$relative_held > 0.2])
 ```
 
 ```{block2, type="rmdanswer", include = show_answers}
-1. `names(veg_data)[wich.min(wts)]`
+1. `names(veg_data)[which.min(wts)]`
 2. `sum(s5$cost * s5$solution_1)` \newline
    `sum(s6$cost * s6$solution_1)`
 3. Yes, TODO.
