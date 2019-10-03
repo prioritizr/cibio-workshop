@@ -6,7 +6,7 @@ Here we will develop prioritizations to identify priority areas for protected ar
 
 ## Starting out simple
 
-To start things off, let's keep things simple. Let's create a prioritization using the minimum set problem formulation of the reserve selection problem. This problem will have 5% targets for each vegetation class. We will use the lpsymphony R package to solve the problem and rely on default settings.
+To start things off, let's keep things simple. Let's create a prioritization using the minimum set problem formulation of the reserve selection problem. This problem will have 5% targets for each vegetation class and use the data in the `cost` column to specify acquisition costs. Although we strongly recommend using Gurobi to solve problems (`add_gurobi_solver`), we will use the lpsymphony solver in this workshop since it is much easier to install. The Gurobi solver is the fastest solver that prioritizr can use to generate solutions and is much, much, much faster than the lpsymphony solver ([see here for Gurobi installation instructions](https://prioritizr.net/articles/gurobi_installation.html)).
 
 ```{r}
 # print planning unit data
@@ -52,7 +52,7 @@ Now let's examine the solution.
 
 ```{block2, type="rmdanswer", include = show_answers}
 1. `sum(s1$solution_1)` \newline
-   `mean(s1$solution_1)`
+   `s1$solution_1)`
 2. Yes, the planning units are generally spread out across most of the study area and they are not biased towards specific areas.
 3. `all(feature_representation(p1, s1[, "solution_1"])$relative_held >= 0.2)`
 4. This prioritization (i) does not account for existing protected areas, (ii) does not account for the spatial fragmentation of priority areas, or (iii) is not likely conserve enough habitat for each vegetation type (i.e. 5% is pretty small).
@@ -122,7 +122,7 @@ print(p4)
 s4 <- solve(p4)
 
 # plot solution
-spplot(s4, "solution_4", col = c("white", "darkgreen"), main = "s4")
+spplot(s4, "solution_1", col = c("white", "darkgreen"), main = "s4")
 ```
 
 Now, let's compare the solutions.
@@ -156,18 +156,21 @@ Now, let's compare the solutions.
 The Conventional on Biological Diversity (https://www.cbd.int) mandates that signatories -- including Australia -- should have at least 17% of their land and 10% of their oceans covered by protected areas (or other effective area-based conservation measures) by 2020. But is 17% coverage enough to adequately conserve biodiversity? Well, let's calculate the percentage of land secured in priority areas.
 
 ```{r}
-# calculate area for each planning unit
-pu_data$area <- gArea(pu_data, byid = TRUE)
-
+# calculate area for each planning unit in km^2
+pu_data$area_km2 <-
+  pu_data %>%
+  gArea(byid = TRUE) %>%
+  set_units(m^2) %>%
+  set_units(km^2)
 
 # calculate proportion of land covered by existing protected areas
-mean(pu_data$locked_in * pu_data$area)
+sum(pu_data$pa_status * pu_data$area_km2) / sum(pu_data$area_km2)
 
 # calculate proportion of land covered by prioritization
-mean(s4$solution_1 * pu_data$area)
+sum(s4$solution_1 * pu_data$area_km2) / sum(pu_data$area_km2)
 ```
 
-We can see that the answer is no. If protected areas were established to expand the existing protected area system in the most cost-effective places to ensure adequate representation of the 62 vegetation communities, then we would need at least `r mean(s4$solution_1 * pu_data$area) * 100`% of Tasmania covered by protected areas. So, one question could be where should the Australian government establish new protected areas to increase representation of vegetation 
+We can see that the answer is no. If additional protected areas were established to ensure adequate representation of the 62 vegetation communities for minimal cost, then we would need at least `r round((sum(s4$solution_1 * pu_data$area_km2) / sum(pu_data$area_km2)) * 100, 2)`% of Tasmania covered by protected areas. So, one question could be where should the Australian government establish new protected areas to increase representation of vegetation
 
  what if the Australian government
 
