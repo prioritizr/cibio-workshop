@@ -159,8 +159,8 @@ Now, you can try and answer some questions about the planning unit data.
 7. Can you verify that all values in the `locked_in` and `locked_out` columns are zero or one (hint: `min(x)` and `max(x)`)?.
 8. Can you verify that none of the planning units are missing cost values (hint: `all(is.finite(x))`)?.
 9. Can you very that none of the planning units have duplicated identifiers? (hint: `sum(duplicated(x))`)?
-10. Is there a spatial pattern in the planning unit cost values (hint: make a map).
-11. Is there a spatial pattern in where most planning units are covered by protected areas (hint: make a map of `locked_in`).
+10. Is there a spatial pattern in the planning unit cost values (hint: use `spplot` to make a map).
+11. Is there a spatial pattern in where most planning units are covered by protected areas (hint: use `spplot` to make a map).
 
 ```
 
@@ -256,12 +256,8 @@ Now, you can try and answer some questions about the vegetation data.
 
 ```{block2, type="rmdquestion"}
 1. What part of the study area is the 51st vegetation class found in (hint: make a map)?
-2. How many rows does the 23rd layer contain?
-3. Is the third vegetation class present at the 400th cell?
-4. How many cells contain the 56th vegetation class?
-5. What proportion of cells contain the 12th vegetation class?
-6. Which vegetation class is present in the greatest number of cells?
-7. Make an new object by summing together all the layer values into a single grid (i.e. `sum_veg_data <- sum(veg_data)`) and make a map showing this data (i.e. `plot(sum_veg_data)`). What does it mean if cells contain zeros in this new object? What reasons could there be to explain why some cells in this new object contain zeros?
+2. What proportion of cells contain the 12th vegetation class?
+3. Which vegetation class is present in the greatest number of cells?
 
 ```
 
@@ -271,11 +267,7 @@ sum_veg_data <- sum(veg_data)
 
 ```{block2, type="rmdanswer", include = show_answers}
 1. Central-north Tasmania
-2. `nrow(veg_data[[23]])`
-3. `veg_data[[3]][400]`
-4. `ncell(veg_data[[56]])`
-5. `cellStats(veg_data[[12]], "mean")`
-6. `names(veg_data)[which.max(cellStats(veg_data, "sum"))]`
-7.  Cells which do not contain habitat in any of the layers are denoted with a zero in `sum_veg_data`. These zero cells occur in places which do not contain any remnant vegetation (e.g. due to habitat destruction) or they occur in the ocean (i.e. because terrestrial vegetation does not occur in the ocean).
+2. `cellStats(veg_data[[12]], "mean")`
+3. `names(veg_data)[which.max(cellStats(veg_data, "sum"))]`
 
 ```
