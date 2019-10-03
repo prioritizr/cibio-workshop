@@ -348,8 +348,8 @@ pu_data<span class="op">@</span>polygons[[<span class="dv">80</span>]]</code></p
 <li>Can you verify that all values in the <code>locked_in</code> and <code>locked_out</code> columns are zero or one (hint: <code>min(x)</code> and <code>max(x)</code>)?.</li>
 <li>Can you verify that none of the planning units are missing cost values (hint: <code>all(is.finite(x))</code>)?.</li>
 <li>Can you very that none of the planning units have duplicated identifiers? (hint: <code>sum(duplicated(x))</code>)?</li>
-<li>Is there a spatial pattern in the planning unit cost values (hint: make a map).</li>
-<li>Is there a spatial pattern in where most planning units are covered by protected areas (hint: make a map of <code>locked_in</code>).</li>
+<li>Is there a spatial pattern in the planning unit cost values (hint: use <code>spplot</code> to make a map).</li>
+<li>Is there a spatial pattern in where most planning units are covered by protected areas (hint: use <code>spplot</code> to make a map).</li>
 </ol>
 </div>
 
@@ -460,12 +460,8 @@ pu_data<span class="op">@</span>polygons[[<span class="dv">80</span>]]</code></p
 <div class="rmdquestion">
 <ol style="list-style-type: decimal">
 <li>What part of the study area is the 51st vegetation class found in (hint: make a map)?</li>
-<li>How many rows does the 23rd layer contain?</li>
-<li>Is the third vegetation class present at the 400th cell?</li>
-<li>How many cells contain the 56th vegetation class?</li>
 <li>What proportion of cells contain the 12th vegetation class?</li>
 <li>Which vegetation class is present in the greatest number of cells?</li>
-<li>Make an new object by summing together all the layer values into a single grid (i.e. <code>sum_veg_data &lt;- sum(veg_data)</code>) and make a map showing this data (i.e. <code>plot(sum_veg_data)</code>). What does it mean if cells contain zeros in this new object? What reasons could there be to explain why some cells in this new object contain zeros?</li>
 </ol>
 </div>
 

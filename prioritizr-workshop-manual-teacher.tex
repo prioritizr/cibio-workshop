@@ -820,11 +820,11 @@ Now, you can try and answer some questions about the planning unit data.
   Can you very that none of the planning units have duplicated
   identifiers? (hint: \texttt{sum(duplicated(x))})?
 \item
-  Is there a spatial pattern in the planning unit cost values (hint:
-  make a map).
+  Is there a spatial pattern in the planning unit cost values (hint: use
+  \texttt{spplot} to make a map).
 \item
   Is there a spatial pattern in where most planning units are covered by
-  protected areas (hint: make a map of \texttt{locked\_in}).
+  protected areas (hint: use \texttt{spplot} to make a map).
 \end{enumerate}
 \EndKnitrBlock{rmdquestion}
 
@@ -1137,22 +1137,9 @@ Now, you can try and answer some questions about the vegetation data.
   What part of the study area is the 51st vegetation class found in
   (hint: make a map)?
 \item
-  How many rows does the 23rd layer contain?
-\item
-  Is the third vegetation class present at the 400th cell?
-\item
-  How many cells contain the 56th vegetation class?
-\item
   What proportion of cells contain the 12th vegetation class?
 \item
   Which vegetation class is present in the greatest number of cells?
-\item
-  Make an new object by summing together all the layer values into a
-  single grid (i.e.
-  \texttt{sum\_veg\_data\ \textless{}-\ sum(veg\_data)}) and make a map
-  showing this data (i.e. \texttt{plot(sum\_veg\_data)}). What does it
-  mean if cells contain zeros in this new object? What reasons could
-  there be to explain why some cells in this new object contain zeros?
 \end{enumerate}
 \EndKnitrBlock{rmdquestion}
 
@@ -1163,21 +1150,9 @@ Now, you can try and answer some questions about the vegetation data.
 \item
   Central-north Tasmania
 \item
-  \texttt{nrow(veg\_data{[}{[}23{]}{]})}
-\item
-  \texttt{veg\_data{[}{[}3{]}{]}{[}400{]}}
-\item
-  \texttt{ncell(veg\_data{[}{[}56{]}{]})}
-\item
   \texttt{cellStats(veg\_data{[}{[}12{]}{]},\ "mean")}
 \item
   \texttt{names(veg\_data){[}which.max(cellStats(veg\_data,\ "sum")){]}}
-\item
-  Cells which do not contain habitat in any of the layers are denoted
-  with a zero in \texttt{sum\_veg\_data}. These zero cells occur in
-  places which do not contain any remnant vegetation (e.g.~due to
-  habitat destruction) or they occur in the ocean (i.e.~because
-  terrestrial vegetation does not occur in the ocean).
 \end{enumerate}
 \EndKnitrBlock{rmdanswer}
 
