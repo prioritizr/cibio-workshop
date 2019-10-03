@@ -132,10 +132,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.1" data-path="spatial-prioritizations.html"><a href="spatial-prioritizations.html#introduction-2"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
 <li class="chapter" data-level="5.2" data-path="spatial-prioritizations.html"><a href="spatial-prioritizations.html#starting-out-simple"><i class="fa fa-check"></i><b>5.2</b> Starting out simple</a></li>
 <li class="chapter" data-level="5.3" data-path="spatial-prioritizations.html"><a href="spatial-prioritizations.html#adding-complexity"><i class="fa fa-check"></i><b>5.3</b> Adding complexity</a></li>
+<li class="chapter" data-level="5.4" data-path="spatial-prioritizations.html"><a href="spatial-prioritizations.html#budget-limited-prioritizations"><i class="fa fa-check"></i><b>5.4</b> Budget limited prioritizations</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="budget-limited-prioritizations.html"><a href="budget-limited-prioritizations.html"><i class="fa fa-check"></i><b>6</b> Budget limited prioritizations</a></li>
-<li class="chapter" data-level="7" data-path="irreplaceability.html"><a href="irreplaceability.html"><i class="fa fa-check"></i><b>7</b> Irreplaceability</a></li>
-<li class="chapter" data-level="8" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>8</b> Acknowledgements</a></li>
+<li class="chapter" data-level="6" data-path="irreplaceability.html"><a href="irreplaceability.html"><i class="fa fa-check"></i><b>6</b> Irreplaceability</a></li>
+<li class="chapter" data-level="7" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>7</b> Acknowledgements</a></li>
 </ul>
 
       </nav>
@@ -194,14 +194,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="data-import" class="section level2">
 <h2><span class="header-section-number">3.3</span> Data import</h2>
-<p>Now that we have downloaded the dataset, we will need to import it into our R session. Specifically, this data was obtained from the “Introduction to Marxan” course and was originally a subset of a larger spatial prioritization project performed under contract to Australia’s Department of Environment and Water Resources. It contains vector-based planning unit data (<code>pu.shp</code>)and the raster-based data describing the spatial distributions of 62 vegetation classes (<code>vegetation.tif</code>) in Tasmania, Australia. We can import the data into our R session using the following code.</p>
+<p>Now that we have downloaded the dataset, we will need to import it into our R session. Specifically, this data was obtained from the “Introduction to Marxan” course and was originally a subset of a larger spatial prioritization project performed under contract to Australia’s Department of Environment and Water Resources. It contains vector-based planning unit data (<code>pu.shp</code>) and the raster-based data describing the spatial distributions of 62 vegetation classes (<code>vegetation.tif</code>) in Tasmania, Australia. Please note this dataset is only provided for teaching purposes and should not be used for any real-world conservation planning. We can import the data into our R session using the following code.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># import planning unit data</span>
 pu_data &lt;-<span class="st"> </span><span class="kw">readOGR</span>(<span class="st">&quot;data/pu.shp&quot;</span>)</code></pre></div>
 <pre><code>## OGR data source with driver: ESRI Shapefile 
 ## Source: &quot;/home/travis/build/prioritizr/cibio-workshop/data/pu.shp&quot;, layer: &quot;pu&quot;
 ## with 1130 features
 ## It has 5 fields</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># format planning unit data</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># format columns in planning unit data</span>
 pu_data<span class="op">$</span>locked_in &lt;-<span class="st"> </span><span class="kw">as.logical</span>(pu_data<span class="op">$</span>locked_in)
 pu_data<span class="op">$</span>locked_out &lt;-<span class="st"> </span><span class="kw">as.logical</span>(pu_data<span class="op">$</span>locked_out)
 
@@ -213,7 +213,7 @@ veg_data &lt;-<span class="st"> </span><span class="kw">stack</span>(<span class
 <p>The planning unit data contains spatial data describing the geometry for each planning unit and attribute data with information about each planning unit (e.g. cost values). Let’s investigate the <code>pu_data</code> object. The attribute data contains 5 columns with contain the following information:</p>
 <ul>
 <li><code>id</code>: unique identifiers for each planning unit</li>
-<li><code>cost</code>: acquisition cost values for each planning unit</li>
+<li><code>cost</code>: acquisition cost values for each planning unit (millions of Australian dollars).</li>
 <li><code>status</code>: status information for each planning unit (only relevant with Marxan)</li>
 <li><code>locked_in</code>: logical values (i.e. <code>TRUE</code>/<code>FALSE</code>) indicating if planning units are covered by protected areas or not.</li>
 <li><code>locked_out</code>: logical values (i.e. <code>TRUE</code>/<code>FALSE</code>) indicating if planning units cannot be managed as a protected area because they contain too much anthropologically altered land.</li>

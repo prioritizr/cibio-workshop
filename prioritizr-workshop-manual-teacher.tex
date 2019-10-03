@@ -490,10 +490,12 @@ our R session. Specifically, this data was obtained from the
 ``Introduction to Marxan'' course and was originally a subset of a
 larger spatial prioritization project performed under contract to
 Australia's Department of Environment and Water Resources. It contains
-vector-based planning unit data (\texttt{pu.shp})and the raster-based
+vector-based planning unit data (\texttt{pu.shp}) and the raster-based
 data describing the spatial distributions of 62 vegetation classes
-(\texttt{vegetation.tif}) in Tasmania, Australia. We can import the data
-into our R session using the following code.
+(\texttt{vegetation.tif}) in Tasmania, Australia. Please note this
+dataset is only provided for teaching purposes and should not be used
+for any real-world conservation planning. We can import the data into
+our R session using the following code.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -511,7 +513,7 @@ into our R session using the following code.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# format planning unit data}
+\CommentTok{# format columns in planning unit data}
 \NormalTok{pu_data}\OperatorTok{$}\NormalTok{locked_in <-}\StringTok{ }\KeywordTok{as.logical}\NormalTok{(pu_data}\OperatorTok{$}\NormalTok{locked_in)}
 \NormalTok{pu_data}\OperatorTok{$}\NormalTok{locked_out <-}\StringTok{ }\KeywordTok{as.logical}\NormalTok{(pu_data}\OperatorTok{$}\NormalTok{locked_out)}
 
@@ -534,6 +536,7 @@ contain the following information:
   \texttt{id}: unique identifiers for each planning unit
 \item
   \texttt{cost}: acquisition cost values for each planning unit
+  (millions of Australian dollars).
 \item
   \texttt{status}: status information for each planning unit (only
   relevant with Marxan)
@@ -1757,7 +1760,7 @@ here for Gurobi installation instructions}).
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# plot solution}
-\KeywordTok{spplot}\NormalTok{(s1, }\StringTok{"solution_1"}\NormalTok{, }\DataTypeTok{col =} \KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{), }\DataTypeTok{main =} \StringTok{"s1"}\NormalTok{)}
+\KeywordTok{spplot}\NormalTok{(s1, }\StringTok{"solution_1"}\NormalTok{, }\DataTypeTok{col.regions =} \KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{), }\DataTypeTok{main =} \StringTok{"s1"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1844,7 +1847,7 @@ let's lock in planing units that are already inside protected areas.
 \NormalTok{s2 <-}\StringTok{ }\KeywordTok{solve}\NormalTok{(p2)}
 
 \CommentTok{# plot solution}
-\KeywordTok{spplot}\NormalTok{(s2, }\StringTok{"solution_1"}\NormalTok{, }\DataTypeTok{col =} \KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{), }\DataTypeTok{main =} \StringTok{"s2"}\NormalTok{)}
+\KeywordTok{spplot}\NormalTok{(s2, }\StringTok{"solution_1"}\NormalTok{, }\DataTypeTok{col.regions =} \KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{), }\DataTypeTok{main =} \StringTok{"s2"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1890,7 +1893,7 @@ study area.
 \NormalTok{s3 <-}\StringTok{ }\KeywordTok{solve}\NormalTok{(p3)}
 
 \CommentTok{# plot solution}
-\KeywordTok{spplot}\NormalTok{(s3, }\StringTok{"solution_1"}\NormalTok{, }\DataTypeTok{col =} \KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{), }\DataTypeTok{main =} \StringTok{"s3"}\NormalTok{)}
+\KeywordTok{spplot}\NormalTok{(s3, }\StringTok{"solution_1"}\NormalTok{, }\DataTypeTok{col.regions =} \KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{), }\DataTypeTok{main =} \StringTok{"s3"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1903,7 +1906,7 @@ Next, let's lock out highly degraded areas.
 \CommentTok{# make prioritization problem}
 \NormalTok{p4 <-}\StringTok{ }\KeywordTok{problem}\NormalTok{(pu_data, veg_data, }\DataTypeTok{cost_column =} \StringTok{"cost"}\NormalTok{) }\OperatorTok{%>%}
 \StringTok{      }\KeywordTok{add_min_set_objective}\NormalTok{() }\OperatorTok{%>%}
-\StringTok{      }\KeywordTok{add_relative_targets}\NormalTok{(}\FloatTok{0.05}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_relative_targets}\NormalTok{(}\FloatTok{0.2}\NormalTok{) }\OperatorTok{%>%}
 \StringTok{      }\KeywordTok{add_locked_in_constraints}\NormalTok{(}\StringTok{"locked_in"}\NormalTok{) }\OperatorTok{%>%}
 \StringTok{      }\KeywordTok{add_locked_out_constraints}\NormalTok{(}\StringTok{"locked_out"}\NormalTok{) }\OperatorTok{%>%}
 \StringTok{      }\KeywordTok{add_binary_decisions}\NormalTok{() }\OperatorTok{%>%}
@@ -1920,7 +1923,7 @@ Next, let's lock out highly degraded areas.
 ##   cost:           min: 0.19249, max: 61.92727
 ##   features:       vegetation.1, vegetation.2, vegetation.3, ... (62 features)
 ##   objective:      Minimum set objective 
-##   targets:        Relative targets [targets (min: 0.05, max: 0.05)]
+##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
 ##   decisions:      Binary decision 
 ##   constraints:    <Locked out planning units [51 locked units]
 ##                    Locked in planning units [257 locked units]>
@@ -1935,7 +1938,7 @@ Next, let's lock out highly degraded areas.
 \NormalTok{s4 <-}\StringTok{ }\KeywordTok{solve}\NormalTok{(p4)}
 
 \CommentTok{# plot solution}
-\KeywordTok{spplot}\NormalTok{(s4, }\StringTok{"solution_1"}\NormalTok{, }\DataTypeTok{col =} \KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{), }\DataTypeTok{main =} \StringTok{"s4"}\NormalTok{)}
+\KeywordTok{spplot}\NormalTok{(s4, }\StringTok{"solution_1"}\NormalTok{, }\DataTypeTok{col.regions =} \KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{), }\DataTypeTok{main =} \StringTok{"s4"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1962,6 +1965,11 @@ Now, let's compare the solutions.
 \item
   Why does the third solution (\texttt{s3}) cost less than the fourth
   solution solution with highly degraded areas locked out (\texttt{s4})?
+\item
+  Since planning units covered by existing protected areas have already
+  been purchased, what is the cost for expanding the protected area
+  system based on on the fourth prioritization (\texttt{s4}) (hint:
+  total cost minus the cost of locked in planning units)?
 \item
   What happens if you specify targets that exceed the total amount of
   vegetation in the study area? You can do this by rerunning the code to
@@ -1998,63 +2006,85 @@ Now, let's compare the solutions.
   them from the reserve selection process means that other more costly
   planning units are needed to meet the targets.
 \item
+  \texttt{sum(s4\$cost\ *\ s4\$solution\_1)\ -\ sum(s4\$cost\ *\ s4\$locked\_in)}
+\item
   We get an error message stating the the problem is infeasible because
   there is no valid solution---even if we selected all the planning
   units the study area we would still not meet the targets.
 \end{enumerate}
 \EndKnitrBlock{rmdanswer}
 
-\chapter{Budget limited
+\section{Budget limited
 prioritizations}\label{budget-limited-prioritizations}
 
-The Conventional on Biological Diversity (\url{https://www.cbd.int})
-mandates that signatories -- including Australia -- should have at least
-17\% of their land and 10\% of their oceans covered by protected areas
-(or other effective area-based conservation measures) by 2020. But is
-17\% coverage enough to adequately conserve biodiversity? Well, let's
-calculate the percentage of land secured in priority areas.
+In many systematic conservation planning exercises, there is a limit on
+the expenditure for land acquisition. This means that decision makers
+need prioritizations where the total cost of the priority areas does not
+exceed a budget. In our previous prioritization (\texttt{s4}), we found
+that we would need \$9384 million AUD to ensure that each vegetation
+community is adequately represented in the protected area system. But
+what if the funds available for additional land acquisition were limited
+to \$1000? Let's create a budget-limited prioritization that aims to
+adequately represent as many targets as possible whilst remaining within
+a budget.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# calculate area for each planning unit in km^2}
-\NormalTok{pu_data}\OperatorTok{$}\NormalTok{area_km2 <-}
-\StringTok{  }\NormalTok{pu_data }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{gArea}\NormalTok{(}\DataTypeTok{byid =} \OtherTok{TRUE}\NormalTok{) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{set_units}\NormalTok{(m}\OperatorTok{^}\DecValTok{2}\NormalTok{) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{set_units}\NormalTok{(km}\OperatorTok{^}\DecValTok{2}\NormalTok{)}
+\CommentTok{# set the funds for additional land acquisition}
+\NormalTok{funds <-}\StringTok{ }\DecValTok{1000}
 
-\CommentTok{# calculate proportion of land covered by existing protected areas}
-\KeywordTok{sum}\NormalTok{(pu_data}\OperatorTok{$}\NormalTok{pa_status }\OperatorTok{*}\StringTok{ }\NormalTok{pu_data}\OperatorTok{$}\NormalTok{area_km2) }\OperatorTok{/}\StringTok{ }\KeywordTok{sum}\NormalTok{(pu_data}\OperatorTok{$}\NormalTok{area_km2)}
+\CommentTok{# calculate the total budget for the prioritization}
+\NormalTok{budget <-}\StringTok{ }\NormalTok{funds }\OperatorTok{+}\StringTok{ }\KeywordTok{sum}\NormalTok{(s4}\OperatorTok{$}\NormalTok{cost }\OperatorTok{*}\StringTok{ }\NormalTok{s4}\OperatorTok{$}\NormalTok{locked_in)}
+\KeywordTok{print}\NormalTok{(budget)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## 0.2220554 [1]
+## [1] 9475.56
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# calculate proportion of land covered by prioritization}
-\KeywordTok{sum}\NormalTok{(s4}\OperatorTok{$}\NormalTok{solution_}\DecValTok{1} \OperatorTok{*}\StringTok{ }\NormalTok{pu_data}\OperatorTok{$}\NormalTok{area_km2) }\OperatorTok{/}\StringTok{ }\KeywordTok{sum}\NormalTok{(pu_data}\OperatorTok{$}\NormalTok{area_km2)}
+\CommentTok{# make prioritization problem}
+\NormalTok{p5 <-}\StringTok{ }\KeywordTok{problem}\NormalTok{(pu_data, veg_data, }\DataTypeTok{cost_column =} \StringTok{"cost"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_max_features_objective}\NormalTok{(budget) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_relative_targets}\NormalTok{(}\FloatTok{0.2}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_locked_in_constraints}\NormalTok{(}\StringTok{"locked_in"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_locked_out_constraints}\NormalTok{(}\StringTok{"locked_out"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_binary_decisions}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_lpsymphony_solver}\NormalTok{(}\DataTypeTok{verbose =} \OtherTok{FALSE}\NormalTok{)}
+
+\CommentTok{# print problem}
+\KeywordTok{print}\NormalTok{(p5)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## 0.2395804 [1]
+## Conservation Problem
+##   planning units: SpatialPolygonsDataFrame (1130 units)
+##   cost:           min: 0.19249, max: 61.92727
+##   features:       vegetation.1, vegetation.2, vegetation.3, ... (62 features)
+##   objective:      Maximum representation objective [budget (9475.56009869836)]
+##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
+##   decisions:      Binary decision 
+##   constraints:    <Locked in planning units [257 locked units]
+##                    Locked out planning units [51 locked units]>
+##   penalties:      <none>
+##   portfolio:      default
+##   solver:         Lpsymphony [first_feasible (0), gap (0.1), time_limit (-1), verbose (0)]
 \end{verbatim}
 
-We can see that the answer is no. If additional protected areas were
-established to ensure adequate representation of the 62 vegetation
-communities for minimal cost, then we would need at least 23.96\% of
-Tasmania covered by protected areas. So, one question could be where
-should the Australian government establish new protected areas to
-increase representation of vegetation
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# solve problem}
+\NormalTok{s5 <-}\StringTok{ }\KeywordTok{solve}\NormalTok{(p5)}
 
-what if the Australian government
+\CommentTok{# plot solution}
+\KeywordTok{spplot}\NormalTok{(s5, }\StringTok{"solution_1"}\NormalTok{, }\DataTypeTok{col.regions =} \KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{), }\DataTypeTok{main =} \StringTok{"s5"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-If the Australian government wanted to expand the protected area system
-to increase protected area coverage of as many vegetation communities as
-possible without exceeding the 17\% threshold,
+\begin{center}\includegraphics{prioritizr-workshop-manual-teacher_files/figure-latex/unnamed-chunk-42-1} \end{center}
 
 \chapter{Irreplaceability}\label{irreplaceability}
 

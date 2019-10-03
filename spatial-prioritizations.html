@@ -32,7 +32,7 @@
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 <link rel="prev" href="gap-analysis.html"/>
-<link rel="next" href="budget-limited-prioritizations.html"/>
+<link rel="next" href="irreplaceability.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -132,10 +132,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.1" data-path="spatial-prioritizations.html"><a href="spatial-prioritizations.html#introduction-2"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
 <li class="chapter" data-level="5.2" data-path="spatial-prioritizations.html"><a href="spatial-prioritizations.html#starting-out-simple"><i class="fa fa-check"></i><b>5.2</b> Starting out simple</a></li>
 <li class="chapter" data-level="5.3" data-path="spatial-prioritizations.html"><a href="spatial-prioritizations.html#adding-complexity"><i class="fa fa-check"></i><b>5.3</b> Adding complexity</a></li>
+<li class="chapter" data-level="5.4" data-path="spatial-prioritizations.html"><a href="spatial-prioritizations.html#budget-limited-prioritizations"><i class="fa fa-check"></i><b>5.4</b> Budget limited prioritizations</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="budget-limited-prioritizations.html"><a href="budget-limited-prioritizations.html"><i class="fa fa-check"></i><b>6</b> Budget limited prioritizations</a></li>
-<li class="chapter" data-level="7" data-path="irreplaceability.html"><a href="irreplaceability.html"><i class="fa fa-check"></i><b>7</b> Irreplaceability</a></li>
-<li class="chapter" data-level="8" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>8</b> Acknowledgements</a></li>
+<li class="chapter" data-level="6" data-path="irreplaceability.html"><a href="irreplaceability.html"><i class="fa fa-check"></i><b>6</b> Irreplaceability</a></li>
+<li class="chapter" data-level="7" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>7</b> Acknowledgements</a></li>
 </ul>
 
       </nav>
@@ -214,7 +214,7 @@ s1 &lt;-<span class="st"> </span><span class="kw">solve</span>(p1)
 <span class="kw">sum</span>(s1<span class="op">$</span>solution_<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>s1<span class="op">$</span>cost)</code></pre></div>
 <pre><code>## [1] 806.2393</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot solution</span>
-<span class="kw">spplot</span>(s1, <span class="st">&quot;solution_1&quot;</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>), <span class="dt">main =</span> <span class="st">&quot;s1&quot;</span>)</code></pre></div>
+<span class="kw">spplot</span>(s1, <span class="st">&quot;solution_1&quot;</span>, <span class="dt">col.regions =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>), <span class="dt">main =</span> <span class="st">&quot;s1&quot;</span>)</code></pre></div>
 <p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-34-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Now let’s examine the solution.</p>
 
@@ -256,7 +256,7 @@ p2 &lt;-<span class="st"> </span><span class="kw">problem</span>(pu_data, veg_da
 s2 &lt;-<span class="st"> </span><span class="kw">solve</span>(p2)
 
 <span class="co"># plot solution</span>
-<span class="kw">spplot</span>(s2, <span class="st">&quot;solution_1&quot;</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>), <span class="dt">main =</span> <span class="st">&quot;s2&quot;</span>)</code></pre></div>
+<span class="kw">spplot</span>(s2, <span class="st">&quot;solution_1&quot;</span>, <span class="dt">col.regions =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>), <span class="dt">main =</span> <span class="st">&quot;s2&quot;</span>)</code></pre></div>
 <p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-37-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Let’s pretend we talked to an expert on the vegetation communities in our study system and they recommended that a 20% target was needed. So, now let’s set the targets to 20% of their total distribution in the study area.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make prioritization problem</span>
@@ -284,13 +284,13 @@ p3 &lt;-<span class="st"> </span><span class="kw">problem</span>(pu_data, veg_da
 s3 &lt;-<span class="st"> </span><span class="kw">solve</span>(p3)
 
 <span class="co"># plot solution</span>
-<span class="kw">spplot</span>(s3, <span class="st">&quot;solution_1&quot;</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>), <span class="dt">main =</span> <span class="st">&quot;s3&quot;</span>)</code></pre></div>
+<span class="kw">spplot</span>(s3, <span class="st">&quot;solution_1&quot;</span>, <span class="dt">col.regions =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>), <span class="dt">main =</span> <span class="st">&quot;s3&quot;</span>)</code></pre></div>
 <p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-38-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Next, let’s lock out highly degraded areas.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make prioritization problem</span>
 p4 &lt;-<span class="st"> </span><span class="kw">problem</span>(pu_data, veg_data, <span class="dt">cost_column =</span> <span class="st">&quot;cost&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">      </span><span class="kw">add_min_set_objective</span>() <span class="op">%&gt;%</span>
-<span class="st">      </span><span class="kw">add_relative_targets</span>(<span class="fl">0.05</span>) <span class="op">%&gt;%</span>
+<span class="st">      </span><span class="kw">add_relative_targets</span>(<span class="fl">0.2</span>) <span class="op">%&gt;%</span>
 <span class="st">      </span><span class="kw">add_locked_in_constraints</span>(<span class="st">&quot;locked_in&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">      </span><span class="kw">add_locked_out_constraints</span>(<span class="st">&quot;locked_out&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">      </span><span class="kw">add_binary_decisions</span>() <span class="op">%&gt;%</span>
@@ -303,7 +303,7 @@ p4 &lt;-<span class="st"> </span><span class="kw">problem</span>(pu_data, veg_da
 ##   cost:           min: 0.19249, max: 61.92727
 ##   features:       vegetation.1, vegetation.2, vegetation.3, ... (62 features)
 ##   objective:      Minimum set objective 
-##   targets:        Relative targets [targets (min: 0.05, max: 0.05)]
+##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
 ##   decisions:      Binary decision 
 ##   constraints:    &lt;Locked out planning units [51 locked units]
 ##                    Locked in planning units [257 locked units]&gt;
@@ -314,7 +314,7 @@ p4 &lt;-<span class="st"> </span><span class="kw">problem</span>(pu_data, veg_da
 s4 &lt;-<span class="st"> </span><span class="kw">solve</span>(p4)
 
 <span class="co"># plot solution</span>
-<span class="kw">spplot</span>(s4, <span class="st">&quot;solution_1&quot;</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>), <span class="dt">main =</span> <span class="st">&quot;s4&quot;</span>)</code></pre></div>
+<span class="kw">spplot</span>(s4, <span class="st">&quot;solution_1&quot;</span>, <span class="dt">col.regions =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>), <span class="dt">main =</span> <span class="st">&quot;s4&quot;</span>)</code></pre></div>
 <p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-39-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Now, let’s compare the solutions.</p>
 
@@ -325,9 +325,51 @@ s4 &lt;-<span class="st"> </span><span class="kw">solve</span>(p4)
 <li>Do the solutions with more planning units have a greater cost? Why or why not?</li>
 <li>Why does the first solution (<code>s1</code>) cost less than the second solution with protected areas locked into the solution (<code>s2</code>)?</li>
 <li>Why does the third solution (<code>s3</code>) cost less than the fourth solution solution with highly degraded areas locked out (<code>s4</code>)?</li>
+<li>Since planning units covered by existing protected areas have already been purchased, what is the cost for expanding the protected area system based on on the fourth prioritization (<code>s4</code>) (hint: total cost minus the cost of locked in planning units)?</li>
 <li>What happens if you specify targets that exceed the total amount of vegetation in the study area? You can do this by rerunning the code to make <code>p4</code> with <code>add_absolute_targets(1000)</code> instead of <code>add_relative_targets(0.2)</code> and generating a new solution?</li>
 </ol>
 </div>
+
+</div>
+<div id="budget-limited-prioritizations" class="section level2">
+<h2><span class="header-section-number">5.4</span> Budget limited prioritizations</h2>
+<p>In many systematic conservation planning exercises, there is a limit on the expenditure for land acquisition. This means that decision makers need prioritizations where the total cost of the priority areas does not exceed a budget. In our previous prioritization (<code>s4</code>), we found that we would need $9384 million AUD to ensure that each vegetation community is adequately represented in the protected area system. But what if the funds available for additional land acquisition were limited to $1000? Let’s create a budget-limited prioritization that aims to adequately represent as many targets as possible whilst remaining within a budget.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># set the funds for additional land acquisition</span>
+funds &lt;-<span class="st"> </span><span class="dv">1000</span>
+
+<span class="co"># calculate the total budget for the prioritization</span>
+budget &lt;-<span class="st"> </span>funds <span class="op">+</span><span class="st"> </span><span class="kw">sum</span>(s4<span class="op">$</span>cost <span class="op">*</span><span class="st"> </span>s4<span class="op">$</span>locked_in)
+<span class="kw">print</span>(budget)</code></pre></div>
+<pre><code>## [1] 9475.56</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make prioritization problem</span>
+p5 &lt;-<span class="st"> </span><span class="kw">problem</span>(pu_data, veg_data, <span class="dt">cost_column =</span> <span class="st">&quot;cost&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">      </span><span class="kw">add_max_features_objective</span>(budget) <span class="op">%&gt;%</span>
+<span class="st">      </span><span class="kw">add_relative_targets</span>(<span class="fl">0.2</span>) <span class="op">%&gt;%</span>
+<span class="st">      </span><span class="kw">add_locked_in_constraints</span>(<span class="st">&quot;locked_in&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">      </span><span class="kw">add_locked_out_constraints</span>(<span class="st">&quot;locked_out&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">      </span><span class="kw">add_binary_decisions</span>() <span class="op">%&gt;%</span>
+<span class="st">      </span><span class="kw">add_lpsymphony_solver</span>(<span class="dt">verbose =</span> <span class="ot">FALSE</span>)
+
+<span class="co"># print problem</span>
+<span class="kw">print</span>(p5)</code></pre></div>
+<pre><code>## Conservation Problem
+##   planning units: SpatialPolygonsDataFrame (1130 units)
+##   cost:           min: 0.19249, max: 61.92727
+##   features:       vegetation.1, vegetation.2, vegetation.3, ... (62 features)
+##   objective:      Maximum representation objective [budget (9475.56009869836)]
+##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
+##   decisions:      Binary decision 
+##   constraints:    &lt;Locked in planning units [257 locked units]
+##                    Locked out planning units [51 locked units]&gt;
+##   penalties:      &lt;none&gt;
+##   portfolio:      default
+##   solver:         Lpsymphony [first_feasible (0), gap (0.1), time_limit (-1), verbose (0)]</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># solve problem</span>
+s5 &lt;-<span class="st"> </span><span class="kw">solve</span>(p5)
+
+<span class="co"># plot solution</span>
+<span class="kw">spplot</span>(s5, <span class="st">&quot;solution_1&quot;</span>, <span class="dt">col.regions =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>), <span class="dt">main =</span> <span class="st">&quot;s5&quot;</span>)</code></pre></div>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-42-1.png" width="672" style="display: block; margin: auto;" /></p>
 
 </div>
 </div>
@@ -337,7 +379,7 @@ s4 &lt;-<span class="st"> </span><span class="kw">solve</span>(p4)
         </div>
       </div>
 <a href="gap-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="budget-limited-prioritizations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="irreplaceability.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
