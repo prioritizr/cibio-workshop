@@ -1,3 +1,9 @@
 # Acknowledgements
 
 Many thanks to [Icons8](https://icons8.com) for providing the icons used in this manual and to Yihui Xie for developing the [bookdown R package](http://bookdown.org) that underpins this manual.
+
+# Session information
+
+```{r}
+sessionInfo()
+```
