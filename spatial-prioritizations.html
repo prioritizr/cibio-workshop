@@ -324,8 +324,8 @@ p4 &lt;-<span class="st"> </span><span class="kw">problem</span>(pu_data, veg_da
 ##   objective:      Minimum set objective 
 ##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
 ##   decisions:      Binary decision 
-##   constraints:    &lt;Locked in planning units [257 locked units]
-##                    Locked out planning units [51 locked units]&gt;
+##   constraints:    &lt;Locked out planning units [51 locked units]
+##                    Locked in planning units [257 locked units]&gt;
 ##   penalties:      &lt;none&gt;
 ##   portfolio:      default
 ##   solver:         Lpsymphony [first_feasible (0), gap (0.1), time_limit (-1), verbose (0)]</code></pre>
@@ -382,8 +382,8 @@ p6 &lt;-<span class="st"> </span><span class="kw">problem</span>(pu_data, veg_da
 ##   objective:      Maximum representation objective [budget (9475.56009869836)]
 ##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
 ##   decisions:      Binary decision 
-##   constraints:    &lt;Locked in planning units [257 locked units]
-##                    Locked out planning units [51 locked units]&gt;
+##   constraints:    &lt;Locked out planning units [51 locked units]
+##                    Locked in planning units [257 locked units]&gt;
 ##   penalties:      &lt;none&gt;
 ##   portfolio:      default
 ##   solver:         Lpsymphony [first_feasible (0), gap (0.1), time_limit (-1), verbose (0)]</code></pre>
@@ -478,10 +478,10 @@ r7 &lt;-<span class="st"> </span><span class="kw">feature_representation</span>(
 <li>What is the name of the feature with the smallest weight?</li>
 <li>What is the cost of the sixth (<code>s6</code>) and seventh (<code>s7</code>) solutions?</li>
 <li>Does there seem to be a big difference in which planning units were selected in the sixth (<code>s6</code>) and seventh (<code>s7</code>) solutions?</li>
-<li>Is there a difference between which features are adequately represented in the sixth (<code>s6</code>) and seventh (<code>s7</code>) solutions?
-</div>
-</li>
+<li>Is there a difference between which features are adequately represented in the sixth (<code>s6</code>) and seventh (<code>s7</code>) solutions?</li>
 </ol>
+</div>
+
 </div>
 <div id="solution-portfolios" class="section level2">
 <h2><span class="header-section-number">5.6</span> Solution portfolios</h2>
@@ -538,20 +538,20 @@ s8_plots &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span clas
 <pre><code>## [1] 2194.232</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the cost of the second solution</span>
 <span class="kw">sum</span>(s8<span class="op">$</span>solution_<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>s8<span class="op">$</span>cost)</code></pre></div>
-<pre><code>## [1] 2146.141</code></pre>
+<pre><code>## [1] 2156.081</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the proportion of planning units with the same solution values</span>
 <span class="co"># in the first and second solutions</span>
 <span class="kw">mean</span>(s8<span class="op">$</span>solution_<span class="dv">1</span> <span class="op">==</span><span class="st"> </span>s8<span class="op">$</span>solution_<span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] 0.9752212</code></pre>
+<pre><code>## [1] 0.9699115</code></pre>
 
 <div class="rmdquestion">
 <ol style="list-style-type: decimal">
 <li>What is the cost of each of the six solutions in portfolio? Are they costs very different?</li>
 <li>Are the solutions in the portfolio very different?</li>
-<li>What could we do to obtain a portfolio with more different solutions?
-</div>
-</li>
+<li>What could we do to obtain a portfolio with more different solutions?</li>
 </ol>
+</div>
+
 
 </div>
 </div>

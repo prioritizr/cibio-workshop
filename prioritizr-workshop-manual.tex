@@ -129,7 +129,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2019-10-03}
+    \date{2019-10-04}
 
 % load packages
 \usepackage{caption}
@@ -267,19 +267,20 @@ prioritizr R package for systematic conservation planning. It is not
 designed to give you a comprehensive overview and you will not become an
 expert after completing this workshop. Instead, we want to help you
 understand the core principles of conservation planning and guide you
-through some of the common tasks involved with generating
-prioritizations. Phrased provocatively, we want to give you the
-knowledge base and confidence needed to start applying systematic
-conservation planning to your own work.
+through some of the common tasks involved with developing
+prioritizations. In other words, we want to give you the knowledge base
+and confidence needed to start applying systematic conservation planning
+to your own work.
 
 You are not alone in this workshop. If you are having trouble, please
 put your hand up and one of the instructors will help you as soon as
 they can. You can also ask the people sitting next to you for help too.
-If you are having trouble with using the prioritizr R package, please
-consult the package website: \url{https://prioritizr.net}. It has plenty
-of examples and tutorials. Finally, please note that the first thing an
-instructor will ask you will (probably) be ``what have you tried so
-far?''. We can't help you if you haven't tried anything.
+\textbf{Most importantly, the code needed to answer the questions in
+this workshop are almost always located in the same section as the
+question. So if you are stuck, try rereading the example code and see if
+you can modify it to answer the question.} Please note that the first
+thing an instructor will ask you will (probably) be ``what have you
+tried so far?''. We can't help you if you haven't tried anything.
 
 \hypertarget{setup}{\section{Setting up your computer}\label{setup}}
 
@@ -343,7 +344,7 @@ may take a while to complete.
 \begin{Highlighting}[]
 \KeywordTok{install.packages}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"sf"}\NormalTok{, }\StringTok{"tidyverse"}\NormalTok{, }\StringTok{"sp"}\NormalTok{, }\StringTok{"rgeos"}\NormalTok{, }\StringTok{"rgdal"}\NormalTok{, }\StringTok{"raster"}\NormalTok{, }\StringTok{"units"}\NormalTok{,}
                    \StringTok{"prioritizr"}\NormalTok{, }\StringTok{"prioritizrdata"} \StringTok{"Rsymphony"}\NormalTok{, }\StringTok{"mapview"}\NormalTok{,}
-                   \StringTok{"assertthat"}\NormalTok{, }\StringTok{"velox"}\NormalTok{, }\StringTok{"remotes"}\NormalTok{))}
+                   \StringTok{"assertthat"}\NormalTok{, }\StringTok{"velox"}\NormalTok{, }\StringTok{"remotes"}\NormalTok{, }\StringTok{"gridExtra"}\NormalTok{))}
 \NormalTok{remotes}\OperatorTok{::}\KeywordTok{install_bioc}\NormalTok{(}\StringTok{"lpsymphony"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -448,7 +449,9 @@ the following R code to attach the R packages used in this workshop.
 \KeywordTok{library}\NormalTok{(rgeos)}
 \KeywordTok{library}\NormalTok{(mapview)}
 \KeywordTok{library}\NormalTok{(units)}
+\KeywordTok{library}\NormalTok{(scales)}
 \KeywordTok{library}\NormalTok{(assertthat)}
+\KeywordTok{library}\NormalTok{(gridExtra)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -878,7 +881,7 @@ Let's explore the vegetation data.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-19-1} \end{center}
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-18-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1350,7 +1353,7 @@ Now let's explore the abundance data.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-27-1} \end{center}
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-25-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1383,9 +1386,9 @@ Now, try to answer the following questions.
 \item
   What is the median abundance of the features (hint: \texttt{median})?
 \item
-  What the abundance of the feature with smallest abundance?
+  What is the abundance of the feature with smallest abundance?
 \item
-  What the name of the feature with smallest abundance?
+  What is the name of the feature with smallest abundance?
 \item
   What is the total abundance of all features in the planning units
   summed together?
@@ -1526,22 +1529,30 @@ Now let's investigate how well the species are represented.
 \section{Introduction}\label{introduction-2}
 
 Here we will develop prioritizations to identify priority areas for
-protected area establishment. Its worth noting that prioritizr, Marxan,
-and Zonation are all decision \emph{support} tools. This means that
-these tools are all designed to \emph{help} you make decisions---they
-can't make decisions for you.
+protected area establishment. Its worth noting that
+\href{https://prioritizr.net/}{prioritizr},
+\href{http://marxan.org/}{Marxan}, and
+\href{https://www.helsinki.fi/en/researchgroups/digital-geography-lab/software-developed-in-cbig\#section-52992}{Zonation}
+are all decision \emph{support} tools. This means that these tools are
+all designed to \emph{help} you make decisions---they can't make
+decisions for you.
 
 \section{Starting out simple}\label{starting-out-simple}
 
 To start things off, let's keep things simple. Let's create a
-prioritization using the minimum set problem formulation of the reserve
-selection problem. This problem will have 5\% targets for each
-vegetation class and use the data in the \texttt{cost} column to specify
-acquisition costs. Although we strongly recommend using Gurobi to solve
-problems (\texttt{add\_gurobi\_solver}), we will use the lpsymphony
-solver in this workshop since it is much easier to install. The Gurobi
+prioritization using the
+\href{https://prioritizr.net/reference/add_min_set_objective.html}{minimum
+set problem formulation of the reserve selection problem}. This problem
+will have 5\% targets for each vegetation class and use the data in the
+\texttt{cost} column to specify acquisition costs. Although we strongly
+recommend using \href{https://www.gurobi.com/}{Gurobi} to solve problems
+(with
+\href{https://prioritizr.net/reference/add_gurobi_solver.html}{\texttt{add\_gurobi\_solver}}),
+we will use the
+\href{https://prioritizr.net/reference/add_lsymphony_solver.html}{lpsymphony
+solver} in this workshop since it is much easier to install. The Gurobi
 solver is the fastest solver that prioritizr can use to generate
-solutions and is much, much, much faster than the lpsymphony solver
+solutions and it is much, much, much faster than the lpsymphony solver
 (\href{https://prioritizr.net/articles/gurobi_installation.html}{see
 here for Gurobi installation instructions}).
 
@@ -1643,7 +1654,7 @@ here for Gurobi installation instructions}).
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-34-1} \end{center}
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-30-1} \end{center}
 
 Now let's examine the solution.
 
@@ -1710,7 +1721,7 @@ let's lock in planing units that are already inside protected areas.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-37-1} \end{center}
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-32-1} \end{center}
 
 Let's pretend we talked to an expert on the vegetation communities in
 our study system and they recommended that a 20\% target was needed. So,
@@ -1756,7 +1767,7 @@ study area.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-38-1} \end{center}
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-33-1} \end{center}
 
 Next, let's lock out highly degraded areas.
 
@@ -1801,7 +1812,7 @@ Next, let's lock out highly degraded areas.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-39-1} \end{center}
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-34-1} \end{center}
 
 Now, let's compare the solutions.
 
@@ -1837,17 +1848,28 @@ Now, let's compare the solutions.
 \end{enumerate}
 \EndKnitrBlock{rmdquestion}
 
+\section{Penalizing fragmentation}\label{penalizing-fragmentation}
+
+TODO.
+
 \section{Budget limited
 prioritizations}\label{budget-limited-prioritizations}
 
-In many systematic conservation planning exercises, there is a limit on
-the expenditure for land acquisition. This means that decision makers
-need prioritizations where the total cost of the priority areas does not
-exceed a budget. In our previous prioritization (\texttt{s4}), we found
-that we would need \$9384 million AUD to ensure that each vegetation
+In the real-world, the funding available for conservation is often very
+limited. As a consequence, decision makers often need prioritizations
+where the total cost of priority areas does not exceed a budget. In our
+fourth prioritization (\texttt{s4}), we found that we would need to
+spend an additional \$909 million AUD to ensure that each vegetation
 community is adequately represented in the protected area system. But
-what if the funds available for additional land acquisition were limited
-to \$1000? Let's create a budget-limited prioritization that aims to
+what if the funds available for protecting new land were limited to
+\$1000? In this case, we need a ``budget limited prioritization''.
+Budget limited prioritizations aim to maximize some measure of
+conservation benefit subject to a budget (e.g.
+\href{https://prioritizr.net/reference/add_max_cover_objective.html}{number
+of species with at least one occurrence in the protected area system},
+or
+\href{https://prioritizr.net/reference/add_max_phylo_div_objective.html}{phylogenetic
+diversity}). Let's create a budget-limited prioritization that aims to
 adequately represent as many targets as possible whilst remaining within
 a budget.
 
@@ -1869,7 +1891,7 @@ a budget.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# make prioritization problem}
-\NormalTok{p5 <-}\StringTok{ }\KeywordTok{problem}\NormalTok{(pu_data, veg_data, }\DataTypeTok{cost_column =} \StringTok{"cost"}\NormalTok{) }\OperatorTok{%>%}
+\NormalTok{p6 <-}\StringTok{ }\KeywordTok{problem}\NormalTok{(pu_data, veg_data, }\DataTypeTok{cost_column =} \StringTok{"cost"}\NormalTok{) }\OperatorTok{%>%}
 \StringTok{      }\KeywordTok{add_max_features_objective}\NormalTok{(budget) }\OperatorTok{%>%}
 \StringTok{      }\KeywordTok{add_relative_targets}\NormalTok{(}\FloatTok{0.2}\NormalTok{) }\OperatorTok{%>%}
 \StringTok{      }\KeywordTok{add_locked_in_constraints}\NormalTok{(}\StringTok{"locked_in"}\NormalTok{) }\OperatorTok{%>%}
@@ -1878,7 +1900,7 @@ a budget.
 \StringTok{      }\KeywordTok{add_lpsymphony_solver}\NormalTok{(}\DataTypeTok{verbose =} \OtherTok{FALSE}\NormalTok{)}
 
 \CommentTok{# print problem}
-\KeywordTok{print}\NormalTok{(p5)}
+\KeywordTok{print}\NormalTok{(p6)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1890,8 +1912,8 @@ a budget.
 ##   objective:      Maximum representation objective [budget (9475.56009869836)]
 ##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
 ##   decisions:      Binary decision 
-##   constraints:    <Locked out planning units [51 locked units]
-##                    Locked in planning units [257 locked units]>
+##   constraints:    <Locked in planning units [257 locked units]
+##                    Locked out planning units [51 locked units]>
 ##   penalties:      <none>
 ##   portfolio:      default
 ##   solver:         Lpsymphony [first_feasible (0), gap (0.1), time_limit (-1), verbose (0)]
@@ -1900,23 +1922,623 @@ a budget.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# solve problem}
-\NormalTok{s5 <-}\StringTok{ }\KeywordTok{solve}\NormalTok{(p5)}
+\NormalTok{s6 <-}\StringTok{ }\KeywordTok{solve}\NormalTok{(p6)}
 
 \CommentTok{# plot solution}
-\KeywordTok{spplot}\NormalTok{(s5, }\StringTok{"solution_1"}\NormalTok{, }\DataTypeTok{col.regions =} \KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{), }\DataTypeTok{main =} \StringTok{"s5"}\NormalTok{)}
+\KeywordTok{spplot}\NormalTok{(s6, }\StringTok{"solution_1"}\NormalTok{, }\DataTypeTok{col.regions =} \KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{), }\DataTypeTok{main =} \StringTok{"s5"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-42-1} \end{center}
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-36-1} \end{center}
 
-\chapter{Irreplaceability}\label{irreplaceability}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# find out which features have their targets met}
+\NormalTok{r6 <-}\StringTok{ }\KeywordTok{feature_representation}\NormalTok{(p6, s6[, }\StringTok{"solution_1"}\NormalTok{])}
+\KeywordTok{print}\NormalTok{(r6}\OperatorTok{$}\NormalTok{feature[r6}\OperatorTok{$}\NormalTok{relative_held }\OperatorTok{>}\StringTok{ }\FloatTok{0.2}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
 
-TODO.
+\begin{verbatim}
+##  [1] "vegetation.1"  "vegetation.2"  "vegetation.3"  "vegetation.4" 
+##  [5] "vegetation.5"  "vegetation.6"  "vegetation.8"  "vegetation.9" 
+##  [9] "vegetation.10" "vegetation.11" "vegetation.12" "vegetation.14"
+## [13] "vegetation.15" "vegetation.16" "vegetation.17" "vegetation.18"
+## [17] "vegetation.19" "vegetation.20" "vegetation.21" "vegetation.22"
+## [21] "vegetation.24" "vegetation.25" "vegetation.26" "vegetation.28"
+## [25] "vegetation.29" "vegetation.30" "vegetation.31" "vegetation.32"
+## [29] "vegetation.33" "vegetation.34" "vegetation.35" "vegetation.36"
+## [33] "vegetation.37" "vegetation.38" "vegetation.39" "vegetation.40"
+## [37] "vegetation.41" "vegetation.42" "vegetation.44" "vegetation.45"
+## [41] "vegetation.47" "vegetation.48" "vegetation.49" "vegetation.50"
+## [45] "vegetation.51" "vegetation.52" "vegetation.53" "vegetation.55"
+## [49] "vegetation.56" "vegetation.57" "vegetation.58" "vegetation.59"
+## [53] "vegetation.60" NA              "vegetation.62"
+\end{verbatim}
+
+We can also add weights to specify that it is more important to meet the
+targets for certain features and less important for other features. A
+common approach for weighting features is to assign a greater importance
+to features with smaller spatial distributions. The rationale behind
+this weighting method is that features with smaller spatial
+distributions are at greater risk of extinction. So, let's calculate
+some weights for our vegetation communities and see how weighting the
+features changes our prioritization.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculate weights as the inverse number of grid cells that each vegetation}
+\CommentTok{# class occupies, rescaled between 1 and 100}
+\NormalTok{wts <-}\StringTok{ }\DecValTok{1} \OperatorTok{/}\StringTok{ }\KeywordTok{cellStats}\NormalTok{(veg_data, }\StringTok{"sum"}\NormalTok{)}
+\NormalTok{wts <-}\StringTok{ }\KeywordTok{rescale}\NormalTok{(wts, }\DataTypeTok{to =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{10}\NormalTok{))}
+
+\CommentTok{# print the name of the feature with smallest weight}
+\KeywordTok{names}\NormalTok{(veg_data)[}\KeywordTok{which.min}\NormalTok{(wts)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "vegetation.20"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# print the name of the feature with greatest weight}
+\KeywordTok{names}\NormalTok{(veg_data)[}\KeywordTok{which.max}\NormalTok{(wts)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "vegetation.52"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# plot histogram of weights}
+\KeywordTok{hist}\NormalTok{(wts, }\DataTypeTok{main =} \StringTok{"feature weights"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-37-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# make prioritization problem with weights}
+\NormalTok{p7 <-}\StringTok{ }\KeywordTok{problem}\NormalTok{(pu_data, veg_data, }\DataTypeTok{cost_column =} \StringTok{"cost"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_max_features_objective}\NormalTok{(budget) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_relative_targets}\NormalTok{(}\FloatTok{0.2}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_feature_weights}\NormalTok{(wts) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_locked_in_constraints}\NormalTok{(}\StringTok{"locked_in"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_locked_out_constraints}\NormalTok{(}\StringTok{"locked_out"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_binary_decisions}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_lpsymphony_solver}\NormalTok{(}\DataTypeTok{verbose =} \OtherTok{FALSE}\NormalTok{)}
+
+\CommentTok{# print problem}
+\KeywordTok{print}\NormalTok{(p7)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Conservation Problem
+##   planning units: SpatialPolygonsDataFrame (1130 units)
+##   cost:           min: 0.19249, max: 61.92727
+##   features:       vegetation.1, vegetation.2, vegetation.3, ... (62 features)
+##   objective:      Maximum representation objective [budget (9475.56009869836)]
+##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
+##   decisions:      Binary decision 
+##   constraints:    <Locked in planning units [257 locked units]
+##                    Locked out planning units [51 locked units]>
+##   penalties:      <Feature weights [weights (min: 1, max: 10)]>
+##   portfolio:      default
+##   solver:         Lpsymphony [first_feasible (0), gap (0.1), time_limit (-1), verbose (0)]
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# solve problem}
+\NormalTok{s7 <-}\StringTok{ }\KeywordTok{solve}\NormalTok{(p7)}
+
+\CommentTok{# plot solution}
+\KeywordTok{spplot}\NormalTok{(s7, }\StringTok{"solution_1"}\NormalTok{, }\DataTypeTok{col.regions =} \KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{), }\DataTypeTok{main =} \StringTok{"s6"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-37-2} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# find out which features have their targets met when we add weights}
+\NormalTok{r7 <-}\StringTok{ }\KeywordTok{feature_representation}\NormalTok{(p7, s7[, }\StringTok{"solution_1"}\NormalTok{])}
+\KeywordTok{print}\NormalTok{(r6}\OperatorTok{$}\NormalTok{feature[r7}\OperatorTok{$}\NormalTok{relative_held }\OperatorTok{>}\StringTok{ }\FloatTok{0.2}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "vegetation.1"  "vegetation.2"  "vegetation.3"  "vegetation.4" 
+##  [5] "vegetation.5"  "vegetation.6"  "vegetation.9"  "vegetation.10"
+##  [9] "vegetation.11" "vegetation.12" "vegetation.14" "vegetation.15"
+## [13] "vegetation.16" "vegetation.17" "vegetation.18" "vegetation.19"
+## [17] "vegetation.20" "vegetation.21" "vegetation.22" "vegetation.24"
+## [21] "vegetation.25" "vegetation.26" "vegetation.28" "vegetation.29"
+## [25] "vegetation.30" "vegetation.31" "vegetation.32" "vegetation.33"
+## [29] "vegetation.34" "vegetation.35" "vegetation.36" "vegetation.37"
+## [33] "vegetation.38" "vegetation.39" "vegetation.40" "vegetation.41"
+## [37] "vegetation.42" "vegetation.43" "vegetation.44" "vegetation.45"
+## [41] "vegetation.47" "vegetation.48" "vegetation.49" "vegetation.50"
+## [45] "vegetation.51" "vegetation.52" "vegetation.53" "vegetation.55"
+## [49] "vegetation.56" "vegetation.57" "vegetation.58" "vegetation.59"
+## [53] "vegetation.60" NA              "vegetation.62"
+\end{verbatim}
+
+\BeginKnitrBlock{rmdquestion}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  What is the name of the feature with the smallest weight?
+\item
+  What is the cost of the sixth (\texttt{s6}) and seventh (\texttt{s7})
+  solutions?
+\item
+  Does there seem to be a big difference in which planning units were
+  selected in the sixth (\texttt{s6}) and seventh (\texttt{s7})
+  solutions?
+\item
+  Is there a difference between which features are adequately
+  represented in the sixth (\texttt{s6}) and seventh (\texttt{s7})
+  solutions?
+\end{enumerate}
+\EndKnitrBlock{rmdquestion}
+
+\section{Solution portfolios}\label{solution-portfolios}
+
+In systematic conservation planning, only rarely do we have data on all
+of the stakeholder preferences and biodiversity features that we are
+interested in conserving. As a consequence, it is often useful to
+generate a portfolio of near optimal solutions to present to decision
+makers to guide the reserve selection process. Generally we would want
+many solutions in our portfolio (e.g.~1000) to ensure that our portfolio
+contains a range of highly different solutions, but here we will
+generate a portfolio containing just six near-optimal solutions so the
+code doesn't take too long to run. We will also increase the optimality
+gap to obtain solutions that are more suboptimal than earlier (the
+default gap value is 0.1).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# make problem with a cuts portfolio}
+\NormalTok{p8 <-}\StringTok{ }\KeywordTok{problem}\NormalTok{(pu_data, veg_data, }\DataTypeTok{cost_column =} \StringTok{"cost"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_max_features_objective}\NormalTok{(budget) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_relative_targets}\NormalTok{(}\FloatTok{0.2}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_feature_weights}\NormalTok{(wts) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_binary_decisions}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_shuffle_portfolio}\NormalTok{(}\DataTypeTok{number_solutions =} \DecValTok{6}\NormalTok{,}
+                            \DataTypeTok{remove_duplicates =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_lpsymphony_solver}\NormalTok{(}\DataTypeTok{verbose =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{gap =} \DecValTok{10}\NormalTok{)}
+
+\CommentTok{# print problem}
+\KeywordTok{print}\NormalTok{(p8)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Conservation Problem
+##   planning units: SpatialPolygonsDataFrame (1130 units)
+##   cost:           min: 0.19249, max: 61.92727
+##   features:       vegetation.1, vegetation.2, vegetation.3, ... (62 features)
+##   objective:      Maximum representation objective [budget (9475.56009869836)]
+##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
+##   decisions:      Binary decision 
+##   constraints:    <none>
+##   penalties:      <Feature weights [weights (min: 1, max: 10)]>
+##   portfolio:      Shuffle portfolio [number_solutions (6), remove_duplicates (0), threads (1)]
+##   solver:         Lpsymphony [first_feasible (0), gap (10), time_limit (-1), verbose (1)]
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# solve problem}
+\CommentTok{# note that this will contain six solutions since we added a portfolio}
+\NormalTok{s8 <-}\StringTok{ }\KeywordTok{solve}\NormalTok{(p8)}
+
+\CommentTok{# print solution}
+\KeywordTok{print}\NormalTok{(s8)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## class       : SpatialPolygonsDataFrame 
+## features    : 1130 
+## extent      : 1080623, 1399989, -4840595, -4497092  (xmin, xmax, ymin, ymax)
+## crs         : +proj=aea +lat_1=-18 +lat_2=-36 +lat_0=0 +lon_0=132 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs 
+## variables   : 12
+## names       :   id,              cost, status, locked_in, locked_out, pa_status, solution_1, solution_2, solution_3, solution_4, solution_5, solution_6 
+## min values  :    1, 0.192488262910798,      0,         0,          0,         0,          0,          0,          0,          0,          0,          0 
+## max values  : 1130,  61.9272727272727,      2,         1,          1,         1,          1,          1,          1,          1,          1,          1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# plot first solution}
+\KeywordTok{spplot}\NormalTok{(s8, }\StringTok{"solution_1"}\NormalTok{, }\DataTypeTok{col.regions =} \KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{),}
+       \DataTypeTok{main =} \StringTok{"s8 (solution 1)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-40-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# plot all solutions}
+\NormalTok{s8_plots <-}\StringTok{ }\KeywordTok{lapply}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"solution_"}\NormalTok{, }\KeywordTok{seq_len}\NormalTok{(}\DecValTok{6}\NormalTok{)), }\ControlFlowTok{function}\NormalTok{(x) \{}
+  \KeywordTok{spplot}\NormalTok{(s8, x, }\DataTypeTok{main =}\NormalTok{ x, }\DataTypeTok{col.regions =} \KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{))}
+\NormalTok{\})}
+\KeywordTok{do.call}\NormalTok{(grid.arrange, }\KeywordTok{append}\NormalTok{(s8_plots, }\KeywordTok{list}\NormalTok{(}\DataTypeTok{ncol =} \DecValTok{3}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-40-2} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculate the cost of the first solution}
+\KeywordTok{sum}\NormalTok{(s8}\OperatorTok{$}\NormalTok{solution_}\DecValTok{1} \OperatorTok{*}\StringTok{ }\NormalTok{s8}\OperatorTok{$}\NormalTok{cost)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2194.232
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculate the cost of the second solution}
+\KeywordTok{sum}\NormalTok{(s8}\OperatorTok{$}\NormalTok{solution_}\DecValTok{2} \OperatorTok{*}\StringTok{ }\NormalTok{s8}\OperatorTok{$}\NormalTok{cost)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2163.894
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculate the proportion of planning units with the same solution values}
+\CommentTok{# in the first and second solutions}
+\KeywordTok{mean}\NormalTok{(s8}\OperatorTok{$}\NormalTok{solution_}\DecValTok{1} \OperatorTok{==}\StringTok{ }\NormalTok{s8}\OperatorTok{$}\NormalTok{solution_}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.9743363
+\end{verbatim}
+
+\BeginKnitrBlock{rmdquestion}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  What is the cost of each of the six solutions in portfolio? Are they
+  costs very different?
+\item
+  Are the solutions in the portfolio very different?
+\item
+  What could we do to obtain a portfolio with more different solutions?
+\end{enumerate}
+\EndKnitrBlock{rmdquestion}
+
+\chapter{Answers}\label{answers}
+
+This chapter contains the answers to the questions presented in the
+earlier chapters. The answers are provided here so you can check if your
+answers are correct.
+
+\section{Data}\label{data}
+
+\subsection{Planning unit data}\label{planning-unit-data-1}
+
+\BeginKnitrBlock{rmdanswer}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \texttt{nrow(pu\_data)}
+\item
+  \texttt{max(pu\_data\$cost)}
+\item
+  \texttt{sum(pu\_data\$locked\_in)}
+\item
+  \texttt{mean(pu\_data\$locked\_in)}
+\item
+  \texttt{sum(pu\_data\$locked\_out)}
+\item
+  \texttt{mean(pu\_data\$locked\_out)}
+\item
+  \texttt{assert\_that(min(c(pu\_data\$locked\_in,\ pu\_data\$locked\_out))\ ==\ 0)}
+  \newline
+
+  \texttt{assert\_that(max(c(pu\_data\$locked\_in,\ pu\_data\$locked\_out))\ ==\ 1)}
+\item
+  \texttt{all(is.finite(pu\_data\$cost))}
+\item
+  \texttt{assert\_that(sum(duplicated(pu\_data\$id))\ ==\ 0)}
+\item
+  Yes, the eastern side of Tasmania is generally much cheaper than the
+  western side.
+\item
+  Yes, most planning units covered by protected areas are located in the
+  south-western side of Tasmania.
+\end{enumerate}
+\EndKnitrBlock{rmdanswer}
+
+\subsection{Vegetation data}\label{vegetation-data-1}
+
+\BeginKnitrBlock{rmdanswer}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Central-north Tasmania
+\item
+  \texttt{cellStats(veg\_data{[}{[}12{]}{]},\ "mean")}
+\item
+  \texttt{names(veg\_data){[}which.max(cellStats(veg\_data,\ "sum")){]}}
+\end{enumerate}
+\EndKnitrBlock{rmdanswer}
+
+\section{Gap analysis}\label{gap-analysis}
+
+\subsection{Feature abundance}\label{feature-abundance-1}
+
+\BeginKnitrBlock{rmdanswer}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \texttt{median(abundance\_data\$absolute\_abundance\_km2)}
+\item
+  \texttt{min(abundance\_data\$absolute\_abundance\_km2)}
+\item
+  \texttt{abundance\_data\$feature{[}which.min(abundance\_data\$absolute\_abundance\_km2){]}}
+\item
+  \texttt{sum(abundance\_data\$absolute\_abundance\_km2)}
+\item
+  \texttt{sum(abundance\_data\$absolute\_abundance\_km2\ \textgreater{}\ set\_units(100,\ km\^{}2))}
+\end{enumerate}
+\EndKnitrBlock{rmdanswer}
+
+\subsection{Feature representation by protected
+areas}\label{feature-representation-by-protected-areas-1}
+
+\BeginKnitrBlock{rmdanswer}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \texttt{mean(repr\_data\$relative\_held,\ na.rm\ =\ TRUE)}
+\item
+  \texttt{mean(repr\_data\$absolute\_held\_km2,\ na.rm\ =\ TRUE)}
+\item
+  \texttt{repr\_data\$feature{[}which.max(repr\_data\$relative\_held){]}}
+\item
+  \texttt{repr\_data\$feature{[}which.max(repr\_data\$absolute\_held){]}}
+\item
+  No, just because a vegetation class is widespread does not necessarily
+  mean that it has the greatest overlap with protected areas. In fact,
+  due to biases in the establishment of protected areas this can often
+  be the case.
+\item
+  Yes, the largest protected areas tend to have the great representation
+  (broadly speaking). \newline
+  See
+  \texttt{plot(x\ =\ abundance\_data\$absolute\_abundance,\ y\ =\ repr\_data\$relative\_held)}
+\item
+  \texttt{sum(repr\_data\$absolute\_held\ \textless{}\ 1e-10)} (floating
+  point errors)
+\item
+  \texttt{sum(repr\_data\$relative\_held\ \textgreater{}\ 0.1)}
+\item
+  \texttt{sum(repr\_data\$relative\_held\ \textgreater{}\ 0.2)}
+\end{enumerate}
+\EndKnitrBlock{rmdanswer}
+
+\section{Spatial prioritizations}\label{spatial-prioritizations}
+
+\subsection{Starting out simple}\label{starting-out-simple-1}
+
+\BeginKnitrBlock{rmdanswer}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \texttt{sum(s1\$solution\_1)} \newline
+   \texttt{s1\$solution\_1)}
+\item
+  Yes, the planning units are generally spread out across most of the
+  study area and they are not biased towards specific areas.
+\item
+  \texttt{all(feature\_representation(p1,\ s1{[},\ "solution\_1"{]})\$relative\_held\ \textgreater{}=\ 0.2)}
+\item
+  This prioritization (i) does not account for existing protected areas,
+  (ii) does not account for the spatial fragmentation of priority areas,
+  or (iii) is not likely conserve enough habitat for each vegetation
+  type (i.e.~5\% is pretty small).
+\end{enumerate}
+\EndKnitrBlock{rmdanswer}
+
+\subsection{Adding complexity}\label{adding-complexity-1}
+
+\BeginKnitrBlock{rmdanswer}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \texttt{sum(s2\$cost\ *\ s2\$solution\_1)} \newline
+   \texttt{sum(s3\$cost\ *\ s3\$solution\_1)} \newline
+   \texttt{sum(s4\$cost\ *\ s4\$solution\_1)}
+\item
+  \texttt{sum(s2\$solution\_1)} \newline
+   \texttt{sum(s3\$solution\_1)} \newline
+   \texttt{sum(s4\$solution\_1)}
+\item
+  No, just because a solution a solution has more planning units does
+  not mean that it will cost less.
+\item
+  This is because the planning units covered by existing protected areas
+  have a non-zero cost and locking in these planning units introduces
+  inefficiencies into the solution. This is very common in real-world
+  conservation prioritizations because existing protected areas are
+  often in places that do little to benefit biodiversity \citep{r3}.
+\item
+  This is because some of the planning units that are highly degraded --
+  based on just the planning unit costs and vegetation data -- provide
+  cost-efficient opportunities for meeting the targets and excluding
+  them from the reserve selection process means that other more costly
+  planning units are needed to meet the targets.
+\item
+  \texttt{sum(s4\$cost\ *\ s4\$solution\_1)\ -\ sum(s4\$cost\ *\ s4\$locked\_in)}
+\item
+  We get an error message stating the the problem is infeasible because
+  there is no valid solution---even if we selected all the planning
+  units the study area we would still not meet the targets.
+\end{enumerate}
+\EndKnitrBlock{rmdanswer}
+
+\subsection{Penalizing fragmentation}\label{penalizing-fragmentation-1}
+
+\BeginKnitrBlock{rmdanswer}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  TODO.
+\end{enumerate}
+\EndKnitrBlock{rmdanswer}
+
+\subsection{Budget limited
+prioritizations}\label{budget-limited-prioritizations-1}
+
+\BeginKnitrBlock{rmdanswer}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \texttt{names(veg\_data){[}which.min(wts){]}}
+\item
+  \texttt{sum(s6\$cost\ *\ s6\$solution\_1)} \newline
+   \texttt{sum(s7\$cost\ *\ s7\$solution\_1)}
+\item
+  No, the sixth (\texttt{s6}) and seventh (\texttt{s7}) solutions both
+  share many of the same selected planning units and there does not
+  appear to be specific difference in the spatial location of the
+  planning units which they do not share.
+\item
+  Yes. Although both of these solutions are meeting the targets for
+  \texttt{r6\$feature{[}r6\$relative\_held\ \textgreater{}\ 0.2\ \&\ r7\$relative\_held\ \textgreater{}\ 0.2{]}}
+  vegetation communities, the sixth (\texttt{s6}) is also adequately
+  representing
+  \texttt{r6\$feature{[}r6\$relative\_held\ \textgreater{}\ 0.2\ \&\ !r7\$relative\_held\ \textgreater{}\ 0.2{]}}
+  additional community and the seventh (\texttt{s7}) solution is
+  adequately representing
+  \texttt{r6\$feature{[}!r6\$relative\_held\ \textgreater{}\ 0.2\ \&\ r7\$relative\_held\ \textgreater{}\ 0.2{]}}
+  different additional community.
+\end{enumerate}
+\EndKnitrBlock{rmdanswer}
+
+\subsection{Solution portfolios}\label{solution-portfolios-1}
+
+\BeginKnitrBlock{rmdanswer}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  No the cost are very similar. \newline
+   \texttt{sum(s8\$solution\_1\ *\ s8\$cost)} \newline
+   \texttt{sum(s8\$solution\_2\ *\ s8\$cost)} \newline
+   \texttt{sum(s8\$solution\_3\ *\ s8\$cost)} \newline
+   \texttt{sum(s8\$solution\_4\ *\ s8\$cost)} \newline
+   \texttt{sum(s8\$solution\_5\ *\ s8\$cost)} \newline
+   \texttt{sum(s8\$solution\_6\ *\ s8\$cost)}
+\item
+  No the status of the planning units are very similar in the all of the
+  solutions in the portfolio. \newline
+  \texttt{mean((s8\$solution\_1\ ==\ s8\$solution\_2)\ \&\ (s8\$solution\_1\ ==\ s8\$solution\_3)\ \&\ (s8\$solution\_1\ ==\ s8\$solution\_4)\ \&\ (s8\$solution\_1\ ==\ s8\$solution\_5)\ \&\ (s8\$solution\_1\ ==\ s8\$solution\_6))}
+\item
+  We should increase the number of the solutions in the portfolio.
+\end{enumerate}
+\EndKnitrBlock{rmdanswer}
 
 \chapter{Acknowledgements}\label{acknowledgements}
 
 Many thanks to \href{https://icons8.com}{Icons8} for providing the icons
-used in this manual.
+used in this manual and to Yihui Xie for developing the
+\href{http://bookdown.org}{bookdown R package} that underpins this
+manual.
+
+\chapter{Session information}\label{session-information}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# print session information}
+\KeywordTok{sessionInfo}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## R version 3.6.1 (2017-01-27)
+## Platform: x86_64-pc-linux-gnu (64-bit)
+## Running under: Ubuntu 16.04.6 LTS
+## 
+## Matrix products: default
+## BLAS:   /home/travis/R-bin/lib/R/lib/libRblas.so
+## LAPACK: /home/travis/R-bin/lib/R/lib/libRlapack.so
+## 
+## locale:
+##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] gridExtra_2.3    assertthat_0.2.1 scales_1.0.0     units_0.6-4     
+##  [5] mapview_2.7.0    rgeos_0.5-2      rgdal_1.4-6      prioritizr_4.1.4
+##  [9] proto_1.0.0      raster_3.0-7     sp_1.3-1         forcats_0.4.0   
+## [13] stringr_1.4.0    dplyr_0.8.3      purrr_0.3.2      readr_1.3.1     
+## [17] tidyr_1.0.0      tibble_2.1.3     ggplot2_3.2.1    tidyverse_1.2.1 
+## 
+## loaded via a namespace (and not attached):
+##  [1] nlme_3.1-140       sf_0.8-0           satellite_1.0.1   
+##  [4] lubridate_1.7.4    webshot_0.5.1      httr_1.4.1        
+##  [7] tools_3.6.1        backports_1.1.5    utf8_1.1.4        
+## [10] R6_2.4.0           KernSmooth_2.23-15 DBI_1.0.0         
+## [13] lazyeval_0.2.2     colorspace_1.4-1   withr_2.1.2       
+## [16] tidyselect_0.2.5   leaflet_2.0.2      compiler_3.6.1    
+## [19] cli_1.1.0          rvest_0.3.4        xml2_1.2.2        
+## [22] bookdown_0.14.1    classInt_0.4-1     digest_0.6.21     
+## [25] rmarkdown_1.16     base64enc_0.1-3    pkgconfig_2.0.3   
+## [28] htmltools_0.3.6    lpsymphony_1.12.0  htmlwidgets_1.3   
+## [31] rlang_0.4.0        readxl_1.3.1       rstudioapi_0.10   
+## [34] shiny_1.3.2        generics_0.0.2     jsonlite_1.6      
+## [37] crosstalk_1.0.0    magrittr_1.5       Matrix_1.2-17     
+## [40] Rcpp_1.0.2         munsell_0.5.0      fansi_0.4.0       
+## [43] lifecycle_0.1.0    stringi_1.4.3      yaml_2.2.0        
+## [46] plyr_1.8.4         grid_3.6.1         parallel_3.6.1    
+## [49] promises_1.0.1     crayon_1.3.4       lattice_0.20-38   
+## [52] haven_2.1.1        hms_0.5.1          zeallot_0.1.0     
+## [55] knitr_1.25         pillar_1.4.2       uuid_0.1-2        
+## [58] velox_0.2.0        codetools_0.2-16   stats4_3.6.1      
+## [61] glue_1.3.1         evaluate_0.14      modelr_0.1.5      
+## [64] png_0.1-7          vctrs_0.2.0        httpuv_1.5.2      
+## [67] cellranger_1.1.0   gtable_0.3.0       xfun_0.10         
+## [70] mime_0.7           xtable_1.8-4       broom_0.5.2       
+## [73] e1071_1.7-2        later_1.0.0        class_7.3-15      
+## [76] viridisLite_0.3.0
+\end{verbatim}
 
 \bibliography{references.bib}
 

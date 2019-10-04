@@ -294,10 +294,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><code>names(veg_data)[which.min(wts)]</code></li>
 <li><code>sum(s6$cost * s6$solution_1)</code>  <code>sum(s7$cost * s7$solution_1)</code></li>
 <li>No, the sixth (<code>s6</code>) and seventh (<code>s7</code>) solutions both share many of the same selected planning units and there does not appear to be specific difference in the spatial location of the planning units which they do not share.</li>
-<li>Yes. Although both of these solutions are meeting the targets for <code>r6$feature[r6$relative_held &gt; 0.2 &amp; r7$relative_held &gt; 0.2]</code> vegetation communities, the sixth (<code>s6</code>) is also adequately representing <code>r6$feature[r6$relative_held &gt; 0.2 &amp; !r7$relative_held &gt; 0.2]</code> additional community and the seventh (<code>s7</code>) solution is adequately representing <code>r6$feature[!r6$relative_held &gt; 0.2 &amp; r7$relative_held &gt; 0.2]</code> different additional community.
-</div>
-</li>
+<li>Yes. Although both of these solutions are meeting the targets for <code>r6$feature[r6$relative_held &gt; 0.2 &amp; r7$relative_held &gt; 0.2]</code> vegetation communities, the sixth (<code>s6</code>) is also adequately representing <code>r6$feature[r6$relative_held &gt; 0.2 &amp; !r7$relative_held &gt; 0.2]</code> additional community and the seventh (<code>s7</code>) solution is adequately representing <code>r6$feature[!r6$relative_held &gt; 0.2 &amp; r7$relative_held &gt; 0.2]</code> different additional community.</li>
 </ol>
+</div>
+
 </div>
 <div id="solution-portfolios-1" class="section level3">
 <h3><span class="header-section-number">6.3.5</span> Solution portfolios</h3>
@@ -306,10 +306,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <ol style="list-style-type: decimal">
 <li>No the cost are very similar.  <code>sum(s8$solution_1 * s8$cost)</code>  <code>sum(s8$solution_2 * s8$cost)</code>  <code>sum(s8$solution_3 * s8$cost)</code>  <code>sum(s8$solution_4 * s8$cost)</code>  <code>sum(s8$solution_5 * s8$cost)</code>  <code>sum(s8$solution_6 * s8$cost)</code></li>
 <li>No the status of the planning units are very similar in the all of the solutions in the portfolio. <code>mean((s8$solution_1 == s8$solution_2) &amp; (s8$solution_1 == s8$solution_3) &amp; (s8$solution_1 == s8$solution_4) &amp; (s8$solution_1 == s8$solution_5) &amp; (s8$solution_1 == s8$solution_6))</code></li>
-<li>We should increase the number of the solutions in the portfolio.
-</div>
-</li>
+<li>We should increase the number of the solutions in the portfolio.</li>
 </ol>
+</div>
+
 
 </div>
 </div>
