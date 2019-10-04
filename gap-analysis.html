@@ -24,7 +24,7 @@
 <meta name="author" content="Jeffrey O. Hanson" />
 
 
-<meta name="date" content="2019-10-03" />
+<meta name="date" content="2019-10-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -132,10 +132,29 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.1" data-path="spatial-prioritizations.html"><a href="spatial-prioritizations.html#introduction-2"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
 <li class="chapter" data-level="5.2" data-path="spatial-prioritizations.html"><a href="spatial-prioritizations.html#starting-out-simple"><i class="fa fa-check"></i><b>5.2</b> Starting out simple</a></li>
 <li class="chapter" data-level="5.3" data-path="spatial-prioritizations.html"><a href="spatial-prioritizations.html#adding-complexity"><i class="fa fa-check"></i><b>5.3</b> Adding complexity</a></li>
-<li class="chapter" data-level="5.4" data-path="spatial-prioritizations.html"><a href="spatial-prioritizations.html#budget-limited-prioritizations"><i class="fa fa-check"></i><b>5.4</b> Budget limited prioritizations</a></li>
+<li class="chapter" data-level="5.4" data-path="spatial-prioritizations.html"><a href="spatial-prioritizations.html#penalizing-fragmentation"><i class="fa fa-check"></i><b>5.4</b> Penalizing fragmentation</a></li>
+<li class="chapter" data-level="5.5" data-path="spatial-prioritizations.html"><a href="spatial-prioritizations.html#budget-limited-prioritizations"><i class="fa fa-check"></i><b>5.5</b> Budget limited prioritizations</a></li>
+<li class="chapter" data-level="5.6" data-path="spatial-prioritizations.html"><a href="spatial-prioritizations.html#solution-portfolios"><i class="fa fa-check"></i><b>5.6</b> Solution portfolios</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="irreplaceability.html"><a href="irreplaceability.html"><i class="fa fa-check"></i><b>6</b> Irreplaceability</a></li>
+<li class="chapter" data-level="6" data-path="answers.html"><a href="answers.html"><i class="fa fa-check"></i><b>6</b> Answers</a><ul>
+<li class="chapter" data-level="6.1" data-path="data.html"><a href="data.html#data"><i class="fa fa-check"></i><b>6.1</b> Data</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="answers.html"><a href="answers.html#planning-unit-data-1"><i class="fa fa-check"></i><b>6.1.1</b> Planning unit data</a></li>
+<li class="chapter" data-level="6.1.2" data-path="answers.html"><a href="answers.html#vegetation-data-1"><i class="fa fa-check"></i><b>6.1.2</b> Vegetation data</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="gap-analysis.html"><a href="gap-analysis.html#gap-analysis"><i class="fa fa-check"></i><b>6.2</b> Gap analysis</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="answers.html"><a href="answers.html#feature-abundance-1"><i class="fa fa-check"></i><b>6.2.1</b> Feature abundance</a></li>
+<li class="chapter" data-level="6.2.2" data-path="answers.html"><a href="answers.html#feature-representation-by-protected-areas-1"><i class="fa fa-check"></i><b>6.2.2</b> Feature representation by protected areas</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="spatial-prioritizations.html"><a href="spatial-prioritizations.html#spatial-prioritizations"><i class="fa fa-check"></i><b>6.3</b> Spatial prioritizations</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="answers.html"><a href="answers.html#starting-out-simple-1"><i class="fa fa-check"></i><b>6.3.1</b> Starting out simple</a></li>
+<li class="chapter" data-level="6.3.2" data-path="answers.html"><a href="answers.html#adding-complexity-1"><i class="fa fa-check"></i><b>6.3.2</b> Adding complexity</a></li>
+<li class="chapter" data-level="6.3.3" data-path="answers.html"><a href="answers.html#penalizing-fragmentation-1"><i class="fa fa-check"></i><b>6.3.3</b> Penalizing fragmentation</a></li>
+<li class="chapter" data-level="6.3.4" data-path="answers.html"><a href="answers.html#budget-limited-prioritizations-1"><i class="fa fa-check"></i><b>6.3.4</b> Budget limited prioritizations</a></li>
+<li class="chapter" data-level="6.3.5" data-path="answers.html"><a href="answers.html#solution-portfolios-1"><i class="fa fa-check"></i><b>6.3.5</b> Solution portfolios</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="7" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>7</b> Acknowledgements</a></li>
+<li class="chapter" data-level="8" data-path="session-information.html"><a href="session-information.html"><i class="fa fa-check"></i><b>8</b> Session information</a></li>
 </ul>
 
       </nav>
@@ -299,7 +318,7 @@ abundance_data<span class="op">$</span>absolute_abundance_km2 &lt;-
 <pre><code>## 86.67742 [km^2]</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot histogram of the features&#39; abundances</span>
 <span class="kw">hist</span>(abundance_data<span class="op">$</span>absolute_abundance_km2, <span class="dt">main =</span> <span class="st">&quot;Feature abundances&quot;</span>)</code></pre></div>
-<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-27-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># find the abundance of the feature with the largest abundance</span>
 <span class="kw">max</span>(abundance_data<span class="op">$</span>absolute_abundance_km2)</code></pre></div>
 <pre><code>## 895 [km^2]</code></pre>
@@ -311,8 +330,8 @@ abundance_data<span class="op">$</span>feature[<span class="kw">which.max</span>
 <div class="rmdquestion">
 <ol style="list-style-type: decimal">
 <li>What is the median abundance of the features (hint: <code>median</code>)?</li>
-<li>What the abundance of the feature with smallest abundance?</li>
-<li>What the name of the feature with smallest abundance?</li>
+<li>What is the abundance of the feature with smallest abundance?</li>
+<li>What is the name of the feature with smallest abundance?</li>
 <li>What is the total abundance of all features in the planning units summed together?</li>
 <li>How many features have a total abundance greater than 100 km^2 (hint: <code>sum(abundance_values &gt; set_units(threshold_value, km^2)</code>)?</li>
 </ol>

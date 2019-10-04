@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Introduction | PRIORITIZR WORKSHOP MANUAL</title>
+  <title>Chapter 6 Answers | PRIORITIZR WORKSHOP MANUAL</title>
   <meta name="description" content="Manual for the prioritizr module of the Spatial Conservation Prioritization: Concepts, Methods and Application workshop held at CIBIO-InBIO, Vairão, Portugal." />
   <meta name="generator" content="bookdown 0.14.1 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Introduction | PRIORITIZR WORKSHOP MANUAL" />
+  <meta property="og:title" content="Chapter 6 Answers | PRIORITIZR WORKSHOP MANUAL" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://prioritizr.github.io/cibio-workshop" />
   <meta property="og:image" content="https://prioritizr.github.io/cibio-workshopimages/cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="prioritizr/cibio-workshop" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Introduction | PRIORITIZR WORKSHOP MANUAL" />
+  <meta name="twitter:title" content="Chapter 6 Answers | PRIORITIZR WORKSHOP MANUAL" />
   
   <meta name="twitter:description" content="Manual for the prioritizr module of the Spatial Conservation Prioritization: Concepts, Methods and Application workshop held at CIBIO-InBIO, Vairão, Portugal." />
   <meta name="twitter:image" content="https://prioritizr.github.io/cibio-workshopimages/cover.png" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="index.html"/>
-<link rel="next" href="data.html"/>
+<link rel="prev" href="spatial-prioritizations.html"/>
+<link rel="next" href="acknowledgements.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -172,39 +172,152 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduction" class="section level1">
-<h1><span class="header-section-number">Chapter 2</span> Introduction</h1>
-<div id="overview" class="section level2">
-<h2><span class="header-section-number">2.1</span> Overview</h2>
-<p>The aim of this workshop is to help you get started with using the prioritizr R package for systematic conservation planning. It is not designed to give you a comprehensive overview and you will not become an expert after completing this workshop. Instead, we want to help you understand the core principles of conservation planning and guide you through some of the common tasks involved with developing prioritizations. In other words, we want to give you the knowledge base and confidence needed to start applying systematic conservation planning to your own work.</p>
-<p>You are not alone in this workshop. If you are having trouble, please put your hand up and one of the instructors will help you as soon as they can. You can also ask the people sitting next to you for help too. <strong>Most importantly, the code needed to answer the questions in this workshop are almost always located in the same section as the question. So if you are stuck, try rereading the example code and see if you can modify it to answer the question.</strong> Please note that the first thing an instructor will ask you will (probably) be “what have you tried so far?”. We can’t help you if you haven’t tried anything.</p>
-</div>
-<div id="setup" class="section level2">
-<h2><span class="header-section-number">2.2</span> Setting up your computer</h2>
-<p>You will need to have both <a href="https://www.r-project.org">R</a> and <a href="https://www.rstudio.com/">RStudio</a> installed on your computer to complete this workshop. Although it is not imperative that you have the latest version of RStudio installed, <strong>you will need the latest version of R installed (i.e. version 3.6.1)</strong>. Please note that you meed need administrative permissions to complete install these programs. After installing them, you will also need to install various R packages too.</p>
-<div id="r" class="section level3">
-<h3><span class="header-section-number">2.2.1</span> R</h3>
-<p>The <a href="https://www.r-project.org">R statistical computing environment</a> can be downloaded from the Comprehensive R Archive Network (CRAN). You can download the latest version of R (version 3.6.1) from here: <a href="https://cloud.r-project.org" class="uri">https://cloud.r-project.org</a>. Please note that you will need to download the correct file for your operating system (i.e. Linux, Mac OSX, Windows).</p>
-</div>
-<div id="rstudio" class="section level3">
-<h3><span class="header-section-number">2.2.2</span> RStudio</h3>
-<p><a href="https://www.rstudio.com">RStudio</a> is an integrated development environment (IDE). In other words, it is a program that is designed to make your R programming experience more enjoyable. During this workshop, you will interact with R through RStudio—meaning that you will open RStudio when you want to code in R. You can download the latest version of RStudio here: <a href="http://www.rstudio.com/download" class="uri">http://www.rstudio.com/download</a>. When you start RStudio, you will see two main parts of the interface:</p>
-<p><img src="images/rstudio-console.png" width="90%" style="display: block; margin: auto;" /></p>
-<p>You can type R code into the <em>Console</em> part of the interface and press the enter key to run the code.</p>
-</div>
-<div id="r-packages" class="section level3">
-<h3><span class="header-section-number">2.2.3</span> R packages</h3>
-<p>An R package is a collection of R code and documentation that can be installed to enhance the standard R environment with additional functionality. Currently, there are over ten thousand R packages available on CRAN. Each of these R packages (mostly) aim to serve a specific need, such as <a href="https://cran.r-project.org/web/packages/readxl/index.html">reading Excel spreadsheets</a>, <a href="https://cran.r-project.org/web/packages/MODIStsp/index.html">downloading satellite imagery data</a>, <a href="https://cran.r-project.org/web/packages/wdpar/index.html">downloading and cleaning protected area data</a>, or <a href="https://cran.r-project.org/web/packages/ENMeval/index.html">fitting environmental niche models</a>. In fact, R has such a diverse ecosystem of R packages, that the question is (generally) not “can I use R to do …?” but “what R package can I use to …?”. During this workshop, we will use various R packages. To install these R packages, please run enter the code below in the <em>Console</em> part of the RStudio interface and press enter. Please note that you will require an internet connection to install the packages and the installation process may take a while to complete.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">&quot;sf&quot;</span>, <span class="st">&quot;tidyverse&quot;</span>, <span class="st">&quot;sp&quot;</span>, <span class="st">&quot;rgeos&quot;</span>, <span class="st">&quot;rgdal&quot;</span>, <span class="st">&quot;raster&quot;</span>, <span class="st">&quot;units&quot;</span>,
-                   <span class="st">&quot;prioritizr&quot;</span>, <span class="st">&quot;prioritizrdata&quot;</span> <span class="st">&quot;Rsymphony&quot;</span>, <span class="st">&quot;mapview&quot;</span>,
-                   <span class="st">&quot;assertthat&quot;</span>, <span class="st">&quot;velox&quot;</span>, <span class="st">&quot;remotes&quot;</span>, <span class="st">&quot;gridExtra&quot;</span>))
-remotes<span class="op">::</span><span class="kw">install_bioc</span>(<span class="st">&quot;lpsymphony&quot;</span>)</code></pre></div>
-</div>
-</div>
-<div id="further-reading" class="section level2">
-<h2><span class="header-section-number">2.3</span> Further reading</h2>
-<p>There is a wealth of resources available for learning how to use R. Although not required for this workshop, I would highly recommend that you read <a href="https://r4ds.had.co.nz/"><em>R for Data Science</em> by Garrett Grolemund and Hadley Wickham</a>. <strong>This veritable trove of R goodness is freely available online.</strong> If you spend a week going through this book then you will save months debugging and rerunning incorrect code. I would urge any and all ecologists – especially those working on Masters or PhD degrees – to read this book. I even bought this book as a Christmas present for my sister—and, yes, she was happy to receive it! For intermediate users looking to skill-up, I would recommend the <a href="http://shop.oreilly.com/product/9781593273842.do"><em>The Art of R Programming: A Tour of Statistical Software Design</em> by Norman Matloff</a> and <a href="https://adv-r.hadley.nz/"><em>Advanced R</em> by Hadley Wickham</a>. Finally, if you wish to learn more about using R as a geospatial information system (GIS), I would recommend <a href="https://geocompr.robinlovelace.net/"><em>Geocomputation with R</em> by Robin Lovelace, Jakub Nowosad, and Jannes Muenchow</a> which is also freely available online. I also recommend <a href="https://www.springer.com/gp/book/9781461476177"><em>Applied Spatial Data Analysis</em> by Roger S. Bivand, Edzer Pebesma, and Virgilio Gómez-Rubio</a> too.</p>
+<div id="answers" class="section level1">
+<h1><span class="header-section-number">Chapter 6</span> Answers</h1>
+<p>This chapter contains the answers to the questions presented in the earlier chapters. The answers are provided here so you can check if your answers are correct.</p>
+<div id="data" class="section level2">
+<h2><span class="header-section-number">6.1</span> Data</h2>
+<div id="planning-unit-data-1" class="section level3">
+<h3><span class="header-section-number">6.1.1</span> Planning unit data</h3>
 
+<div class="rmdanswer">
+<ol style="list-style-type: decimal">
+<li><code>nrow(pu_data)</code></li>
+<li><code>max(pu_data$cost)</code></li>
+<li><code>sum(pu_data$locked_in)</code></li>
+<li><code>mean(pu_data$locked_in)</code></li>
+<li><code>sum(pu_data$locked_out)</code></li>
+<li><code>mean(pu_data$locked_out)</code></li>
+<li><code>assert_that(min(c(pu_data$locked_in, pu_data$locked_out)) == 0)</code>  <code>assert_that(max(c(pu_data$locked_in, pu_data$locked_out)) == 1)</code></li>
+<li><code>all(is.finite(pu_data$cost))</code></li>
+<li><code>assert_that(sum(duplicated(pu_data$id)) == 0)</code></li>
+<li>Yes, the eastern side of Tasmania is generally much cheaper than the western side.</li>
+<li>Yes, most planning units covered by protected areas are located in the south-western side of Tasmania.</li>
+</ol>
+</div>
+
+</div>
+<div id="vegetation-data-1" class="section level3">
+<h3><span class="header-section-number">6.1.2</span> Vegetation data</h3>
+
+<div class="rmdanswer">
+<ol style="list-style-type: decimal">
+<li>Central-north Tasmania</li>
+<li><code>cellStats(veg_data[[12]], &quot;mean&quot;)</code></li>
+<li><code>names(veg_data)[which.max(cellStats(veg_data, &quot;sum&quot;))]</code></li>
+</ol>
+</div>
+
+</div>
+</div>
+<div id="gap-analysis" class="section level2">
+<h2><span class="header-section-number">6.2</span> Gap analysis</h2>
+<div id="feature-abundance-1" class="section level3">
+<h3><span class="header-section-number">6.2.1</span> Feature abundance</h3>
+
+<div class="rmdanswer">
+<ol style="list-style-type: decimal">
+<li><code>median(abundance_data$absolute_abundance_km2)</code></li>
+<li><code>min(abundance_data$absolute_abundance_km2)</code></li>
+<li><code>abundance_data$feature[which.min(abundance_data$absolute_abundance_km2)]</code></li>
+<li><code>sum(abundance_data$absolute_abundance_km2)</code></li>
+<li><code>sum(abundance_data$absolute_abundance_km2 &gt; set_units(100, km^2))</code></li>
+</ol>
+</div>
+
+</div>
+<div id="feature-representation-by-protected-areas-1" class="section level3">
+<h3><span class="header-section-number">6.2.2</span> Feature representation by protected areas</h3>
+
+<div class="rmdanswer">
+<ol style="list-style-type: decimal">
+<li><code>mean(repr_data$relative_held, na.rm = TRUE)</code></li>
+<li><code>mean(repr_data$absolute_held_km2, na.rm = TRUE)</code></li>
+<li><code>repr_data$feature[which.max(repr_data$relative_held)]</code></li>
+<li><code>repr_data$feature[which.max(repr_data$absolute_held)]</code></li>
+<li>No, just because a vegetation class is widespread does not necessarily mean that it has the greatest overlap with protected areas. In fact, due to biases in the establishment of protected areas this can often be the case.</li>
+<li>Yes, the largest protected areas tend to have the great representation (broadly speaking). See <code>plot(x = abundance_data$absolute_abundance, y = repr_data$relative_held)</code></li>
+<li><code>sum(repr_data$absolute_held &lt; 1e-10)</code> (floating point errors)</li>
+<li><code>sum(repr_data$relative_held &gt; 0.1)</code></li>
+<li><code>sum(repr_data$relative_held &gt; 0.2)</code></li>
+</ol>
+</div>
+
+</div>
+</div>
+<div id="spatial-prioritizations" class="section level2">
+<h2><span class="header-section-number">6.3</span> Spatial prioritizations</h2>
+<div id="starting-out-simple-1" class="section level3">
+<h3><span class="header-section-number">6.3.1</span> Starting out simple</h3>
+
+<div class="rmdanswer">
+<ol style="list-style-type: decimal">
+<li><code>sum(s1$solution_1)</code>  <code>s1$solution_1)</code></li>
+<li>Yes, the planning units are generally spread out across most of the study area and they are not biased towards specific areas.</li>
+<li><code>all(feature_representation(p1, s1[, &quot;solution_1&quot;])$relative_held &gt;= 0.2)</code></li>
+<li>This prioritization (i) does not account for existing protected areas, (ii) does not account for the spatial fragmentation of priority areas, or (iii) is not likely conserve enough habitat for each vegetation type (i.e. 5% is pretty small).</li>
+</ol>
+</div>
+
+</div>
+<div id="adding-complexity-1" class="section level3">
+<h3><span class="header-section-number">6.3.2</span> Adding complexity</h3>
+
+<div class="rmdanswer">
+<ol style="list-style-type: decimal">
+<li><code>sum(s2$cost * s2$solution_1)</code>  <code>sum(s3$cost * s3$solution_1)</code>  <code>sum(s4$cost * s4$solution_1)</code></li>
+<li><code>sum(s2$solution_1)</code>  <code>sum(s3$solution_1)</code>  <code>sum(s4$solution_1)</code></li>
+<li>No, just because a solution a solution has more planning units does not mean that it will cost less.</li>
+<li>This is because the planning units covered by existing protected areas have a non-zero cost and locking in these planning units introduces inefficiencies into the solution. This is very common in real-world conservation prioritizations because existing protected areas are often in places that do little to benefit biodiversity <span class="citation">(Fuller <em>et al.</em> <a href="#ref-r3">2010</a>)</span>.</li>
+<li>This is because some of the planning units that are highly degraded – based on just the planning unit costs and vegetation data – provide cost-efficient opportunities for meeting the targets and excluding them from the reserve selection process means that other more costly planning units are needed to meet the targets.</li>
+<li><code>sum(s4$cost * s4$solution_1) - sum(s4$cost * s4$locked_in)</code></li>
+<li>We get an error message stating the the problem is infeasible because there is no valid solution—even if we selected all the planning units the study area we would still not meet the targets.</li>
+</ol>
+</div>
+
+</div>
+<div id="penalizing-fragmentation-1" class="section level3">
+<h3><span class="header-section-number">6.3.3</span> Penalizing fragmentation</h3>
+
+<div class="rmdanswer">
+<ol style="list-style-type: decimal">
+<li>TODO.</li>
+</ol>
+</div>
+
+</div>
+<div id="budget-limited-prioritizations-1" class="section level3">
+<h3><span class="header-section-number">6.3.4</span> Budget limited prioritizations</h3>
+
+<div class="rmdanswer">
+<ol style="list-style-type: decimal">
+<li><code>names(veg_data)[which.min(wts)]</code></li>
+<li><code>sum(s6$cost * s6$solution_1)</code>  <code>sum(s7$cost * s7$solution_1)</code></li>
+<li>No, the sixth (<code>s6</code>) and seventh (<code>s7</code>) solutions both share many of the same selected planning units and there does not appear to be specific difference in the spatial location of the planning units which they do not share.</li>
+<li>Yes. Although both of these solutions are meeting the targets for <code>r6$feature[r6$relative_held &gt; 0.2 &amp; r7$relative_held &gt; 0.2]</code> vegetation communities, the sixth (<code>s6</code>) is also adequately representing <code>r6$feature[r6$relative_held &gt; 0.2 &amp; !r7$relative_held &gt; 0.2]</code> additional community and the seventh (<code>s7</code>) solution is adequately representing <code>r6$feature[!r6$relative_held &gt; 0.2 &amp; r7$relative_held &gt; 0.2]</code> different additional community.
+</div>
+</li>
+</ol>
+</div>
+<div id="solution-portfolios-1" class="section level3">
+<h3><span class="header-section-number">6.3.5</span> Solution portfolios</h3>
+
+<div class="rmdanswer">
+<ol style="list-style-type: decimal">
+<li>No the cost are very similar.  <code>sum(s8$solution_1 * s8$cost)</code>  <code>sum(s8$solution_2 * s8$cost)</code>  <code>sum(s8$solution_3 * s8$cost)</code>  <code>sum(s8$solution_4 * s8$cost)</code>  <code>sum(s8$solution_5 * s8$cost)</code>  <code>sum(s8$solution_6 * s8$cost)</code></li>
+<li>No the status of the planning units are very similar in the all of the solutions in the portfolio. <code>mean((s8$solution_1 == s8$solution_2) &amp; (s8$solution_1 == s8$solution_3) &amp; (s8$solution_1 == s8$solution_4) &amp; (s8$solution_1 == s8$solution_5) &amp; (s8$solution_1 == s8$solution_6))</code></li>
+<li>We should increase the number of the solutions in the portfolio.
+</div>
+</li>
+</ol>
+
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-r3">
+<p>Fuller, R.A., McDonald-Madden, E., Wilson, K.A., Carwardine, J., Grantham, H.S., Watson, J.E., Klein, C.J., Green, D.C. &amp; Possingham, H.P. (2010). Replacing underperforming protected areas achieves better conservation outcomes. <em>Nature</em>, <em>466</em>, 365.</p>
 </div>
 </div>
             </section>
@@ -212,8 +325,8 @@ remotes<span class="op">::</span><span class="kw">install_bioc</span>(<span clas
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="spatial-prioritizations.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="acknowledgements.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -245,7 +358,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/prioritizr/cibio-workshop/edit/master/01-introduction.Rmd",
+"link": "https://github.com/prioritizr/cibio-workshop/edit/master/05-answers.Rmd",
 "text": "Edit"
 },
 "history": {

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Introduction | PRIORITIZR WORKSHOP MANUAL</title>
+  <title>Chapter 8 Session information | PRIORITIZR WORKSHOP MANUAL</title>
   <meta name="description" content="Manual for the prioritizr module of the Spatial Conservation Prioritization: Concepts, Methods and Application workshop held at CIBIO-InBIO, Vairão, Portugal." />
   <meta name="generator" content="bookdown 0.14.1 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Introduction | PRIORITIZR WORKSHOP MANUAL" />
+  <meta property="og:title" content="Chapter 8 Session information | PRIORITIZR WORKSHOP MANUAL" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://prioritizr.github.io/cibio-workshop" />
   <meta property="og:image" content="https://prioritizr.github.io/cibio-workshopimages/cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="prioritizr/cibio-workshop" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Introduction | PRIORITIZR WORKSHOP MANUAL" />
+  <meta name="twitter:title" content="Chapter 8 Session information | PRIORITIZR WORKSHOP MANUAL" />
   
   <meta name="twitter:description" content="Manual for the prioritizr module of the Spatial Conservation Prioritization: Concepts, Methods and Application workshop held at CIBIO-InBIO, Vairão, Portugal." />
   <meta name="twitter:image" content="https://prioritizr.github.io/cibio-workshopimages/cover.png" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="index.html"/>
-<link rel="next" href="data.html"/>
+<link rel="prev" href="acknowledgements.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -172,39 +172,74 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduction" class="section level1">
-<h1><span class="header-section-number">Chapter 2</span> Introduction</h1>
-<div id="overview" class="section level2">
-<h2><span class="header-section-number">2.1</span> Overview</h2>
-<p>The aim of this workshop is to help you get started with using the prioritizr R package for systematic conservation planning. It is not designed to give you a comprehensive overview and you will not become an expert after completing this workshop. Instead, we want to help you understand the core principles of conservation planning and guide you through some of the common tasks involved with developing prioritizations. In other words, we want to give you the knowledge base and confidence needed to start applying systematic conservation planning to your own work.</p>
-<p>You are not alone in this workshop. If you are having trouble, please put your hand up and one of the instructors will help you as soon as they can. You can also ask the people sitting next to you for help too. <strong>Most importantly, the code needed to answer the questions in this workshop are almost always located in the same section as the question. So if you are stuck, try rereading the example code and see if you can modify it to answer the question.</strong> Please note that the first thing an instructor will ask you will (probably) be “what have you tried so far?”. We can’t help you if you haven’t tried anything.</p>
-</div>
-<div id="setup" class="section level2">
-<h2><span class="header-section-number">2.2</span> Setting up your computer</h2>
-<p>You will need to have both <a href="https://www.r-project.org">R</a> and <a href="https://www.rstudio.com/">RStudio</a> installed on your computer to complete this workshop. Although it is not imperative that you have the latest version of RStudio installed, <strong>you will need the latest version of R installed (i.e. version 3.6.1)</strong>. Please note that you meed need administrative permissions to complete install these programs. After installing them, you will also need to install various R packages too.</p>
-<div id="r" class="section level3">
-<h3><span class="header-section-number">2.2.1</span> R</h3>
-<p>The <a href="https://www.r-project.org">R statistical computing environment</a> can be downloaded from the Comprehensive R Archive Network (CRAN). You can download the latest version of R (version 3.6.1) from here: <a href="https://cloud.r-project.org" class="uri">https://cloud.r-project.org</a>. Please note that you will need to download the correct file for your operating system (i.e. Linux, Mac OSX, Windows).</p>
-</div>
-<div id="rstudio" class="section level3">
-<h3><span class="header-section-number">2.2.2</span> RStudio</h3>
-<p><a href="https://www.rstudio.com">RStudio</a> is an integrated development environment (IDE). In other words, it is a program that is designed to make your R programming experience more enjoyable. During this workshop, you will interact with R through RStudio—meaning that you will open RStudio when you want to code in R. You can download the latest version of RStudio here: <a href="http://www.rstudio.com/download" class="uri">http://www.rstudio.com/download</a>. When you start RStudio, you will see two main parts of the interface:</p>
-<p><img src="images/rstudio-console.png" width="90%" style="display: block; margin: auto;" /></p>
-<p>You can type R code into the <em>Console</em> part of the interface and press the enter key to run the code.</p>
-</div>
-<div id="r-packages" class="section level3">
-<h3><span class="header-section-number">2.2.3</span> R packages</h3>
-<p>An R package is a collection of R code and documentation that can be installed to enhance the standard R environment with additional functionality. Currently, there are over ten thousand R packages available on CRAN. Each of these R packages (mostly) aim to serve a specific need, such as <a href="https://cran.r-project.org/web/packages/readxl/index.html">reading Excel spreadsheets</a>, <a href="https://cran.r-project.org/web/packages/MODIStsp/index.html">downloading satellite imagery data</a>, <a href="https://cran.r-project.org/web/packages/wdpar/index.html">downloading and cleaning protected area data</a>, or <a href="https://cran.r-project.org/web/packages/ENMeval/index.html">fitting environmental niche models</a>. In fact, R has such a diverse ecosystem of R packages, that the question is (generally) not “can I use R to do …?” but “what R package can I use to …?”. During this workshop, we will use various R packages. To install these R packages, please run enter the code below in the <em>Console</em> part of the RStudio interface and press enter. Please note that you will require an internet connection to install the packages and the installation process may take a while to complete.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">&quot;sf&quot;</span>, <span class="st">&quot;tidyverse&quot;</span>, <span class="st">&quot;sp&quot;</span>, <span class="st">&quot;rgeos&quot;</span>, <span class="st">&quot;rgdal&quot;</span>, <span class="st">&quot;raster&quot;</span>, <span class="st">&quot;units&quot;</span>,
-                   <span class="st">&quot;prioritizr&quot;</span>, <span class="st">&quot;prioritizrdata&quot;</span> <span class="st">&quot;Rsymphony&quot;</span>, <span class="st">&quot;mapview&quot;</span>,
-                   <span class="st">&quot;assertthat&quot;</span>, <span class="st">&quot;velox&quot;</span>, <span class="st">&quot;remotes&quot;</span>, <span class="st">&quot;gridExtra&quot;</span>))
-remotes<span class="op">::</span><span class="kw">install_bioc</span>(<span class="st">&quot;lpsymphony&quot;</span>)</code></pre></div>
-</div>
-</div>
-<div id="further-reading" class="section level2">
-<h2><span class="header-section-number">2.3</span> Further reading</h2>
-<p>There is a wealth of resources available for learning how to use R. Although not required for this workshop, I would highly recommend that you read <a href="https://r4ds.had.co.nz/"><em>R for Data Science</em> by Garrett Grolemund and Hadley Wickham</a>. <strong>This veritable trove of R goodness is freely available online.</strong> If you spend a week going through this book then you will save months debugging and rerunning incorrect code. I would urge any and all ecologists – especially those working on Masters or PhD degrees – to read this book. I even bought this book as a Christmas present for my sister—and, yes, she was happy to receive it! For intermediate users looking to skill-up, I would recommend the <a href="http://shop.oreilly.com/product/9781593273842.do"><em>The Art of R Programming: A Tour of Statistical Software Design</em> by Norman Matloff</a> and <a href="https://adv-r.hadley.nz/"><em>Advanced R</em> by Hadley Wickham</a>. Finally, if you wish to learn more about using R as a geospatial information system (GIS), I would recommend <a href="https://geocompr.robinlovelace.net/"><em>Geocomputation with R</em> by Robin Lovelace, Jakub Nowosad, and Jannes Muenchow</a> which is also freely available online. I also recommend <a href="https://www.springer.com/gp/book/9781461476177"><em>Applied Spatial Data Analysis</em> by Roger S. Bivand, Edzer Pebesma, and Virgilio Gómez-Rubio</a> too.</p>
+<div id="session-information" class="section level1">
+<h1><span class="header-section-number">Chapter 8</span> Session information</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># print session information</span>
+<span class="kw">sessionInfo</span>()</code></pre></div>
+<pre><code>## R version 3.6.1 (2017-01-27)
+## Platform: x86_64-pc-linux-gnu (64-bit)
+## Running under: Ubuntu 16.04.6 LTS
+## 
+## Matrix products: default
+## BLAS:   /home/travis/R-bin/lib/R/lib/libRblas.so
+## LAPACK: /home/travis/R-bin/lib/R/lib/libRlapack.so
+## 
+## locale:
+##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] gridExtra_2.3    assertthat_0.2.1 scales_1.0.0     units_0.6-4     
+##  [5] mapview_2.7.0    rgeos_0.5-2      rgdal_1.4-6      prioritizr_4.1.4
+##  [9] proto_1.0.0      raster_3.0-7     sp_1.3-1         forcats_0.4.0   
+## [13] stringr_1.4.0    dplyr_0.8.3      purrr_0.3.2      readr_1.3.1     
+## [17] tidyr_1.0.0      tibble_2.1.3     ggplot2_3.2.1    tidyverse_1.2.1 
+## 
+## loaded via a namespace (and not attached):
+##  [1] nlme_3.1-140       sf_0.8-0           satellite_1.0.1   
+##  [4] lubridate_1.7.4    webshot_0.5.1      httr_1.4.1        
+##  [7] tools_3.6.1        backports_1.1.5    utf8_1.1.4        
+## [10] R6_2.4.0           KernSmooth_2.23-15 DBI_1.0.0         
+## [13] lazyeval_0.2.2     colorspace_1.4-1   withr_2.1.2       
+## [16] tidyselect_0.2.5   leaflet_2.0.2      compiler_3.6.1    
+## [19] cli_1.1.0          rvest_0.3.4        xml2_1.2.2        
+## [22] bookdown_0.14.1    classInt_0.4-1     digest_0.6.21     
+## [25] rmarkdown_1.16     base64enc_0.1-3    pkgconfig_2.0.3   
+## [28] htmltools_0.3.6    lpsymphony_1.12.0  htmlwidgets_1.3   
+## [31] rlang_0.4.0        readxl_1.3.1       rstudioapi_0.10   
+## [34] shiny_1.3.2        generics_0.0.2     jsonlite_1.6      
+## [37] crosstalk_1.0.0    magrittr_1.5       Matrix_1.2-17     
+## [40] Rcpp_1.0.2         munsell_0.5.0      fansi_0.4.0       
+## [43] lifecycle_0.1.0    stringi_1.4.3      yaml_2.2.0        
+## [46] plyr_1.8.4         grid_3.6.1         parallel_3.6.1    
+## [49] promises_1.0.1     crayon_1.3.4       lattice_0.20-38   
+## [52] haven_2.1.1        hms_0.5.1          zeallot_0.1.0     
+## [55] knitr_1.25         pillar_1.4.2       uuid_0.1-2        
+## [58] velox_0.2.0        codetools_0.2-16   stats4_3.6.1      
+## [61] glue_1.3.1         evaluate_0.14      modelr_0.1.5      
+## [64] png_0.1-7          vctrs_0.2.0        httpuv_1.5.2      
+## [67] cellranger_1.1.0   gtable_0.3.0       xfun_0.10         
+## [70] mime_0.7           xtable_1.8-4       broom_0.5.2       
+## [73] e1071_1.7-2        later_1.0.0        class_7.3-15      
+## [76] viridisLite_0.3.0</code></pre>
 
+<div id="refs" class="references">
+<div>
+<p>Butchart, S.H., Clarke, M., Smith, R.J., Sykes, R.E., Scharlemann, J.P., Harfoot, M., Buchanan, G.M., Angulo, A., Balmford, A., Bertzky, B., Brooks, T.M., Carpenter, K.E., Comeros-Raynal, M.T., Cornell, J., Ficetola, G.F., Fishpool, L.D., Fuller, R.A., Geldmann, J., Harwell, H., Hilton-Taylor, C., Hoffmann, M., Joolia, A., Joppa, L., Kingston, N., May, I., Milam, A., Polidoro, B., Ralph, G., Richman, N., Rondinini, C., Segan, D.B., Skolnik, B., Spalding, M.D., Stuart, S.N., Symes, A., Taylor, J., Visconti, P., Watson, J.E., Wood, L. &amp; Burgess, N.D. (2015). Shortfalls and solutions for meeting national and global conservation area targets. <em>Conservation Letters</em>, <em>8</em>, 329–337.</p>
+</div>
+<div>
+<p>Fuller, R.A., McDonald-Madden, E., Wilson, K.A., Carwardine, J., Grantham, H.S., Watson, J.E., Klein, C.J., Green, D.C. &amp; Possingham, H.P. (2010). Replacing underperforming protected areas achieves better conservation outcomes. <em>Nature</em>, <em>466</em>, 365.</p>
+</div>
+<div>
+<p>Rodrigues, A.S.L., Akçakaya, H.R., Andelman, S.J., Bakarr, M.I., Boitani, L., Brooks, T.M., Chanson, J.S., Fishpool, L.D.C., Da Fonseca, G.A.B., Gaston, K.J., Hoffmann, M., Marquet, P.A., Pilgrim, J.D., Pressey, R.L., Schipper, J., Sechrest, W., Stuart, S.N., Underhill, L.G., Waller, R.W., Watts, M.E.J. &amp; Yan, X. (2004). Global gap analysis: Priority regions for expanding the global protected-area network. <em>BioScience</em>, <em>54</em>, 1092–1100.</p>
+</div>
 </div>
 </div>
             </section>
@@ -212,8 +247,8 @@ remotes<span class="op">::</span><span class="kw">install_bioc</span>(<span clas
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="acknowledgements.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -245,7 +280,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/prioritizr/cibio-workshop/edit/master/01-introduction.Rmd",
+"link": "https://github.com/prioritizr/cibio-workshop/edit/master/06-back-matter.Rmd",
 "text": "Edit"
 },
 "history": {
