@@ -105,6 +105,7 @@ This chapter contains the answers to the questions presented in the earlier chap
    `sum(s7$cost * s7$solution_1)`
 3. No, the sixth (`s6`) and seventh (`s7`) solutions both share many of the same selected planning units and there does not appear to be specific difference in the spatial location of the planning units which they do not share.
 4. Yes. Although both of these solutions are meeting the targets for `r6$feature[r6$relative_held > 0.2 & r7$relative_held > 0.2]` vegetation communities, the sixth (`s6`) is also adequately representing `r6$feature[r6$relative_held > 0.2 & !r7$relative_held > 0.2]` additional community and the seventh (`s7`) solution is adequately representing `r6$feature[!r6$relative_held > 0.2 & r7$relative_held > 0.2]` different additional community.
+
 ```
 
 ### Solution portfolios
@@ -120,4 +121,5 @@ This chapter contains the answers to the questions presented in the earlier chap
 2. No the status of the planning units are very similar in the all of the solutions in the portfolio. \newline
     `mean((s8$solution_1 == s8$solution_2) & (s8$solution_1 == s8$solution_3) & (s8$solution_1 == s8$solution_4) & (s8$solution_1 == s8$solution_5) & (s8$solution_1 == s8$solution_6))`
 3. We should increase the number of the solutions in the portfolio.
+
 ```

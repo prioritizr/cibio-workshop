@@ -214,6 +214,7 @@ print(r6$feature[r7$relative_held > 0.2])
 2. What is the cost of the sixth (`s6`) and seventh (`s7`) solutions?
 4. Does there seem to be a big difference in which planning units were selected in the  sixth (`s6`) and seventh (`s7`) solutions?
 3. Is there a difference between which features are adequately represented in the sixth (`s6`) and seventh (`s7`) solutions?
+
 ```
 
 ## Solution portfolios
@@ -268,4 +269,5 @@ mean(s8$solution_1 == s8$solution_2)
 1. What is the cost of each of the six solutions in portfolio? Are they costs very different?
 2. Are the solutions in the portfolio very different?
 3. What could we do to obtain a portfolio with more different solutions?
+
 ```
