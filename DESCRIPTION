@@ -18,7 +18,8 @@ Imports:
   mapview,
   units,
   velox,
-  lpsymphony
+  lpsymphony,
+  gridExtra
 Remotes:
   rstudio/bookdown,
   prioritizr/prioritizr

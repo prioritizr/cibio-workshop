@@ -42,6 +42,7 @@ library(mapview)
 library(units)
 library(scales)
 library(assertthat)
+library(gridExtra)
 ```
 
 You should have already downloaded the data for the prioritizr module of this workshop. If you have not already done so, you can download it from here: https://github.com/prioritizr/cibio-workshop/raw/master/data.zip. After downloading the data, you can unzip the data into a new folder. Next, you will need to set the working directory to this new folder. To achieve this, click on the _Session_ button on the RStudio menu bar, then click _Set working directory_, and then _Choose Directory_.
@@ -165,22 +166,6 @@ Now, you can try and answer some questions about the planning unit data.
 
 ```
 
-```{block2, type="rmdanswer", include = show_answers}
-1. `nrow(pu_data)`
-2. `max(pu_data$cost)`
-3. `sum(pu_data$locked_in)`
-4. `mean(pu_data$locked_in)`
-5. `sum(pu_data$locked_out)`
-6. `mean(pu_data$locked_out)`
-7. `assert_that(min(c(pu_data$locked_in, pu_data$locked_out)) == 0)` \newline
-      `assert_that(max(c(pu_data$locked_in, pu_data$locked_out)) == 1)`
-8. `all(is.finite(pu_data$cost))`
-9. `assert_that(sum(duplicated(pu_data$id)) == 0)`
-10. Yes, the eastern side of Tasmania is generally much cheaper than the western side.
-11. Yes, most planning units covered by protected areas are located in the south-western side of Tasmania.
-
-```
-
 ## Vegetation data
 
 The vegetation data describes the spatial distribution of 62 vegetation classes in the study area. This data is in a raster format and so the data are organized using a regular spatial grid with square grid cells. In our case, our raster data contains multiple layers (also called "bands") and each layer has corresponds to a spatial grid with exactly the same area and has exactly the same dimensionality (i.e. number of rows, columns, and cells). In this dataset, there are 62 different regular spatial grids layered on top of each other -- with each layer corresponding to a different vegetation class -- and each of these layers contains a grid with `r nrow(veg_data)` columns, `r ncol(veg_data)` rows, and `r nrow(veg_data) * ncol(veg_data)` cells. Within each layer, each cell corresponds to a `r xres(veg_data)/1000` by `r yres(veg_data)/1000` km square. The values associated with each grid cell contain values (i.e. one or zero) indicating the presence or absence of a given vegetation class in the cell.
@@ -264,11 +249,4 @@ Now, you can try and answer some questions about the vegetation data.
 
 ```{r, include = FALSE}
 sum_veg_data <- sum(veg_data)
-```
-
-```{block2, type="rmdanswer", include = show_answers}
-1. Central-north Tasmania
-2. `cellStats(veg_data[[12]], "mean")`
-3. `names(veg_data)[which.max(cellStats(veg_data, "sum"))]`
-
 ```

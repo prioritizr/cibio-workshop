@@ -71,15 +71,6 @@ Now, try to answer the following questions.
 
 ```
 
-```{block2, type="rmdanswer", include = show_answers}
-1. `median(abundance_data$absolute_abundance_km2)`
-2. `min(abundance_data$absolute_abundance_km2)`
-3. `abundance_data$feature[which.min(abundance_data$absolute_abundance_km2)]`
-4. `sum(abundance_data$absolute_abundance_km2)`
-5. `sum(abundance_data$absolute_abundance_km2 > set_units(100, km^2))`
-
-```
-
 ## Feature representation by protected areas
 
 After calculating the total amount of each feature in the planning units (i.e. the features' abundances), we will now calculate the amount of each feature in the planning units that are covered by protected areas (i.e. feature representation by protected areas). We can complete this task using the `feature_representation` function. This function requires (i) a conservation problem object with the planning unit and biodiversity data and also (ii) an object representing a solution to the problem (i.e an object in the same format as the planning unit data with zeros and ones indicating if the planning units are contained in the prioritization problem or not).
@@ -121,19 +112,5 @@ Now let's investigate how well the species are represented.
 7. Are any features entirely missing from protected areas (hint: `sum(x == 0)`)?
 8. If we set a target of 10% coverage by protected areas, how many features fail to meet this target (hint: `sum(relative_held >= target)`)?
 9. If we set a target of 20% coverage by protected areas, how many features fail to meet this target?
-
-```
-
-```{block2, type="rmdanswer", include = show_answers}
-1. `mean(repr_data$relative_held, na.rm = TRUE)`
-2. `mean(repr_data$absolute_held_km2, na.rm = TRUE)`
-3. `repr_data$feature[which.max(repr_data$relative_held)]`
-4. `repr_data$feature[which.max(repr_data$absolute_held)]`
-5. No, just because a vegetation class is widespread does not necessarily mean that it has the greatest overlap with protected areas. In fact, due to biases in the establishment of protected areas this can often be the case.
-6. Yes, the largest protected areas tend to have the great representation (broadly speaking). \newline
-    See `plot(x = abundance_data$absolute_abundance, y = repr_data$relative_held)`
-7. `sum(repr_data$absolute_held < 1e-10)` (floating point errors)
-8. `sum(repr_data$relative_held > 0.1)`
-9. `sum(repr_data$relative_held > 0.2)`
 
 ```

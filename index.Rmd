@@ -27,11 +27,5 @@ Here you will find the manual for the prioritizr module of the [_Spatial Conserv
 
 ```{r, include = FALSE}
 # set knitr options
-## center figures
 knitr::opts_chunk$set(fig.align = "center")
-## cache code chunks if running on travis to reduce build timings
-if (identical(Sys.getenv("TRAVIS_BRANCH"), "master"))
-  knitr::opts_chunk$set(cache = TRUE)
-# show answers if desired
-show_answers <- isTRUE(identical(Sys.getenv("MANUALVERSION"), "TEACHER"))
 ```
