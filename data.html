@@ -24,7 +24,7 @@
 <meta name="author" content="Jeffrey O. Hanson" />
 
 
-<meta name="date" content="2019-10-04" />
+<meta name="date" content="2019-10-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -177,9 +177,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="starting-out" class="section level2">
 <h2><span class="header-section-number">3.1</span> Starting out</h2>
 <p>We will start by opening RStudio. Ideally, you will have already installed both R and Rstudio before the workshop. If you have not done this already, then please see the <a href="introduction.html#setup">Setting up your computer</a> section. <strong>During this workshop, please do not copy and paste code from the workshop manual into RStudio. Instead, please write it out yourself in an R script.</strong> When programming, you will spend a lot of time fixing coding mistakes – that is, debugging your code – so it is best to get used to making mistakes now when you have people here to help you. You can create a new R script by clicking on <em>File</em> in the RStudio menu bar and then <em>R Script</em>.</p>
-<p><img src="images/rstudio-new-script.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="images/rstudio-new-script.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>After creating a new script, you will notice that a new <em>Source</em> panel has appeared. In this new <em>Source</em> panel, you can type and edit code. You can run code in the <em>Source</em> panel by placing the cursor (i.e. the blinking line) on the desired line of code and pressing <code>Control + Enter</code> on your keyboard (or <code>CMD + Enter</code> if you are using an Apple computer). You can save the code in the <em>Source</em> panel by pressing <code>Control + s</code> on your keyboard (or <code>CMD + s</code> if you are using an Apple computer).</p>
-<p><img src="images/rstudio-source.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="images/rstudio-source.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>You can also make notes and write your answers to the workshop questions inside the <em>Source</em> panel. When writing notes and answers, add a <code>#</code> symbol so that the text following the <code>#</code> symbol is treated as a comment and not code. This means that you don’t have to worry about highlighting specific parts of the script to avoid errors.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this is a comment and R will ignore this text if you run it</span>
 <span class="co"># R will run the code below because it does not start with a # symbol</span>
@@ -205,10 +205,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">library</span>(assertthat)
 <span class="kw">library</span>(gridExtra)</code></pre></div>
 <p>You should have already downloaded the data for the prioritizr module of this workshop. If you have not already done so, you can download it from here: <a href="https://github.com/prioritizr/cibio-workshop/raw/master/data.zip" class="uri">https://github.com/prioritizr/cibio-workshop/raw/master/data.zip</a>. After downloading the data, you can unzip the data into a new folder. Next, you will need to set the working directory to this new folder. To achieve this, click on the <em>Session</em> button on the RStudio menu bar, then click <em>Set working directory</em>, and then <em>Choose Directory</em>.</p>
-<div class="figure">
-<img src="images/rstudio-wd.png" />
-
-</div>
+<p><img src="images/rstudio-wd.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Now navigate to the folder where you unzipped the data and select <em>Open</em>. You can verify that you have correctly set the working directory using the following R code. You should see the output <code>TRUE</code> in the <em>Console</em> panel.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">file.exists</span>(<span class="st">&quot;data/pu.shp&quot;</span>)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
@@ -251,7 +248,7 @@ veg_data &lt;-<span class="st"> </span><span class="kw">stack</span>(<span class
 ## max values  : 1130,  61.9272727272727,      2,         1,          1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the planning unit data</span>
 <span class="kw">plot</span>(pu_data)</code></pre></div>
-<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot an interactive map of the planning unit data</span>
 <span class="kw">mapview</span>(pu_data)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># print the structure of object</span>
@@ -352,10 +349,9 @@ pu_data<span class="op">@</span>polygons[[<span class="dv">80</span>]]</code></p
 <pre><code>## [1] 25.13536</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot a map of the planning unit cost data</span>
 <span class="kw">spplot</span>(pu_data, <span class="st">&quot;cost&quot;</span>)</code></pre></div>
-<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-16-1.png" width="60%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot an interactive map of the planning unit cost data</span>
 <span class="kw">mapview</span>(pu_data, <span class="dt">zcol =</span> <span class="st">&quot;cost&quot;</span>)</code></pre></div>
-
 <p>Now, you can try and answer some questions about the planning unit data.</p>
 
 <div class="rmdquestion">
@@ -373,6 +369,7 @@ pu_data<span class="op">@</span>polygons[[<span class="dv">80</span>]]</code></p
 <li>Is there a spatial pattern in where most planning units are covered by protected areas (hint: use <code>spplot</code> to make a map).</li>
 </ol>
 </div>
+
 
 </div>
 <div id="vegetation-data" class="section level2">
@@ -395,7 +392,7 @@ pu_data<span class="op">@</span>polygons[[<span class="dv">80</span>]]</code></p
 ## max values :            1,            1,            1,            1,            1,            1,            1,            1,            1,             1,             1,             1,             1,             1,             1, ...</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot a map of the 36th vegetation class</span>
 <span class="kw">plot</span>(veg_data[[<span class="dv">36</span>]])</code></pre></div>
-<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot an interactive map of the 36th vegetation class</span>
 <span class="kw">mapview</span>(veg_data[[<span class="dv">36</span>]])</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># print number of rows in the data</span>
@@ -460,6 +457,7 @@ pu_data<span class="op">@</span>polygons[[<span class="dv">80</span>]]</code></p
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the mean value of all the cell values in the first layer</span>
 <span class="kw">cellStats</span>(veg_data[[<span class="dv">1</span>]], <span class="st">&quot;mean&quot;</span>)</code></pre></div>
 <pre><code>## [1] 0.0003279883</code></pre>
+
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the maximum value in each layer</span>
 <span class="kw">as_tibble</span>(<span class="kw">data.frame</span>(<span class="dt">max =</span> <span class="kw">cellStats</span>(veg_data, <span class="st">&quot;max&quot;</span>)))</code></pre></div>
 <pre><code>## # A tibble: 62 x 1

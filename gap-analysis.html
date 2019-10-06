@@ -24,7 +24,7 @@
 <meta name="author" content="Jeffrey O. Hanson" />
 
 
-<meta name="date" content="2019-10-04" />
+<meta name="date" content="2019-10-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -217,6 +217,7 @@ abundance_data &lt;-<span class="st"> </span><span class="kw">feature_abundances
 ##  9 vegetation.9                 384                  1
 ## 10 vegetation.10                 14                  1
 ## # … with 52 more rows</code></pre>
+
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># note that only the first ten rows are printed,</span>
 <span class="co"># this is because the abundance_data object is a tibble (i.e. tbl_df) object</span>
 <span class="co"># and not a standard data.frame object</span>
@@ -318,7 +319,7 @@ abundance_data<span class="op">$</span>absolute_abundance_km2 &lt;-
 <pre><code>## 86.67742 [km^2]</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot histogram of the features&#39; abundances</span>
 <span class="kw">hist</span>(abundance_data<span class="op">$</span>absolute_abundance_km2, <span class="dt">main =</span> <span class="st">&quot;Feature abundances&quot;</span>)</code></pre></div>
-<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-28-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># find the abundance of the feature with the largest abundance</span>
 <span class="kw">max</span>(abundance_data<span class="op">$</span>absolute_abundance_km2)</code></pre></div>
 <pre><code>## 895 [km^2]</code></pre>

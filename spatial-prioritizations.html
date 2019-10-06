@@ -24,7 +24,7 @@
 <meta name="author" content="Jeffrey O. Hanson" />
 
 
-<meta name="date" content="2019-10-04" />
+<meta name="date" content="2019-10-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -234,7 +234,7 @@ s1 &lt;-<span class="st"> </span><span class="kw">solve</span>(p1)
 <pre><code>## [1] 806.2393</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot solution</span>
 <span class="kw">spplot</span>(s1, <span class="st">&quot;solution_1&quot;</span>, <span class="dt">col.regions =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>), <span class="dt">main =</span> <span class="st">&quot;s1&quot;</span>)</code></pre></div>
-<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-30-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-33-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Now let’s examine the solution.</p>
 
 <div class="rmdquestion">
@@ -276,7 +276,7 @@ s2 &lt;-<span class="st"> </span><span class="kw">solve</span>(p2)
 
 <span class="co"># plot solution</span>
 <span class="kw">spplot</span>(s2, <span class="st">&quot;solution_1&quot;</span>, <span class="dt">col.regions =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>), <span class="dt">main =</span> <span class="st">&quot;s2&quot;</span>)</code></pre></div>
-<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-32-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-35-1.png" width="65%" style="display: block; margin: auto;" /></p>
 <p>Let’s pretend we talked to an expert on the vegetation communities in our study system and they recommended that a 20% target was needed. So, now let’s set the targets to 20% of their total distribution in the study area.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make prioritization problem</span>
 p3 &lt;-<span class="st"> </span><span class="kw">problem</span>(pu_data, veg_data, <span class="dt">cost_column =</span> <span class="st">&quot;cost&quot;</span>) <span class="op">%&gt;%</span>
@@ -304,7 +304,7 @@ s3 &lt;-<span class="st"> </span><span class="kw">solve</span>(p3)
 
 <span class="co"># plot solution</span>
 <span class="kw">spplot</span>(s3, <span class="st">&quot;solution_1&quot;</span>, <span class="dt">col.regions =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>), <span class="dt">main =</span> <span class="st">&quot;s3&quot;</span>)</code></pre></div>
-<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-33-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-36-1.png" width="65%" style="display: block; margin: auto;" /></p>
 <p>Next, let’s lock out highly degraded areas.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make prioritization problem</span>
 p4 &lt;-<span class="st"> </span><span class="kw">problem</span>(pu_data, veg_data, <span class="dt">cost_column =</span> <span class="st">&quot;cost&quot;</span>) <span class="op">%&gt;%</span>
@@ -334,7 +334,7 @@ s4 &lt;-<span class="st"> </span><span class="kw">solve</span>(p4)
 
 <span class="co"># plot solution</span>
 <span class="kw">spplot</span>(s4, <span class="st">&quot;solution_1&quot;</span>, <span class="dt">col.regions =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>), <span class="dt">main =</span> <span class="st">&quot;s4&quot;</span>)</code></pre></div>
-<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-34-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-37-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Now, let’s compare the solutions.</p>
 
 <div class="rmdquestion">
@@ -392,7 +392,7 @@ s6 &lt;-<span class="st"> </span><span class="kw">solve</span>(p6)
 
 <span class="co"># plot solution</span>
 <span class="kw">spplot</span>(s6, <span class="st">&quot;solution_1&quot;</span>, <span class="dt">col.regions =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>), <span class="dt">main =</span> <span class="st">&quot;s5&quot;</span>)</code></pre></div>
-<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-36-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-39-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># find out which features have their targets met</span>
 r6 &lt;-<span class="st"> </span><span class="kw">feature_representation</span>(p6, s6[, <span class="st">&quot;solution_1&quot;</span>])
 <span class="kw">print</span>(r6<span class="op">$</span>feature[r6<span class="op">$</span>relative_held <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.2</span>])</code></pre></div>
@@ -424,7 +424,7 @@ wts &lt;-<span class="st"> </span><span class="kw">rescale</span>(wts, <span cla
 <pre><code>## [1] &quot;vegetation.52&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot histogram of weights</span>
 <span class="kw">hist</span>(wts, <span class="dt">main =</span> <span class="st">&quot;feature weights&quot;</span>)</code></pre></div>
-<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-37-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-40-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make prioritization problem with weights</span>
 p7 &lt;-<span class="st"> </span><span class="kw">problem</span>(pu_data, veg_data, <span class="dt">cost_column =</span> <span class="st">&quot;cost&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">      </span><span class="kw">add_max_features_objective</span>(budget) <span class="op">%&gt;%</span>
@@ -454,7 +454,7 @@ s7 &lt;-<span class="st"> </span><span class="kw">solve</span>(p7)
 
 <span class="co"># plot solution</span>
 <span class="kw">spplot</span>(s7, <span class="st">&quot;solution_1&quot;</span>, <span class="dt">col.regions =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>), <span class="dt">main =</span> <span class="st">&quot;s6&quot;</span>)</code></pre></div>
-<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-37-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-40-2.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># find out which features have their targets met when we add weights</span>
 r7 &lt;-<span class="st"> </span><span class="kw">feature_representation</span>(p7, s7[, <span class="st">&quot;solution_1&quot;</span>])
 <span class="kw">print</span>(r6<span class="op">$</span>feature[r7<span class="op">$</span>relative_held <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.2</span>])</code></pre></div>
@@ -486,7 +486,7 @@ r7 &lt;-<span class="st"> </span><span class="kw">feature_representation</span>(
 <div id="solution-portfolios" class="section level2">
 <h2><span class="header-section-number">5.6</span> Solution portfolios</h2>
 <p>In systematic conservation planning, only rarely do we have data on all of the stakeholder preferences and biodiversity features that we are interested in conserving. As a consequence, it is often useful to generate a portfolio of near optimal solutions to present to decision makers to guide the reserve selection process. Generally we would want many solutions in our portfolio (e.g. 1000) to ensure that our portfolio contains a range of highly different solutions, but here we will generate a portfolio containing just six near-optimal solutions so the code doesn’t take too long to run. We will also increase the optimality gap to obtain solutions that are more suboptimal than earlier (the default gap value is 0.1).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make problem with a cuts portfolio</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make problem with a shuffle portfolio</span>
 p8 &lt;-<span class="st"> </span><span class="kw">problem</span>(pu_data, veg_data, <span class="dt">cost_column =</span> <span class="st">&quot;cost&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">      </span><span class="kw">add_max_features_objective</span>(budget) <span class="op">%&gt;%</span>
 <span class="st">      </span><span class="kw">add_relative_targets</span>(<span class="fl">0.2</span>) <span class="op">%&gt;%</span>
@@ -526,27 +526,27 @@ s8 &lt;-<span class="st"> </span><span class="kw">solve</span>(p8)
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot first solution</span>
 <span class="kw">spplot</span>(s8, <span class="st">&quot;solution_1&quot;</span>, <span class="dt">col.regions =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>),
        <span class="dt">main =</span> <span class="st">&quot;s8 (solution 1)&quot;</span>)</code></pre></div>
-<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-40-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-43-1.png" width="768" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot all solutions</span>
 s8_plots &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="kw">paste0</span>(<span class="st">&quot;solution_&quot;</span>, <span class="kw">seq_len</span>(<span class="dv">6</span>)), <span class="cf">function</span>(x) {
   <span class="kw">spplot</span>(s8, x, <span class="dt">main =</span> x, <span class="dt">col.regions =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>))
 })
 <span class="kw">do.call</span>(grid.arrange, <span class="kw">append</span>(s8_plots, <span class="kw">list</span>(<span class="dt">ncol =</span> <span class="dv">3</span>)))</code></pre></div>
-<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-40-2.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-43-2.png" width="768" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the cost of the first solution</span>
 <span class="kw">sum</span>(s8<span class="op">$</span>solution_<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>s8<span class="op">$</span>cost)</code></pre></div>
 <pre><code>## [1] 2194.232</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the cost of the second solution</span>
 <span class="kw">sum</span>(s8<span class="op">$</span>solution_<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>s8<span class="op">$</span>cost)</code></pre></div>
-<pre><code>## [1] 2115.317</code></pre>
+<pre><code>## [1] 2169.848</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the proportion of planning units with the same solution values</span>
 <span class="co"># in the first and second solutions</span>
 <span class="kw">mean</span>(s8<span class="op">$</span>solution_<span class="dv">1</span> <span class="op">==</span><span class="st"> </span>s8<span class="op">$</span>solution_<span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] 0.9663717</code></pre>
+<pre><code>## [1] 0.9716814</code></pre>
 
 <div class="rmdquestion">
 <ol style="list-style-type: decimal">
-<li>What is the cost of each of the six solutions in portfolio? Are they costs very different?</li>
+<li>What is the cost of each of the six solutions in portfolio? Are their costs very different?</li>
 <li>Are the solutions in the portfolio very different?</li>
 <li>What could we do to obtain a portfolio with more different solutions?</li>
 </ol>
