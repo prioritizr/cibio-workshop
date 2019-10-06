@@ -1799,8 +1799,8 @@ Next, let's lock out highly degraded areas.
 ##   objective:      Minimum set objective 
 ##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
 ##   decisions:      Binary decision 
-##   constraints:    <Locked in planning units [257 locked units]
-##                    Locked out planning units [51 locked units]>
+##   constraints:    <Locked out planning units [51 locked units]
+##                    Locked in planning units [257 locked units]>
 ##   penalties:      <none>
 ##   portfolio:      default
 ##   solver:         Lpsymphony [first_feasible (0), gap (0.1), time_limit (-1), verbose (0)]
@@ -1981,9 +1981,9 @@ fourth prioritization (\texttt{s4}), we found that we would need to
 spend an additional \$909 million AUD to ensure that each vegetation
 community is adequately represented in the protected area system. But
 what if the funds available for protecting new land were limited to
-\$1000? In this case, we need a ``budget limited prioritization''.
-Budget limited prioritizations aim to maximize some measure of
-conservation benefit subject to a budget (e.g.
+\$100 million AUD? In this case, we need a ``budget limited
+prioritization''. Budget limited prioritizations aim to maximize some
+measure of conservation benefit subject to a budget (e.g.
 \href{https://prioritizr.net/reference/add_max_cover_objective.html}{number
 of species with at least one occurrence in the protected area system},
 or
@@ -1995,7 +1995,7 @@ a budget.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# set the funds for additional land acquisition}
-\NormalTok{funds <-}\StringTok{ }\DecValTok{1000}
+\NormalTok{funds <-}\StringTok{ }\DecValTok{100}
 
 \CommentTok{# calculate the total budget for the prioritization}
 \NormalTok{budget <-}\StringTok{ }\NormalTok{funds }\OperatorTok{+}\StringTok{ }\KeywordTok{sum}\NormalTok{(s4}\OperatorTok{$}\NormalTok{cost }\OperatorTok{*}\StringTok{ }\NormalTok{s4}\OperatorTok{$}\NormalTok{locked_in)}
@@ -2004,7 +2004,7 @@ a budget.
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 9475.56
+## [1] 8575.56
 \end{verbatim}
 
 \begin{Shaded}
@@ -2028,11 +2028,11 @@ a budget.
 ##   planning units: SpatialPolygonsDataFrame (1130 units)
 ##   cost:           min: 0.19249, max: 61.92727
 ##   features:       vegetation.1, vegetation.2, vegetation.3, ... (62 features)
-##   objective:      Maximum representation objective [budget (9475.56009869836)]
+##   objective:      Maximum representation objective [budget (8575.56009869836)]
 ##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
 ##   decisions:      Binary decision 
-##   constraints:    <Locked out planning units [51 locked units]
-##                    Locked in planning units [257 locked units]>
+##   constraints:    <Locked in planning units [257 locked units]
+##                    Locked out planning units [51 locked units]>
 ##   penalties:      <none>
 ##   portfolio:      default
 ##   solver:         Lpsymphony [first_feasible (0), gap (0.1), time_limit (-1), verbose (0)]
@@ -2048,31 +2048,37 @@ a budget.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.65\linewidth]{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-44-1} \end{center}
+\begin{center}\includegraphics[width=0.65\linewidth]{prioritizr-workshop-manual_files/figure-latex/budget-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# find out which features have their targets met}
+\CommentTok{# calculate feature representation}
 \NormalTok{r6 <-}\StringTok{ }\KeywordTok{feature_representation}\NormalTok{(p6, s6[, }\StringTok{"solution_1"}\NormalTok{])}
+
+\CommentTok{# calculate number of features with targets met}
+\KeywordTok{sum}\NormalTok{(r6}\OperatorTok{$}\NormalTok{relative_held }\OperatorTok{>}\StringTok{ }\FloatTok{0.2}\NormalTok{, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 25
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# find out which features have their targets met when we add weights}
 \KeywordTok{print}\NormalTok{(r6}\OperatorTok{$}\NormalTok{feature[r6}\OperatorTok{$}\NormalTok{relative_held }\OperatorTok{>}\StringTok{ }\FloatTok{0.2}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ##  [1] "vegetation.1"  "vegetation.2"  "vegetation.3"  "vegetation.4" 
-##  [5] "vegetation.5"  "vegetation.6"  "vegetation.9"  "vegetation.10"
-##  [9] "vegetation.11" "vegetation.12" "vegetation.14" "vegetation.15"
-## [13] "vegetation.16" "vegetation.17" "vegetation.18" "vegetation.19"
-## [17] "vegetation.20" "vegetation.21" "vegetation.22" "vegetation.24"
-## [21] "vegetation.25" "vegetation.26" "vegetation.28" "vegetation.29"
-## [25] "vegetation.30" "vegetation.31" "vegetation.32" "vegetation.33"
-## [29] "vegetation.34" "vegetation.35" "vegetation.36" "vegetation.37"
-## [33] "vegetation.38" "vegetation.39" "vegetation.40" "vegetation.41"
-## [37] "vegetation.42" "vegetation.44" "vegetation.45" "vegetation.47"
-## [41] "vegetation.48" "vegetation.49" "vegetation.50" "vegetation.51"
-## [45] "vegetation.52" "vegetation.53" "vegetation.55" "vegetation.56"
-## [49] "vegetation.57" "vegetation.58" "vegetation.59" "vegetation.60"
-## [53] NA              "vegetation.62"
+##  [5] "vegetation.5"  "vegetation.6"  "vegetation.11" "vegetation.12"
+##  [9] "vegetation.14" "vegetation.15" "vegetation.17" "vegetation.25"
+## [13] "vegetation.28" "vegetation.29" "vegetation.30" "vegetation.32"
+## [17] "vegetation.33" "vegetation.34" "vegetation.35" "vegetation.36"
+## [21] "vegetation.37" "vegetation.38" "vegetation.39" "vegetation.40"
+## [25] "vegetation.45" NA
 \end{verbatim}
 
 We can also add weights to specify that it is more important to meet the
@@ -2086,7 +2092,7 @@ features changes our prioritization.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# calculate weights as the inverse number of grid cells that each vegetation}
+\CommentTok{# calculate weights as the log inverse number of grid cells that each vegetation}
 \CommentTok{# class occupies, rescaled between 1 and 100}
 \NormalTok{wts <-}\StringTok{ }\DecValTok{1} \OperatorTok{/}\StringTok{ }\KeywordTok{cellStats}\NormalTok{(veg_data, }\StringTok{"sum"}\NormalTok{)}
 \NormalTok{wts <-}\StringTok{ }\KeywordTok{rescale}\NormalTok{(wts, }\DataTypeTok{to =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{10}\NormalTok{))}
@@ -2118,7 +2124,7 @@ features changes our prioritization.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.65\linewidth]{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-45-1} \end{center}
+\begin{center}\includegraphics[width=0.65\linewidth]{prioritizr-workshop-manual_files/figure-latex/budget-weights-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2142,11 +2148,11 @@ features changes our prioritization.
 ##   planning units: SpatialPolygonsDataFrame (1130 units)
 ##   cost:           min: 0.19249, max: 61.92727
 ##   features:       vegetation.1, vegetation.2, vegetation.3, ... (62 features)
-##   objective:      Maximum representation objective [budget (9475.56009869836)]
+##   objective:      Maximum representation objective [budget (8575.56009869836)]
 ##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
 ##   decisions:      Binary decision 
-##   constraints:    <Locked in planning units [257 locked units]
-##                    Locked out planning units [51 locked units]>
+##   constraints:    <Locked out planning units [51 locked units]
+##                    Locked in planning units [257 locked units]>
 ##   penalties:      <Feature weights [weights (min: 1, max: 10)]>
 ##   portfolio:      default
 ##   solver:         Lpsymphony [first_feasible (0), gap (0.1), time_limit (-1), verbose (0)]
@@ -2162,31 +2168,37 @@ features changes our prioritization.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.65\linewidth]{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-45-2} \end{center}
+\begin{center}\includegraphics[width=0.65\linewidth]{prioritizr-workshop-manual_files/figure-latex/budget-weights-2} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# find out which features have their targets met when we add weights}
+\CommentTok{# calculate feature representation}
 \NormalTok{r7 <-}\StringTok{ }\KeywordTok{feature_representation}\NormalTok{(p7, s7[, }\StringTok{"solution_1"}\NormalTok{])}
-\KeywordTok{print}\NormalTok{(r6}\OperatorTok{$}\NormalTok{feature[r7}\OperatorTok{$}\NormalTok{relative_held }\OperatorTok{>}\StringTok{ }\FloatTok{0.2}\NormalTok{])}
+
+\CommentTok{# calculate number of features with targets met}
+\KeywordTok{sum}\NormalTok{(r7}\OperatorTok{$}\NormalTok{relative_held }\OperatorTok{>}\StringTok{ }\FloatTok{0.2}\NormalTok{, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "vegetation.1"  "vegetation.2"  "vegetation.3"  "vegetation.4" 
-##  [5] "vegetation.5"  "vegetation.6"  "vegetation.8"  "vegetation.9" 
-##  [9] "vegetation.10" "vegetation.11" "vegetation.12" "vegetation.13"
-## [13] "vegetation.14" "vegetation.15" "vegetation.16" "vegetation.17"
-## [17] "vegetation.18" "vegetation.19" "vegetation.20" "vegetation.21"
-## [21] "vegetation.22" "vegetation.24" "vegetation.25" "vegetation.26"
-## [25] "vegetation.28" "vegetation.29" "vegetation.30" "vegetation.31"
-## [29] "vegetation.32" "vegetation.33" "vegetation.34" "vegetation.35"
-## [33] "vegetation.36" "vegetation.37" "vegetation.38" "vegetation.39"
-## [37] "vegetation.40" "vegetation.41" "vegetation.42" "vegetation.44"
-## [41] "vegetation.45" "vegetation.47" "vegetation.48" "vegetation.49"
-## [45] "vegetation.50" "vegetation.51" "vegetation.52" "vegetation.53"
-## [49] "vegetation.55" "vegetation.56" "vegetation.57" "vegetation.58"
-## [53] "vegetation.59" "vegetation.60" NA              "vegetation.62"
+## [1] 25
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# find out which features have their targets met when we add weights}
+\KeywordTok{print}\NormalTok{(r7}\OperatorTok{$}\NormalTok{feature[r7}\OperatorTok{$}\NormalTok{relative_held }\OperatorTok{>}\StringTok{ }\FloatTok{0.2}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "vegetation.1"  "vegetation.2"  "vegetation.4"  "vegetation.5" 
+##  [5] "vegetation.6"  "vegetation.8"  "vegetation.11" "vegetation.28"
+##  [9] "vegetation.29" "vegetation.30" "vegetation.32" "vegetation.33"
+## [13] "vegetation.34" "vegetation.35" "vegetation.36" "vegetation.37"
+## [17] "vegetation.38" "vegetation.39" "vegetation.40" "vegetation.45"
+## [21] "vegetation.49" "vegetation.50" "vegetation.52" "vegetation.53"
+## [25] "vegetation.55" NA
 \end{verbatim}
 
 \BeginKnitrBlock{rmdquestion}
@@ -2245,7 +2257,7 @@ default gap value is 0.1).
 ##   planning units: SpatialPolygonsDataFrame (1130 units)
 ##   cost:           min: 0.19249, max: 61.92727
 ##   features:       vegetation.1, vegetation.2, vegetation.3, ... (62 features)
-##   objective:      Maximum representation objective [budget (9475.56009869836)]
+##   objective:      Maximum representation objective [budget (8575.56009869836)]
 ##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
 ##   decisions:      Binary decision 
 ##   constraints:    <none>
@@ -2284,7 +2296,7 @@ default gap value is 0.1).
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.65\linewidth]{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-47-1} \end{center}
+\begin{center}\includegraphics[width=0.65\linewidth]{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-46-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2296,7 +2308,7 @@ default gap value is 0.1).
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-48-1} \end{center}
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-47-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2317,7 +2329,7 @@ default gap value is 0.1).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 2140
+## [1] 2148.593
 \end{verbatim}
 
 \begin{Shaded}
@@ -2329,7 +2341,7 @@ default gap value is 0.1).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.9637168
+## [1] 0.979646
 \end{verbatim}
 
 \BeginKnitrBlock{rmdquestion}
@@ -2471,7 +2483,7 @@ areas}\label{feature-representation-by-protected-areas-1}
 \tightlist
 \item
   \texttt{sum(s1\$solution\_1)} \newline
-   \texttt{s1\$solution\_1)}
+   \texttt{mean(s1\$solution\_1)}
 \item
   Yes, the planning units are generally spread out across most of the
   study area and they are not biased towards specific areas.
