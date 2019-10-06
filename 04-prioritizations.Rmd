@@ -222,7 +222,7 @@ print(r6$feature[r7$relative_held > 0.2])
 In systematic conservation planning, only rarely do we have data on all of the stakeholder preferences and biodiversity features that we are interested in conserving. As a consequence, it is often useful to generate a portfolio of near optimal solutions to present to decision makers to guide the reserve selection process. Generally we would want many solutions in our portfolio (e.g. 1000) to ensure that our portfolio contains a range of highly different solutions, but here we will generate a portfolio containing just six near-optimal solutions so the code doesn't take too long to run. We will also increase the optimality gap to obtain solutions that are more suboptimal than earlier (the default gap value is 0.1).
 
 ```{r}
-# make problem with a cuts portfolio
+# make problem with a shuffle portfolio
 p8 <- problem(pu_data, veg_data, cost_column = "cost") %>%
       add_max_features_objective(budget) %>%
       add_relative_targets(0.2) %>%
