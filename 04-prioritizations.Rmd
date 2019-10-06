@@ -54,7 +54,7 @@ Now let's examine the solution.
 
 Our first prioritization suffers many limitations, so let's add additional constraints to the problem to make it more useful. First, let's lock in planing units that are already inside protected areas.
 
-```{r}
+```{r, out.width = "65%"}
 # make prioritization problem
 p2 <- problem(pu_data, veg_data, cost_column = "cost") %>%
       add_min_set_objective() %>%
@@ -75,7 +75,7 @@ spplot(s2, "solution_1", col.regions = c("white", "darkgreen"), main = "s2")
 
 Let's pretend we talked to an expert on the vegetation communities in our study system and they recommended that a 20% target was needed. So, now let's set the targets to 20% of their total distribution in the study area.
 
-```{r}
+```{r, out.width = "65%"}
 # make prioritization problem
 p3 <- problem(pu_data, veg_data, cost_column = "cost") %>%
       add_min_set_objective() %>%
@@ -266,7 +266,7 @@ mean(s8$solution_1 == s8$solution_2)
 ```
 
 ```{block2, type="rmdquestion"}
-1. What is the cost of each of the six solutions in portfolio? Are they costs very different?
+1. What is the cost of each of the six solutions in portfolio? Are their costs very different?
 2. Are the solutions in the portfolio very different?
 3. What could we do to obtain a portfolio with more different solutions?
 

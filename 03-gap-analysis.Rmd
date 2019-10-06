@@ -21,7 +21,11 @@ abundance_data <- feature_abundances(p0)
 
 # print abundance data
 print(abundance_data)
+```
 
+\clearpage
+
+```{r}
 # note that only the first ten rows are printed,
 # this is because the abundance_data object is a tibble (i.e. tbl_df) object
 # and not a standard data.frame object

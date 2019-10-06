@@ -4,13 +4,13 @@
 
 We will start by opening RStudio. Ideally, you will have already installed both R and Rstudio before the workshop. If you have not done this already, then please see the [Setting up your computer] section. **During this workshop, please do not copy and paste code from the workshop manual into RStudio. Instead, please write it out yourself in an R script.** When programming, you will spend a lot of time fixing coding mistakes -- that is, debugging your code -- so it is best to get used to making mistakes now when you have people here to help you. You can create a new R script by clicking on _File_ in the RStudio menu bar and then _R Script_.
 
-```{r, out.width = "90%", echo = FALSE}
+```{r, out.width = "70%", echo = FALSE}
 knitr::include_graphics("images/rstudio-new-script.png")
 ```
 
 After creating a new script, you will notice that a new _Source_ panel has appeared. In this new _Source_ panel, you can type and edit code. You can run code in the _Source_ panel by placing the cursor (i.e. the blinking line) on the desired line of code and pressing `Control + Enter` on your keyboard (or `CMD + Enter` if you are using an Apple computer). You can save the code in the _Source_ panel by pressing `Control + s` on your keyboard (or `CMD + s` if you are using an Apple computer).
 
-```{r, out.width = "90%", echo = FALSE}
+```{r, out.width = "70%", echo = FALSE}
 knitr::include_graphics("images/rstudio-source.png")
 ```
 
@@ -47,7 +47,9 @@ library(gridExtra)
 
 You should have already downloaded the data for the prioritizr module of this workshop. If you have not already done so, you can download it from here: https://github.com/prioritizr/cibio-workshop/raw/master/data.zip. After downloading the data, you can unzip the data into a new folder. Next, you will need to set the working directory to this new folder. To achieve this, click on the _Session_ button on the RStudio menu bar, then click _Set working directory_, and then _Choose Directory_.
 
-![](images/rstudio-wd.png)
+```{r, out.width = "70%", echo = FALSE}
+knitr::include_graphics("images/rstudio-wd.png")
+```
 
 Now navigate to the folder where you unzipped the data and select _Open_. You can verify that you have correctly set the working directory using the following R code. You should see the output `TRUE` in the _Console_ panel.
 
@@ -104,7 +106,7 @@ plot(pu_data)
 mapview(pu_data)
 ```
 
-```{r}
+```{r, out.width = "60%"}
 # print the structure of object
 str(pu_data, max.level = 2)
 
@@ -147,8 +149,6 @@ spplot(pu_data, "cost")
 mapview(pu_data, zcol = "cost")
 ```
 
-\clearpage
-
 Now, you can try and answer some questions about the planning unit data.
 
 ```{block2, type="rmdquestion"}
@@ -165,6 +165,8 @@ Now, you can try and answer some questions about the planning unit data.
 11. Is there a spatial pattern in where most planning units are covered by protected areas (hint: use `spplot` to make a map).
 
 ```
+
+\clearpage
 
 ## Vegetation data
 
@@ -233,7 +235,11 @@ cellStats(veg_data[[1]], "min")
 
 # calculate the mean value of all the cell values in the first layer
 cellStats(veg_data[[1]], "mean")
+```
 
+\clearpage
+
+```{r}
 # calculate the maximum value in each layer
 as_tibble(data.frame(max = cellStats(veg_data, "max")))
 ```
