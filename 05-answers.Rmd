@@ -66,7 +66,7 @@ This chapter contains the answers to the questions presented in the earlier chap
 
 ```{block2, type="rmdanswer"}
 1. `sum(s1$solution_1)` \newline
-   `s1$solution_1)`
+   `mean(s1$solution_1)`
 2. Yes, the planning units are generally spread out across most of the study area and they are not biased towards specific areas.
 3. `all(feature_representation(p1, s1[, "solution_1"])$relative_held >= 0.2)`
 4. This prioritization (i) does not account for existing protected areas, (ii) does not account for the spatial fragmentation of priority areas, or (iii) is not likely conserve enough habitat for each vegetation type (i.e. 5% is pretty small).
