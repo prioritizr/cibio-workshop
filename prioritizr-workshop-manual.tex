@@ -1654,7 +1654,7 @@ here for Gurobi installation instructions}).
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-34-1} \end{center}
+\begin{center}\includegraphics[width=0.65\linewidth]{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-34-1} \end{center}
 
 Now let's examine the solution.
 
@@ -1799,8 +1799,8 @@ Next, let's lock out highly degraded areas.
 ##   objective:      Minimum set objective 
 ##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
 ##   decisions:      Binary decision 
-##   constraints:    <Locked out planning units [51 locked units]
-##                    Locked in planning units [257 locked units]>
+##   constraints:    <Locked in planning units [257 locked units]
+##                    Locked out planning units [51 locked units]>
 ##   penalties:      <none>
 ##   portfolio:      default
 ##   solver:         Lpsymphony [first_feasible (0), gap (0.1), time_limit (-1), verbose (0)]
@@ -1816,7 +1816,7 @@ Next, let's lock out highly degraded areas.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-39-1} \end{center}
+\begin{center}\includegraphics[width=0.65\linewidth]{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-39-1} \end{center}
 
 \clearpage
 
@@ -1906,8 +1906,8 @@ optimality gap to reduce runtime (default is 0.1) -- and solve it.
 ##   objective:      Minimum set objective 
 ##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
 ##   decisions:      Binary decision 
-##   constraints:    <Locked out planning units [51 locked units]
-##                    Locked in planning units [257 locked units]>
+##   constraints:    <Locked in planning units [257 locked units]
+##                    Locked out planning units [51 locked units]>
 ##   penalties:      <Boundary penalties [edge factor (min: 0.5, max: 0.5), penalty (5e-04), zones]>
 ##   portfolio:      default
 ##   solver:         Lpsymphony [first_feasible (0), gap (1), time_limit (-1), verbose (0)]
@@ -1942,7 +1942,7 @@ optimality gap to reduce runtime (default is 0.1) -- and solve it.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-41-1} \end{center}
+\begin{center}\includegraphics[width=0.65\linewidth]{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-41-1} \end{center}
 
 Now let's compare the solutions to the problems with (\texttt{s5}) and
 without (\texttt{s4}) the boundary length penalties.
@@ -1969,6 +1969,8 @@ without (\texttt{s4}) the boundary length penalties.
 \end{enumerate}
 \EndKnitrBlock{rmdquestion}
 
+\clearpage
+
 \section{Budget limited
 prioritizations}\label{budget-limited-prioritizations}
 
@@ -1986,7 +1988,7 @@ conservation benefit subject to a budget (e.g.
 of species with at least one occurrence in the protected area system},
 or
 \href{https://prioritizr.net/reference/add_max_phylo_div_objective.html}{phylogenetic
-diversity}). Let's create a budget-limited prioritization that aims to
+diversity}). Let's create a budget limited prioritization that aims to
 adequately represent as many targets as possible whilst remaining within
 a budget.
 
@@ -2046,7 +2048,7 @@ a budget.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-44-1} \end{center}
+\begin{center}\includegraphics[width=0.65\linewidth]{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-44-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2315,7 +2317,7 @@ default gap value is 0.1).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 2155.661
+## [1] 2140
 \end{verbatim}
 
 \begin{Shaded}
@@ -2327,7 +2329,7 @@ default gap value is 0.1).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.9734513
+## [1] 0.9637168
 \end{verbatim}
 
 \BeginKnitrBlock{rmdquestion}
