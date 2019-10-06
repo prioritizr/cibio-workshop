@@ -125,13 +125,52 @@ Now, let's compare the solutions.
 4. Why does the first solution (`s1`) cost less than the second solution with protected areas locked into the solution (`s2`)?
 5. Why does the third solution (`s3`) cost less than the fourth solution solution with highly degraded areas locked out (`s4`)?
 6. Since planning units covered by existing protected areas have already been purchased, what is the cost for expanding the protected area system based on on the fourth prioritization (`s4`) (hint: total cost minus the cost of locked in planning units)?
-7. What happens if you specify targets that exceed the total amount of vegetation in the study area? You can do this by rerunning the code to make `p4` with `add_absolute_targets(1000)` instead of `add_relative_targets(0.2)` and generating a new solution?
+7. What happens if you specify targets that exceed the total amount of vegetation in the study area and try to solve the problem? You can do this by modifying the code to make `p4` with `add_absolute_targets(1000)` instead of `add_relative_targets(0.2)` and generating a new solution.
 
 ```
 
 ## Penalizing fragmentation
 
-TODO.
+Plans for protected area systems should facilitate gene flow and dispersal between individual reserves in the system. However, the prioritizations we have made so far have been highly fragmented. Similar to the Marxan decision support tool, we can add penalties to our conservation planning problem to penalize fragmentation (i.e. total exposed boundary length) and we also need to set a useful penalty value when adding such penalties (akin to Marxan's boundary length multiplier value; BLM). If we set our penalty value too low, then we end up with a solution that is identical to the solution with no added penalties. If we set our penalty value too high, then prioritizr will take a long time to solve the problem and we will end up with a solution that contains lots of extra planning units that are not needed (since the penalty value is so high that minimizing fragmentation is more important than cost). As a rule of thumb, we generally want penalty values between 0.00001 and 0.01 but finding a useful penalty value requires calibration. The "correct" penalty value depends on the size of the planning units, the main objective values (e.g. cost values), and the effect of fragmentation on biodiversity persistence. Let's create a new problem that is similar to our previous problem (`p4`) -- except that it contains boundary length penalties and a slightly higher optimality gap to reduce runtime (default is 0.1) -- and solve it.
+
+```{r}
+# make prioritization problem
+p5 <- problem(pu_data, veg_data, cost_column = "cost") %>%
+      add_min_set_objective() %>%
+      add_boundary_penalties(penalty = 0.0005) %>%
+      add_relative_targets(0.2) %>%
+      add_locked_in_constraints("locked_in") %>%
+      add_locked_out_constraints("locked_out") %>%
+      add_binary_decisions() %>%
+      add_lpsymphony_solver(verbose = FALSE, gap = 1)
+
+# print problem
+print(p5)
+
+# solve problem,
+# note this will take around 30 seconds
+s5 <- solve(p5)
+
+# print solution
+print(s5)
+
+# plot solution
+spplot(s5, "solution_1", col.regions = c("white", "darkgreen"), main = "s5")
+```
+
+```{r, include=FALSE}
+assert_that(!identical(s5$solution_1, s4$solution_1),
+            sum(s5$solution_1 * s5$cost) > sum(s4$solution_1 * s4$cost))
+```
+
+Now let's compare the solutions to the problems with (`s5`) and without (`s4`) the boundary length penalties.
+
+```{block2, type="rmdquestion"}
+1. What is the cost the fourth (`s4`) and fifth (`s5`) solutions? Why does the fifth solution (`s5`) cost more than the fourth (`s4`) solution?
+2. Try setting the penalty value to 0.000000001 (i.e. `1e-9`) instead of 0.001. What is the cost of the solution now? Is it different from the fourth solution (`s4`) (hint: try plotting the solutions to visualize them)? Is this is a useful penalty value? Why?
+3. Try setting the penalty value to 0.5. What is the cost of the solution now? Is it different from the fourth solution (`s4`) (hint: try plotting the solutions to visualize them)? Is this a useful penalty value? Why?
+
+```
 
 ## Budget limited prioritizations
 
