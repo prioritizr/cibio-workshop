@@ -10,7 +10,7 @@ git config --global user.name "jeffrey-hanson"
 
 git clone -b gh-pages https://${GITHUB_PAT}@github.com/${TRAVIS_REPO_SLUG}.git book-output
 
-rm -rf _book/images
+rm -rf book-output/_book/images
 
 cd book-output
 cp -r ../_book/* ./
