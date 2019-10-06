@@ -105,7 +105,9 @@ p4 <- problem(pu_data, veg_data, cost_column = "cost") %>%
       add_locked_out_constraints("locked_out") %>%
       add_binary_decisions() %>%
       add_lpsymphony_solver(verbose = FALSE)
+```
 
+```{r}
 # print problem
 print(p4)
 
@@ -115,6 +117,8 @@ s4 <- solve(p4)
 # plot solution
 spplot(s4, "solution_1", col.regions = c("white", "darkgreen"), main = "s4")
 ```
+
+\clearpage
 
 Now, let's compare the solutions.
 
@@ -132,6 +136,8 @@ Now, let's compare the solutions.
 ## Penalizing fragmentation
 
 Plans for protected area systems should facilitate gene flow and dispersal between individual reserves in the system. However, the prioritizations we have made so far have been highly fragmented. Similar to the Marxan decision support tool, we can add penalties to our conservation planning problem to penalize fragmentation (i.e. total exposed boundary length) and we also need to set a useful penalty value when adding such penalties (akin to Marxan's boundary length multiplier value; BLM). If we set our penalty value too low, then we end up with a solution that is identical to the solution with no added penalties. If we set our penalty value too high, then prioritizr will take a long time to solve the problem and we will end up with a solution that contains lots of extra planning units that are not needed (since the penalty value is so high that minimizing fragmentation is more important than cost). As a rule of thumb, we generally want penalty values between 0.00001 and 0.01 but finding a useful penalty value requires calibration. The "correct" penalty value depends on the size of the planning units, the main objective values (e.g. cost values), and the effect of fragmentation on biodiversity persistence. Let's create a new problem that is similar to our previous problem (`p4`) -- except that it contains boundary length penalties and a slightly higher optimality gap to reduce runtime (default is 0.1) -- and solve it.
+
+\clearpage
 
 ```{r}
 # make prioritization problem
@@ -200,7 +206,7 @@ print(p6)
 s6 <- solve(p6)
 
 # plot solution
-spplot(s6, "solution_1", col.regions = c("white", "darkgreen"), main = "s5")
+spplot(s6, "solution_1", col.regions = c("white", "darkgreen"), main = "s6")
 
 # find out which features have their targets met
 r6 <- feature_representation(p6, s6[, "solution_1"])
@@ -209,7 +215,7 @@ print(r6$feature[r6$relative_held > 0.2])
 
 We can also add weights to specify that it is more important to meet the targets for certain features and less important for other features. A common approach for weighting features is to assign a greater importance to features with smaller spatial distributions. The rationale behind this weighting method is that features with smaller spatial distributions are at greater risk of extinction. So, let's calculate some weights for our vegetation communities and see how weighting the features changes our prioritization.
 
-```{r}
+```{r, out.width = "65%"}
 # calculate weights as the inverse number of grid cells that each vegetation
 # class occupies, rescaled between 1 and 100
 wts <- 1 / cellStats(veg_data, "sum")
@@ -241,7 +247,7 @@ print(p7)
 s7 <- solve(p7)
 
 # plot solution
-spplot(s7, "solution_1", col.regions = c("white", "darkgreen"), main = "s6")
+spplot(s7, "solution_1", col.regions = c("white", "darkgreen"), main = "s7")
 
 # find out which features have their targets met when we add weights
 r7 <- feature_representation(p7, s7[, "solution_1"])
@@ -260,7 +266,7 @@ print(r6$feature[r7$relative_held > 0.2])
 
 In systematic conservation planning, only rarely do we have data on all of the stakeholder preferences and biodiversity features that we are interested in conserving. As a consequence, it is often useful to generate a portfolio of near optimal solutions to present to decision makers to guide the reserve selection process. Generally we would want many solutions in our portfolio (e.g. 1000) to ensure that our portfolio contains a range of highly different solutions, but here we will generate a portfolio containing just six near-optimal solutions so the code doesn't take too long to run. We will also increase the optimality gap to obtain solutions that are more suboptimal than earlier (the default gap value is 0.1).
 
-```{r}
+```{r, out.width = "65%"}
 # make problem with a shuffle portfolio
 p8 <- problem(pu_data, veg_data, cost_column = "cost") %>%
       add_max_features_objective(budget) %>%
@@ -280,13 +286,13 @@ s8 <- solve(p8)
 
 # print solution
 print(s8)
-```
 
-```{r, fig.width = 8, fig.height = 5}
 # plot first solution
 spplot(s8, "solution_1", col.regions = c("white", "darkgreen"),
        main = "s8 (solution 1)")
+```
 
+```{r, fig.width = 8, fig.height = 5}
 # plot all solutions
 s8_plots <- lapply(paste0("solution_", seq_len(6)), function(x) {
   spplot(s8, x, main = x, col.regions = c("white", "darkgreen"))
