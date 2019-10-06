@@ -324,8 +324,8 @@ p4 &lt;-<span class="st"> </span><span class="kw">problem</span>(pu_data, veg_da
 ##   objective:      Minimum set objective 
 ##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
 ##   decisions:      Binary decision 
-##   constraints:    &lt;Locked in planning units [257 locked units]
-##                    Locked out planning units [51 locked units]&gt;
+##   constraints:    &lt;Locked out planning units [51 locked units]
+##                    Locked in planning units [257 locked units]&gt;
 ##   penalties:      &lt;none&gt;
 ##   portfolio:      default
 ##   solver:         Lpsymphony [first_feasible (0), gap (0.1), time_limit (-1), verbose (0)]</code></pre>
@@ -486,7 +486,7 @@ r7 &lt;-<span class="st"> </span><span class="kw">feature_representation</span>(
 <div id="solution-portfolios" class="section level2">
 <h2><span class="header-section-number">5.6</span> Solution portfolios</h2>
 <p>In systematic conservation planning, only rarely do we have data on all of the stakeholder preferences and biodiversity features that we are interested in conserving. As a consequence, it is often useful to generate a portfolio of near optimal solutions to present to decision makers to guide the reserve selection process. Generally we would want many solutions in our portfolio (e.g. 1000) to ensure that our portfolio contains a range of highly different solutions, but here we will generate a portfolio containing just six near-optimal solutions so the code doesn’t take too long to run. We will also increase the optimality gap to obtain solutions that are more suboptimal than earlier (the default gap value is 0.1).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make problem with a shuffle portfolio</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make problem with a cuts portfolio</span>
 p8 &lt;-<span class="st"> </span><span class="kw">problem</span>(pu_data, veg_data, <span class="dt">cost_column =</span> <span class="st">&quot;cost&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">      </span><span class="kw">add_max_features_objective</span>(budget) <span class="op">%&gt;%</span>
 <span class="st">      </span><span class="kw">add_relative_targets</span>(<span class="fl">0.2</span>) <span class="op">%&gt;%</span>
@@ -538,11 +538,11 @@ s8_plots &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span clas
 <pre><code>## [1] 2194.232</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the cost of the second solution</span>
 <span class="kw">sum</span>(s8<span class="op">$</span>solution_<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>s8<span class="op">$</span>cost)</code></pre></div>
-<pre><code>## [1] 2169.848</code></pre>
+<pre><code>## [1] 2162.263</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the proportion of planning units with the same solution values</span>
 <span class="co"># in the first and second solutions</span>
 <span class="kw">mean</span>(s8<span class="op">$</span>solution_<span class="dv">1</span> <span class="op">==</span><span class="st"> </span>s8<span class="op">$</span>solution_<span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] 0.9716814</code></pre>
+<pre><code>## [1] 0.9734513</code></pre>
 
 <div class="rmdquestion">
 <ol style="list-style-type: decimal">

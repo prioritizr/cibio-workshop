@@ -2106,7 +2106,7 @@ default gap value is 0.1).
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# make problem with a shuffle portfolio}
+\CommentTok{# make problem with a cuts portfolio}
 \NormalTok{p8 <-}\StringTok{ }\KeywordTok{problem}\NormalTok{(pu_data, veg_data, }\DataTypeTok{cost_column =} \StringTok{"cost"}\NormalTok{) }\OperatorTok{%>%}
 \StringTok{      }\KeywordTok{add_max_features_objective}\NormalTok{(budget) }\OperatorTok{%>%}
 \StringTok{      }\KeywordTok{add_relative_targets}\NormalTok{(}\FloatTok{0.2}\NormalTok{) }\OperatorTok{%>%}
@@ -2198,7 +2198,7 @@ default gap value is 0.1).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 2154.932
+## [1] 2139.831
 \end{verbatim}
 
 \begin{Shaded}
@@ -2210,7 +2210,7 @@ default gap value is 0.1).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.9699115
+## [1] 0.9646018
 \end{verbatim}
 
 \BeginKnitrBlock{rmdquestion}
