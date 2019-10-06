@@ -1781,7 +1781,11 @@ Next, let's lock out highly degraded areas.
 \StringTok{      }\KeywordTok{add_locked_out_constraints}\NormalTok{(}\StringTok{"locked_out"}\NormalTok{) }\OperatorTok{%>%}
 \StringTok{      }\KeywordTok{add_binary_decisions}\NormalTok{() }\OperatorTok{%>%}
 \StringTok{      }\KeywordTok{add_lpsymphony_solver}\NormalTok{(}\DataTypeTok{verbose =} \OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{# print problem}
 \KeywordTok{print}\NormalTok{(p4)}
 \end{Highlighting}
@@ -1812,7 +1816,9 @@ Next, let's lock out highly degraded areas.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-38-1} \end{center}
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-39-1} \end{center}
+
+\clearpage
 
 Now, let's compare the solutions.
 
@@ -1872,6 +1878,8 @@ effect of fragmentation on biodiversity persistence. Let's create a new
 problem that is similar to our previous problem (\texttt{p4}) -- except
 that it contains boundary length penalties and a slightly higher
 optimality gap to reduce runtime (default is 0.1) -- and solve it.
+
+\clearpage
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1934,7 +1942,7 @@ optimality gap to reduce runtime (default is 0.1) -- and solve it.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-40-1} \end{center}
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-41-1} \end{center}
 
 Now let's compare the solutions to the problems with (\texttt{s5}) and
 without (\texttt{s4}) the boundary length penalties.
@@ -2021,8 +2029,8 @@ a budget.
 ##   objective:      Maximum representation objective [budget (9475.56009869836)]
 ##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
 ##   decisions:      Binary decision 
-##   constraints:    <Locked in planning units [257 locked units]
-##                    Locked out planning units [51 locked units]>
+##   constraints:    <Locked out planning units [51 locked units]
+##                    Locked in planning units [257 locked units]>
 ##   penalties:      <none>
 ##   portfolio:      default
 ##   solver:         Lpsymphony [first_feasible (0), gap (0.1), time_limit (-1), verbose (0)]
@@ -2034,11 +2042,11 @@ a budget.
 \NormalTok{s6 <-}\StringTok{ }\KeywordTok{solve}\NormalTok{(p6)}
 
 \CommentTok{# plot solution}
-\KeywordTok{spplot}\NormalTok{(s6, }\StringTok{"solution_1"}\NormalTok{, }\DataTypeTok{col.regions =} \KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{), }\DataTypeTok{main =} \StringTok{"s5"}\NormalTok{)}
+\KeywordTok{spplot}\NormalTok{(s6, }\StringTok{"solution_1"}\NormalTok{, }\DataTypeTok{col.regions =} \KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{), }\DataTypeTok{main =} \StringTok{"s6"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-43-1} \end{center}
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-44-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2108,7 +2116,7 @@ features changes our prioritization.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-44-1} \end{center}
+\begin{center}\includegraphics[width=0.65\linewidth]{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-45-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2148,11 +2156,11 @@ features changes our prioritization.
 \NormalTok{s7 <-}\StringTok{ }\KeywordTok{solve}\NormalTok{(p7)}
 
 \CommentTok{# plot solution}
-\KeywordTok{spplot}\NormalTok{(s7, }\StringTok{"solution_1"}\NormalTok{, }\DataTypeTok{col.regions =} \KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{), }\DataTypeTok{main =} \StringTok{"s6"}\NormalTok{)}
+\KeywordTok{spplot}\NormalTok{(s7, }\StringTok{"solution_1"}\NormalTok{, }\DataTypeTok{col.regions =} \KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{), }\DataTypeTok{main =} \StringTok{"s7"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-44-2} \end{center}
+\begin{center}\includegraphics[width=0.65\linewidth]{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-45-2} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2274,7 +2282,7 @@ default gap value is 0.1).
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-47-1} \end{center}
+\begin{center}\includegraphics[width=0.65\linewidth]{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-47-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2286,7 +2294,7 @@ default gap value is 0.1).
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-47-2} \end{center}
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-48-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2307,7 +2315,7 @@ default gap value is 0.1).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 2172.271
+## [1] 2155.661
 \end{verbatim}
 
 \begin{Shaded}
@@ -2319,7 +2327,7 @@ default gap value is 0.1).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.9752212
+## [1] 0.9734513
 \end{verbatim}
 
 \BeginKnitrBlock{rmdquestion}
