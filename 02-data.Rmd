@@ -83,6 +83,11 @@ pu_data$locked_out <- as.logical(pu_data$locked_out)
 veg_data <- stack("data/vegetation.tif")
 ```
 
+```{r, include = FALSE}
+assert_that(sum(pu_data$locked_in) > 0, sum(pu_data$locked_out) > 0,
+            sum(pu_data$locked_in & pu_data$locked_out) == 0)
+```
+
 ## Planning unit data
 
 The planning unit data contains spatial data describing the geometry for each planning unit and attribute data with information about each planning unit (e.g. cost values). Let's investigate the `pu_data` object. The attribute data contains `r ncol(pu_data)` columns with contain the following information:
