@@ -8,7 +8,7 @@ Here we will develop prioritizations to identify priority areas for protected ar
 
 To start things off, let's keep things simple. Let's create a prioritization using the [minimum set problem formulation of the reserve selection problem](https://prioritizr.net/reference/add_min_set_objective.html). This problem will have 5% targets for each vegetation class and use the data in the `cost` column to specify acquisition costs. Although we strongly recommend using [Gurobi](https://www.gurobi.com/) to solve problems (with [`add_gurobi_solver`](https://prioritizr.net/reference/add_gurobi_solver.html)), we will use the [lpsymphony solver](https://prioritizr.net/reference/add_lsymphony_solver.html) in this workshop since it is much easier to install. The Gurobi solver is the fastest solver that prioritizr can use to generate solutions and it is much, much, much faster than the lpsymphony solver ([see here for Gurobi installation instructions](https://prioritizr.net/articles/gurobi_installation.html)).
 
-```{r}
+```{r, out.width = "65%"}
 # print planning unit data
 print(pu_data)
 
@@ -107,7 +107,7 @@ p4 <- problem(pu_data, veg_data, cost_column = "cost") %>%
       add_lpsymphony_solver(verbose = FALSE)
 ```
 
-```{r}
+```{r, out.width = "65%"}
 # print problem
 print(p4)
 
@@ -139,7 +139,7 @@ Plans for protected area systems should facilitate gene flow and dispersal betwe
 
 \clearpage
 
-```{r}
+```{r, out.width = "65%"}
 # make prioritization problem
 p5 <- problem(pu_data, veg_data, cost_column = "cost") %>%
       add_min_set_objective() %>%
@@ -178,11 +178,13 @@ Now let's compare the solutions to the problems with (`s5`) and without (`s4`) t
 
 ```
 
+\clearpage
+
 ## Budget limited prioritizations
 
-In the real-world, the funding available for conservation is often very limited. As a consequence, decision makers often need prioritizations where the total cost of priority areas does not exceed a budget. In our fourth prioritization (`s4`), we found that we would need to spend an additional $`r round(sum(s4$cost * s4$solution_1) - sum(s4$cost * s4$locked_in))` million AUD to ensure that each vegetation community is adequately represented in the protected area system. But what if the funds available for protecting new land were limited to $1000? In this case, we need a "budget limited prioritization". Budget limited prioritizations aim to maximize some measure of conservation benefit subject to a budget (e.g. [number of species with at least one occurrence in the protected area system ](https://prioritizr.net/reference/add_max_cover_objective.html), or [phylogenetic diversity](https://prioritizr.net/reference/add_max_phylo_div_objective.html)). Let's create a budget-limited prioritization that aims to adequately represent as many targets as possible whilst remaining within a budget.
+In the real-world, the funding available for conservation is often very limited. As a consequence, decision makers often need prioritizations where the total cost of priority areas does not exceed a budget. In our fourth prioritization (`s4`), we found that we would need to spend an additional $`r round(sum(s4$cost * s4$solution_1) - sum(s4$cost * s4$locked_in))` million AUD to ensure that each vegetation community is adequately represented in the protected area system. But what if the funds available for protecting new land were limited to $1000? In this case, we need a "budget limited prioritization". Budget limited prioritizations aim to maximize some measure of conservation benefit subject to a budget (e.g. [number of species with at least one occurrence in the protected area system ](https://prioritizr.net/reference/add_max_cover_objective.html), or [phylogenetic diversity](https://prioritizr.net/reference/add_max_phylo_div_objective.html)). Let's create a budget limited prioritization that aims to adequately represent as many targets as possible whilst remaining within a budget.
 
-```{r}
+```{r, out.width = "65%"}
 # set the funds for additional land acquisition
 funds <- 1000
 
