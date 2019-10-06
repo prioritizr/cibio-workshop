@@ -9,6 +9,9 @@ git config --global user.email "jeffrey.hanson@uqconnect.edu.au"
 git config --global user.name "jeffrey-hanson"
 
 git clone -b gh-pages https://${GITHUB_PAT}@github.com/${TRAVIS_REPO_SLUG}.git book-output
+
+rm -rf _book/images
+
 cd book-output
 cp -r ../_book/* ./
 git add --all *
