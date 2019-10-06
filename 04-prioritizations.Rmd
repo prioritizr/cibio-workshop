@@ -182,11 +182,11 @@ Now let's compare the solutions to the problems with (`s5`) and without (`s4`) t
 
 ## Budget limited prioritizations
 
-In the real-world, the funding available for conservation is often very limited. As a consequence, decision makers often need prioritizations where the total cost of priority areas does not exceed a budget. In our fourth prioritization (`s4`), we found that we would need to spend an additional $`r round(sum(s4$cost * s4$solution_1) - sum(s4$cost * s4$locked_in))` million AUD to ensure that each vegetation community is adequately represented in the protected area system. But what if the funds available for protecting new land were limited to $1000? In this case, we need a "budget limited prioritization". Budget limited prioritizations aim to maximize some measure of conservation benefit subject to a budget (e.g. [number of species with at least one occurrence in the protected area system ](https://prioritizr.net/reference/add_max_cover_objective.html), or [phylogenetic diversity](https://prioritizr.net/reference/add_max_phylo_div_objective.html)). Let's create a budget limited prioritization that aims to adequately represent as many targets as possible whilst remaining within a budget.
+In the real-world, the funding available for conservation is often very limited. As a consequence, decision makers often need prioritizations where the total cost of priority areas does not exceed a budget. In our fourth prioritization (`s4`), we found that we would need to spend an additional $`r round(sum(s4$cost * s4$solution_1) - sum(s4$cost * s4$locked_in))` million AUD to ensure that each vegetation community is adequately represented in the protected area system. But what if the funds available for protecting new land were limited to $100 million AUD? In this case, we need a "budget limited prioritization". Budget limited prioritizations aim to maximize some measure of conservation benefit subject to a budget (e.g. [number of species with at least one occurrence in the protected area system ](https://prioritizr.net/reference/add_max_cover_objective.html), or [phylogenetic diversity](https://prioritizr.net/reference/add_max_phylo_div_objective.html)). Let's create a budget limited prioritization that aims to adequately represent as many targets as possible whilst remaining within a budget.
 
-```{r, out.width = "65%"}
+```{r "budget", out.width = "65%"}
 # set the funds for additional land acquisition
-funds <- 1000
+funds <- 100
 
 # calculate the total budget for the prioritization
 budget <- funds + sum(s4$cost * s4$locked_in)
@@ -210,15 +210,20 @@ s6 <- solve(p6)
 # plot solution
 spplot(s6, "solution_1", col.regions = c("white", "darkgreen"), main = "s6")
 
-# find out which features have their targets met
+# calculate feature representation
 r6 <- feature_representation(p6, s6[, "solution_1"])
+
+# calculate number of features with targets met
+sum(r6$relative_held > 0.2, na.rm = TRUE)
+
+# find out which features have their targets met when we add weights
 print(r6$feature[r6$relative_held > 0.2])
 ```
 
 We can also add weights to specify that it is more important to meet the targets for certain features and less important for other features. A common approach for weighting features is to assign a greater importance to features with smaller spatial distributions. The rationale behind this weighting method is that features with smaller spatial distributions are at greater risk of extinction. So, let's calculate some weights for our vegetation communities and see how weighting the features changes our prioritization.
 
-```{r, out.width = "65%"}
-# calculate weights as the inverse number of grid cells that each vegetation
+```{r "budget-weights", out.width = "65%"}
+# calculate weights as the log inverse number of grid cells that each vegetation
 # class occupies, rescaled between 1 and 100
 wts <- 1 / cellStats(veg_data, "sum")
 wts <- rescale(wts, to = c(1, 10))
@@ -251,9 +256,19 @@ s7 <- solve(p7)
 # plot solution
 spplot(s7, "solution_1", col.regions = c("white", "darkgreen"), main = "s7")
 
-# find out which features have their targets met when we add weights
+# calculate feature representation
 r7 <- feature_representation(p7, s7[, "solution_1"])
-print(r6$feature[r7$relative_held > 0.2])
+
+# calculate number of features with targets met
+sum(r7$relative_held > 0.2, na.rm = TRUE)
+
+# find out which features have their targets met when we add weights
+print(r7$feature[r7$relative_held > 0.2])
+```
+
+```{r, include  = FALSE}
+assert_that(!identical(r7$feature[r7$relative_held > 0.2],
+                        r6$feature[r6$relative_held > 0.2]))
 ```
 
 ```{block2, type="rmdquestion"}
