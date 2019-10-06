@@ -234,7 +234,7 @@ s1 &lt;-<span class="st"> </span><span class="kw">solve</span>(p1)
 <pre><code>## [1] 806.2393</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot solution</span>
 <span class="kw">spplot</span>(s1, <span class="st">&quot;solution_1&quot;</span>, <span class="dt">col.regions =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>), <span class="dt">main =</span> <span class="st">&quot;s1&quot;</span>)</code></pre></div>
-<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-33-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-34-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Now let’s examine the solution.</p>
 
 <div class="rmdquestion">
@@ -276,7 +276,7 @@ s2 &lt;-<span class="st"> </span><span class="kw">solve</span>(p2)
 
 <span class="co"># plot solution</span>
 <span class="kw">spplot</span>(s2, <span class="st">&quot;solution_1&quot;</span>, <span class="dt">col.regions =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>), <span class="dt">main =</span> <span class="st">&quot;s2&quot;</span>)</code></pre></div>
-<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-35-1.png" width="65%" style="display: block; margin: auto;" /></p>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-36-1.png" width="65%" style="display: block; margin: auto;" /></p>
 <p>Let’s pretend we talked to an expert on the vegetation communities in our study system and they recommended that a 20% target was needed. So, now let’s set the targets to 20% of their total distribution in the study area.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make prioritization problem</span>
 p3 &lt;-<span class="st"> </span><span class="kw">problem</span>(pu_data, veg_data, <span class="dt">cost_column =</span> <span class="st">&quot;cost&quot;</span>) <span class="op">%&gt;%</span>
@@ -304,7 +304,7 @@ s3 &lt;-<span class="st"> </span><span class="kw">solve</span>(p3)
 
 <span class="co"># plot solution</span>
 <span class="kw">spplot</span>(s3, <span class="st">&quot;solution_1&quot;</span>, <span class="dt">col.regions =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>), <span class="dt">main =</span> <span class="st">&quot;s3&quot;</span>)</code></pre></div>
-<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-36-1.png" width="65%" style="display: block; margin: auto;" /></p>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-37-1.png" width="65%" style="display: block; margin: auto;" /></p>
 <p>Next, let’s lock out highly degraded areas.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make prioritization problem</span>
 p4 &lt;-<span class="st"> </span><span class="kw">problem</span>(pu_data, veg_data, <span class="dt">cost_column =</span> <span class="st">&quot;cost&quot;</span>) <span class="op">%&gt;%</span>
@@ -334,7 +334,7 @@ s4 &lt;-<span class="st"> </span><span class="kw">solve</span>(p4)
 
 <span class="co"># plot solution</span>
 <span class="kw">spplot</span>(s4, <span class="st">&quot;solution_1&quot;</span>, <span class="dt">col.regions =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>), <span class="dt">main =</span> <span class="st">&quot;s4&quot;</span>)</code></pre></div>
-<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-37-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-38-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Now, let’s compare the solutions.</p>
 
 <div class="rmdquestion">
@@ -345,14 +345,65 @@ s4 &lt;-<span class="st"> </span><span class="kw">solve</span>(p4)
 <li>Why does the first solution (<code>s1</code>) cost less than the second solution with protected areas locked into the solution (<code>s2</code>)?</li>
 <li>Why does the third solution (<code>s3</code>) cost less than the fourth solution solution with highly degraded areas locked out (<code>s4</code>)?</li>
 <li>Since planning units covered by existing protected areas have already been purchased, what is the cost for expanding the protected area system based on on the fourth prioritization (<code>s4</code>) (hint: total cost minus the cost of locked in planning units)?</li>
-<li>What happens if you specify targets that exceed the total amount of vegetation in the study area? You can do this by rerunning the code to make <code>p4</code> with <code>add_absolute_targets(1000)</code> instead of <code>add_relative_targets(0.2)</code> and generating a new solution?</li>
+<li>What happens if you specify targets that exceed the total amount of vegetation in the study area and try to solve the problem? You can do this by modifying the code to make <code>p4</code> with <code>add_absolute_targets(1000)</code> instead of <code>add_relative_targets(0.2)</code> and generating a new solution.</li>
 </ol>
 </div>
 
 </div>
 <div id="penalizing-fragmentation" class="section level2">
 <h2><span class="header-section-number">5.4</span> Penalizing fragmentation</h2>
-<p>TODO.</p>
+<p>Plans for protected area systems should facilitate gene flow and dispersal between individual reserves in the system. However, the prioritizations we have made so far have been highly fragmented. Similar to the Marxan decision support tool, we can add penalties to our conservation planning problem to penalize fragmentation (i.e. total exposed boundary length) and we also need to set a useful penalty value when adding such penalties (akin to Marxan’s boundary length multiplier value; BLM). If we set our penalty value too low, then we end up with a solution that is identical to the solution with no added penalties. If we set our penalty value too high, then prioritizr will take a long time to solve the problem and we will end up with a solution that contains lots of extra planning units that are not needed (since the penalty value is so high that minimizing fragmentation is more important than cost). As a rule of thumb, we generally want penalty values between 0.00001 and 0.01 but finding a useful penalty value requires calibration. The “correct” penalty value depends on the size of the planning units, the main objective values (e.g. cost values), and the effect of fragmentation on biodiversity persistence. Let’s create a new problem that is similar to our previous problem (<code>p4</code>) – except that it contains boundary length penalties and a slightly higher optimality gap to reduce runtime (default is 0.1) – and solve it.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make prioritization problem</span>
+p5 &lt;-<span class="st"> </span><span class="kw">problem</span>(pu_data, veg_data, <span class="dt">cost_column =</span> <span class="st">&quot;cost&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">      </span><span class="kw">add_min_set_objective</span>() <span class="op">%&gt;%</span>
+<span class="st">      </span><span class="kw">add_boundary_penalties</span>(<span class="dt">penalty =</span> <span class="fl">0.0005</span>) <span class="op">%&gt;%</span>
+<span class="st">      </span><span class="kw">add_relative_targets</span>(<span class="fl">0.2</span>) <span class="op">%&gt;%</span>
+<span class="st">      </span><span class="kw">add_locked_in_constraints</span>(<span class="st">&quot;locked_in&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">      </span><span class="kw">add_locked_out_constraints</span>(<span class="st">&quot;locked_out&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">      </span><span class="kw">add_binary_decisions</span>() <span class="op">%&gt;%</span>
+<span class="st">      </span><span class="kw">add_lpsymphony_solver</span>(<span class="dt">verbose =</span> <span class="ot">FALSE</span>, <span class="dt">gap =</span> <span class="dv">1</span>)
+
+<span class="co"># print problem</span>
+<span class="kw">print</span>(p5)</code></pre></div>
+<pre><code>## Conservation Problem
+##   planning units: SpatialPolygonsDataFrame (1130 units)
+##   cost:           min: 0.19249, max: 61.92727
+##   features:       vegetation.1, vegetation.2, vegetation.3, ... (62 features)
+##   objective:      Minimum set objective 
+##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
+##   decisions:      Binary decision 
+##   constraints:    &lt;Locked in planning units [257 locked units]
+##                    Locked out planning units [51 locked units]&gt;
+##   penalties:      &lt;Boundary penalties [edge factor (min: 0.5, max: 0.5), penalty (5e-04), zones]&gt;
+##   portfolio:      default
+##   solver:         Lpsymphony [first_feasible (0), gap (1), time_limit (-1), verbose (0)]</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># solve problem,</span>
+<span class="co"># note this will take around 30 seconds</span>
+s5 &lt;-<span class="st"> </span><span class="kw">solve</span>(p5)
+
+<span class="co"># print solution</span>
+<span class="kw">print</span>(s5)</code></pre></div>
+<pre><code>## class       : SpatialPolygonsDataFrame 
+## features    : 1130 
+## extent      : 1080623, 1399989, -4840595, -4497092  (xmin, xmax, ymin, ymax)
+## crs         : +proj=aea +lat_1=-18 +lat_2=-36 +lat_0=0 +lon_0=132 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs 
+## variables   : 7
+## names       :   id,              cost, status, locked_in, locked_out, pa_status, solution_1 
+## min values  :    1, 0.192488262910798,      0,         0,          0,         0,          0 
+## max values  : 1130,  61.9272727272727,      2,         1,          1,         1,          1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot solution</span>
+<span class="kw">spplot</span>(s5, <span class="st">&quot;solution_1&quot;</span>, <span class="dt">col.regions =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>), <span class="dt">main =</span> <span class="st">&quot;s5&quot;</span>)</code></pre></div>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-40-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Now let’s compare the solutions to the problems with (<code>s5</code>) and without (<code>s4</code>) the boundary length penalties.</p>
+
+<div class="rmdquestion">
+<ol style="list-style-type: decimal">
+<li>What is the cost the fourth (<code>s4</code>) and fifth (<code>s5</code>) solutions? Why does the fifth solution (<code>s5</code>) cost more than the fourth (<code>s4</code>) solution?</li>
+<li>Try setting the penalty value to 0.000000001 (i.e. <code>1e-9</code>) instead of 0.001. What is the cost of the solution now? Is it different from the fourth solution (<code>s4</code>) (hint: try plotting the solutions to visualize them)? Is this is a useful penalty value? Why?</li>
+<li>Try setting the penalty value to 0.5. What is the cost of the solution now? Is it different from the fourth solution (<code>s4</code>) (hint: try plotting the solutions to visualize them)? Is this a useful penalty value? Why?</li>
+</ol>
+</div>
+
 </div>
 <div id="budget-limited-prioritizations" class="section level2">
 <h2><span class="header-section-number">5.5</span> Budget limited prioritizations</h2>
@@ -382,8 +433,8 @@ p6 &lt;-<span class="st"> </span><span class="kw">problem</span>(pu_data, veg_da
 ##   objective:      Maximum representation objective [budget (9475.56009869836)]
 ##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
 ##   decisions:      Binary decision 
-##   constraints:    &lt;Locked out planning units [51 locked units]
-##                    Locked in planning units [257 locked units]&gt;
+##   constraints:    &lt;Locked in planning units [257 locked units]
+##                    Locked out planning units [51 locked units]&gt;
 ##   penalties:      &lt;none&gt;
 ##   portfolio:      default
 ##   solver:         Lpsymphony [first_feasible (0), gap (0.1), time_limit (-1), verbose (0)]</code></pre>
@@ -392,24 +443,24 @@ s6 &lt;-<span class="st"> </span><span class="kw">solve</span>(p6)
 
 <span class="co"># plot solution</span>
 <span class="kw">spplot</span>(s6, <span class="st">&quot;solution_1&quot;</span>, <span class="dt">col.regions =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>), <span class="dt">main =</span> <span class="st">&quot;s5&quot;</span>)</code></pre></div>
-<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-39-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-43-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># find out which features have their targets met</span>
 r6 &lt;-<span class="st"> </span><span class="kw">feature_representation</span>(p6, s6[, <span class="st">&quot;solution_1&quot;</span>])
 <span class="kw">print</span>(r6<span class="op">$</span>feature[r6<span class="op">$</span>relative_held <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.2</span>])</code></pre></div>
 <pre><code>##  [1] &quot;vegetation.1&quot;  &quot;vegetation.2&quot;  &quot;vegetation.3&quot;  &quot;vegetation.4&quot; 
-##  [5] &quot;vegetation.5&quot;  &quot;vegetation.6&quot;  &quot;vegetation.8&quot;  &quot;vegetation.9&quot; 
-##  [9] &quot;vegetation.10&quot; &quot;vegetation.11&quot; &quot;vegetation.12&quot; &quot;vegetation.14&quot;
-## [13] &quot;vegetation.15&quot; &quot;vegetation.16&quot; &quot;vegetation.17&quot; &quot;vegetation.18&quot;
-## [17] &quot;vegetation.19&quot; &quot;vegetation.20&quot; &quot;vegetation.21&quot; &quot;vegetation.22&quot;
-## [21] &quot;vegetation.24&quot; &quot;vegetation.25&quot; &quot;vegetation.26&quot; &quot;vegetation.28&quot;
-## [25] &quot;vegetation.29&quot; &quot;vegetation.30&quot; &quot;vegetation.31&quot; &quot;vegetation.32&quot;
-## [29] &quot;vegetation.33&quot; &quot;vegetation.34&quot; &quot;vegetation.35&quot; &quot;vegetation.36&quot;
-## [33] &quot;vegetation.37&quot; &quot;vegetation.38&quot; &quot;vegetation.39&quot; &quot;vegetation.40&quot;
-## [37] &quot;vegetation.41&quot; &quot;vegetation.42&quot; &quot;vegetation.44&quot; &quot;vegetation.45&quot;
-## [41] &quot;vegetation.47&quot; &quot;vegetation.48&quot; &quot;vegetation.49&quot; &quot;vegetation.50&quot;
-## [45] &quot;vegetation.51&quot; &quot;vegetation.52&quot; &quot;vegetation.53&quot; &quot;vegetation.55&quot;
-## [49] &quot;vegetation.56&quot; &quot;vegetation.57&quot; &quot;vegetation.58&quot; &quot;vegetation.59&quot;
-## [53] &quot;vegetation.60&quot; NA              &quot;vegetation.62&quot;</code></pre>
+##  [5] &quot;vegetation.5&quot;  &quot;vegetation.6&quot;  &quot;vegetation.9&quot;  &quot;vegetation.10&quot;
+##  [9] &quot;vegetation.11&quot; &quot;vegetation.12&quot; &quot;vegetation.14&quot; &quot;vegetation.15&quot;
+## [13] &quot;vegetation.16&quot; &quot;vegetation.17&quot; &quot;vegetation.18&quot; &quot;vegetation.19&quot;
+## [17] &quot;vegetation.20&quot; &quot;vegetation.21&quot; &quot;vegetation.22&quot; &quot;vegetation.24&quot;
+## [21] &quot;vegetation.25&quot; &quot;vegetation.26&quot; &quot;vegetation.28&quot; &quot;vegetation.29&quot;
+## [25] &quot;vegetation.30&quot; &quot;vegetation.31&quot; &quot;vegetation.32&quot; &quot;vegetation.33&quot;
+## [29] &quot;vegetation.34&quot; &quot;vegetation.35&quot; &quot;vegetation.36&quot; &quot;vegetation.37&quot;
+## [33] &quot;vegetation.38&quot; &quot;vegetation.39&quot; &quot;vegetation.40&quot; &quot;vegetation.41&quot;
+## [37] &quot;vegetation.42&quot; &quot;vegetation.44&quot; &quot;vegetation.45&quot; &quot;vegetation.47&quot;
+## [41] &quot;vegetation.48&quot; &quot;vegetation.49&quot; &quot;vegetation.50&quot; &quot;vegetation.51&quot;
+## [45] &quot;vegetation.52&quot; &quot;vegetation.53&quot; &quot;vegetation.55&quot; &quot;vegetation.56&quot;
+## [49] &quot;vegetation.57&quot; &quot;vegetation.58&quot; &quot;vegetation.59&quot; &quot;vegetation.60&quot;
+## [53] NA              &quot;vegetation.62&quot;</code></pre>
 <p>We can also add weights to specify that it is more important to meet the targets for certain features and less important for other features. A common approach for weighting features is to assign a greater importance to features with smaller spatial distributions. The rationale behind this weighting method is that features with smaller spatial distributions are at greater risk of extinction. So, let’s calculate some weights for our vegetation communities and see how weighting the features changes our prioritization.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate weights as the inverse number of grid cells that each vegetation</span>
 <span class="co"># class occupies, rescaled between 1 and 100</span>
@@ -424,7 +475,7 @@ wts &lt;-<span class="st"> </span><span class="kw">rescale</span>(wts, <span cla
 <pre><code>## [1] &quot;vegetation.52&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot histogram of weights</span>
 <span class="kw">hist</span>(wts, <span class="dt">main =</span> <span class="st">&quot;feature weights&quot;</span>)</code></pre></div>
-<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-40-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-44-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make prioritization problem with weights</span>
 p7 &lt;-<span class="st"> </span><span class="kw">problem</span>(pu_data, veg_data, <span class="dt">cost_column =</span> <span class="st">&quot;cost&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">      </span><span class="kw">add_max_features_objective</span>(budget) <span class="op">%&gt;%</span>
@@ -454,24 +505,24 @@ s7 &lt;-<span class="st"> </span><span class="kw">solve</span>(p7)
 
 <span class="co"># plot solution</span>
 <span class="kw">spplot</span>(s7, <span class="st">&quot;solution_1&quot;</span>, <span class="dt">col.regions =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>), <span class="dt">main =</span> <span class="st">&quot;s6&quot;</span>)</code></pre></div>
-<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-40-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-44-2.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># find out which features have their targets met when we add weights</span>
 r7 &lt;-<span class="st"> </span><span class="kw">feature_representation</span>(p7, s7[, <span class="st">&quot;solution_1&quot;</span>])
 <span class="kw">print</span>(r6<span class="op">$</span>feature[r7<span class="op">$</span>relative_held <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.2</span>])</code></pre></div>
 <pre><code>##  [1] &quot;vegetation.1&quot;  &quot;vegetation.2&quot;  &quot;vegetation.3&quot;  &quot;vegetation.4&quot; 
-##  [5] &quot;vegetation.5&quot;  &quot;vegetation.6&quot;  &quot;vegetation.9&quot;  &quot;vegetation.10&quot;
-##  [9] &quot;vegetation.11&quot; &quot;vegetation.12&quot; &quot;vegetation.14&quot; &quot;vegetation.15&quot;
-## [13] &quot;vegetation.16&quot; &quot;vegetation.17&quot; &quot;vegetation.18&quot; &quot;vegetation.19&quot;
-## [17] &quot;vegetation.20&quot; &quot;vegetation.21&quot; &quot;vegetation.22&quot; &quot;vegetation.24&quot;
-## [21] &quot;vegetation.25&quot; &quot;vegetation.26&quot; &quot;vegetation.28&quot; &quot;vegetation.29&quot;
-## [25] &quot;vegetation.30&quot; &quot;vegetation.31&quot; &quot;vegetation.32&quot; &quot;vegetation.33&quot;
-## [29] &quot;vegetation.34&quot; &quot;vegetation.35&quot; &quot;vegetation.36&quot; &quot;vegetation.37&quot;
-## [33] &quot;vegetation.38&quot; &quot;vegetation.39&quot; &quot;vegetation.40&quot; &quot;vegetation.41&quot;
-## [37] &quot;vegetation.42&quot; &quot;vegetation.43&quot; &quot;vegetation.44&quot; &quot;vegetation.45&quot;
-## [41] &quot;vegetation.47&quot; &quot;vegetation.48&quot; &quot;vegetation.49&quot; &quot;vegetation.50&quot;
-## [45] &quot;vegetation.51&quot; &quot;vegetation.52&quot; &quot;vegetation.53&quot; &quot;vegetation.55&quot;
-## [49] &quot;vegetation.56&quot; &quot;vegetation.57&quot; &quot;vegetation.58&quot; &quot;vegetation.59&quot;
-## [53] &quot;vegetation.60&quot; NA              &quot;vegetation.62&quot;</code></pre>
+##  [5] &quot;vegetation.5&quot;  &quot;vegetation.6&quot;  &quot;vegetation.8&quot;  &quot;vegetation.9&quot; 
+##  [9] &quot;vegetation.10&quot; &quot;vegetation.11&quot; &quot;vegetation.12&quot; &quot;vegetation.13&quot;
+## [13] &quot;vegetation.14&quot; &quot;vegetation.15&quot; &quot;vegetation.16&quot; &quot;vegetation.17&quot;
+## [17] &quot;vegetation.18&quot; &quot;vegetation.19&quot; &quot;vegetation.20&quot; &quot;vegetation.21&quot;
+## [21] &quot;vegetation.22&quot; &quot;vegetation.24&quot; &quot;vegetation.25&quot; &quot;vegetation.26&quot;
+## [25] &quot;vegetation.28&quot; &quot;vegetation.29&quot; &quot;vegetation.30&quot; &quot;vegetation.31&quot;
+## [29] &quot;vegetation.32&quot; &quot;vegetation.33&quot; &quot;vegetation.34&quot; &quot;vegetation.35&quot;
+## [33] &quot;vegetation.36&quot; &quot;vegetation.37&quot; &quot;vegetation.38&quot; &quot;vegetation.39&quot;
+## [37] &quot;vegetation.40&quot; &quot;vegetation.41&quot; &quot;vegetation.42&quot; &quot;vegetation.44&quot;
+## [41] &quot;vegetation.45&quot; &quot;vegetation.47&quot; &quot;vegetation.48&quot; &quot;vegetation.49&quot;
+## [45] &quot;vegetation.50&quot; &quot;vegetation.51&quot; &quot;vegetation.52&quot; &quot;vegetation.53&quot;
+## [49] &quot;vegetation.55&quot; &quot;vegetation.56&quot; &quot;vegetation.57&quot; &quot;vegetation.58&quot;
+## [53] &quot;vegetation.59&quot; &quot;vegetation.60&quot; NA              &quot;vegetation.62&quot;</code></pre>
 
 <div class="rmdquestion">
 <ol style="list-style-type: decimal">
@@ -486,7 +537,7 @@ r7 &lt;-<span class="st"> </span><span class="kw">feature_representation</span>(
 <div id="solution-portfolios" class="section level2">
 <h2><span class="header-section-number">5.6</span> Solution portfolios</h2>
 <p>In systematic conservation planning, only rarely do we have data on all of the stakeholder preferences and biodiversity features that we are interested in conserving. As a consequence, it is often useful to generate a portfolio of near optimal solutions to present to decision makers to guide the reserve selection process. Generally we would want many solutions in our portfolio (e.g. 1000) to ensure that our portfolio contains a range of highly different solutions, but here we will generate a portfolio containing just six near-optimal solutions so the code doesn’t take too long to run. We will also increase the optimality gap to obtain solutions that are more suboptimal than earlier (the default gap value is 0.1).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make problem with a cuts portfolio</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make problem with a shuffle portfolio</span>
 p8 &lt;-<span class="st"> </span><span class="kw">problem</span>(pu_data, veg_data, <span class="dt">cost_column =</span> <span class="st">&quot;cost&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">      </span><span class="kw">add_max_features_objective</span>(budget) <span class="op">%&gt;%</span>
 <span class="st">      </span><span class="kw">add_relative_targets</span>(<span class="fl">0.2</span>) <span class="op">%&gt;%</span>
@@ -526,23 +577,23 @@ s8 &lt;-<span class="st"> </span><span class="kw">solve</span>(p8)
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot first solution</span>
 <span class="kw">spplot</span>(s8, <span class="st">&quot;solution_1&quot;</span>, <span class="dt">col.regions =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>),
        <span class="dt">main =</span> <span class="st">&quot;s8 (solution 1)&quot;</span>)</code></pre></div>
-<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-43-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-47-1.png" width="768" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot all solutions</span>
 s8_plots &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="kw">paste0</span>(<span class="st">&quot;solution_&quot;</span>, <span class="kw">seq_len</span>(<span class="dv">6</span>)), <span class="cf">function</span>(x) {
   <span class="kw">spplot</span>(s8, x, <span class="dt">main =</span> x, <span class="dt">col.regions =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>))
 })
 <span class="kw">do.call</span>(grid.arrange, <span class="kw">append</span>(s8_plots, <span class="kw">list</span>(<span class="dt">ncol =</span> <span class="dv">3</span>)))</code></pre></div>
-<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-43-2.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="prioritizr-workshop-manual_files/figure-html/unnamed-chunk-47-2.png" width="768" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the cost of the first solution</span>
 <span class="kw">sum</span>(s8<span class="op">$</span>solution_<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>s8<span class="op">$</span>cost)</code></pre></div>
 <pre><code>## [1] 2194.232</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the cost of the second solution</span>
 <span class="kw">sum</span>(s8<span class="op">$</span>solution_<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>s8<span class="op">$</span>cost)</code></pre></div>
-<pre><code>## [1] 2162.263</code></pre>
+<pre><code>## [1] 2142.004</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the proportion of planning units with the same solution values</span>
 <span class="co"># in the first and second solutions</span>
 <span class="kw">mean</span>(s8<span class="op">$</span>solution_<span class="dv">1</span> <span class="op">==</span><span class="st"> </span>s8<span class="op">$</span>solution_<span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] 0.9734513</code></pre>
+<pre><code>## [1] 0.9654867</code></pre>
 
 <div class="rmdquestion">
 <ol style="list-style-type: decimal">

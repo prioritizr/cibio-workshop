@@ -575,7 +575,7 @@ contain the following information:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-14-1} \end{center}
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-15-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -775,7 +775,7 @@ contain the following information:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.6\linewidth]{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-16-1} \end{center}
+\begin{center}\includegraphics[width=0.6\linewidth]{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-17-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -877,7 +877,7 @@ Let's explore the vegetation data.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-19-1} \end{center}
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-20-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1353,7 +1353,7 @@ Now let's explore the abundance data.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-28-1} \end{center}
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-29-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1654,7 +1654,7 @@ here for Gurobi installation instructions}).
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-33-1} \end{center}
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-34-1} \end{center}
 
 Now let's examine the solution.
 
@@ -1721,7 +1721,7 @@ let's lock in planing units that are already inside protected areas.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.65\linewidth]{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-35-1} \end{center}
+\begin{center}\includegraphics[width=0.65\linewidth]{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-36-1} \end{center}
 
 Let's pretend we talked to an expert on the vegetation communities in
 our study system and they recommended that a 20\% target was needed. So,
@@ -1767,7 +1767,7 @@ study area.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.65\linewidth]{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-36-1} \end{center}
+\begin{center}\includegraphics[width=0.65\linewidth]{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-37-1} \end{center}
 
 Next, let's lock out highly degraded areas.
 
@@ -1812,7 +1812,7 @@ Next, let's lock out highly degraded areas.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-37-1} \end{center}
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-38-1} \end{center}
 
 Now, let's compare the solutions.
 
@@ -1842,15 +1842,124 @@ Now, let's compare the solutions.
   total cost minus the cost of locked in planning units)?
 \item
   What happens if you specify targets that exceed the total amount of
-  vegetation in the study area? You can do this by rerunning the code to
-  make \texttt{p4} with \texttt{add\_absolute\_targets(1000)} instead of
-  \texttt{add\_relative\_targets(0.2)} and generating a new solution?
+  vegetation in the study area and try to solve the problem? You can do
+  this by modifying the code to make \texttt{p4} with
+  \texttt{add\_absolute\_targets(1000)} instead of
+  \texttt{add\_relative\_targets(0.2)} and generating a new solution.
 \end{enumerate}
 \EndKnitrBlock{rmdquestion}
 
 \section{Penalizing fragmentation}\label{penalizing-fragmentation}
 
-TODO.
+Plans for protected area systems should facilitate gene flow and
+dispersal between individual reserves in the system. However, the
+prioritizations we have made so far have been highly fragmented. Similar
+to the Marxan decision support tool, we can add penalties to our
+conservation planning problem to penalize fragmentation (i.e.~total
+exposed boundary length) and we also need to set a useful penalty value
+when adding such penalties (akin to Marxan's boundary length multiplier
+value; BLM). If we set our penalty value too low, then we end up with a
+solution that is identical to the solution with no added penalties. If
+we set our penalty value too high, then prioritizr will take a long time
+to solve the problem and we will end up with a solution that contains
+lots of extra planning units that are not needed (since the penalty
+value is so high that minimizing fragmentation is more important than
+cost). As a rule of thumb, we generally want penalty values between
+0.00001 and 0.01 but finding a useful penalty value requires
+calibration. The ``correct'' penalty value depends on the size of the
+planning units, the main objective values (e.g.~cost values), and the
+effect of fragmentation on biodiversity persistence. Let's create a new
+problem that is similar to our previous problem (\texttt{p4}) -- except
+that it contains boundary length penalties and a slightly higher
+optimality gap to reduce runtime (default is 0.1) -- and solve it.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# make prioritization problem}
+\NormalTok{p5 <-}\StringTok{ }\KeywordTok{problem}\NormalTok{(pu_data, veg_data, }\DataTypeTok{cost_column =} \StringTok{"cost"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_min_set_objective}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_boundary_penalties}\NormalTok{(}\DataTypeTok{penalty =} \FloatTok{0.0005}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_relative_targets}\NormalTok{(}\FloatTok{0.2}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_locked_in_constraints}\NormalTok{(}\StringTok{"locked_in"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_locked_out_constraints}\NormalTok{(}\StringTok{"locked_out"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_binary_decisions}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{add_lpsymphony_solver}\NormalTok{(}\DataTypeTok{verbose =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{gap =} \DecValTok{1}\NormalTok{)}
+
+\CommentTok{# print problem}
+\KeywordTok{print}\NormalTok{(p5)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Conservation Problem
+##   planning units: SpatialPolygonsDataFrame (1130 units)
+##   cost:           min: 0.19249, max: 61.92727
+##   features:       vegetation.1, vegetation.2, vegetation.3, ... (62 features)
+##   objective:      Minimum set objective 
+##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
+##   decisions:      Binary decision 
+##   constraints:    <Locked out planning units [51 locked units]
+##                    Locked in planning units [257 locked units]>
+##   penalties:      <Boundary penalties [edge factor (min: 0.5, max: 0.5), penalty (5e-04), zones]>
+##   portfolio:      default
+##   solver:         Lpsymphony [first_feasible (0), gap (1), time_limit (-1), verbose (0)]
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# solve problem,}
+\CommentTok{# note this will take around 30 seconds}
+\NormalTok{s5 <-}\StringTok{ }\KeywordTok{solve}\NormalTok{(p5)}
+
+\CommentTok{# print solution}
+\KeywordTok{print}\NormalTok{(s5)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## class       : SpatialPolygonsDataFrame 
+## features    : 1130 
+## extent      : 1080623, 1399989, -4840595, -4497092  (xmin, xmax, ymin, ymax)
+## crs         : +proj=aea +lat_1=-18 +lat_2=-36 +lat_0=0 +lon_0=132 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs 
+## variables   : 7
+## names       :   id,              cost, status, locked_in, locked_out, pa_status, solution_1 
+## min values  :    1, 0.192488262910798,      0,         0,          0,         0,          0 
+## max values  : 1130,  61.9272727272727,      2,         1,          1,         1,          1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# plot solution}
+\KeywordTok{spplot}\NormalTok{(s5, }\StringTok{"solution_1"}\NormalTok{, }\DataTypeTok{col.regions =} \KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{), }\DataTypeTok{main =} \StringTok{"s5"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-40-1} \end{center}
+
+Now let's compare the solutions to the problems with (\texttt{s5}) and
+without (\texttt{s4}) the boundary length penalties.
+
+\BeginKnitrBlock{rmdquestion}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  What is the cost the fourth (\texttt{s4}) and fifth (\texttt{s5})
+  solutions? Why does the fifth solution (\texttt{s5}) cost more than
+  the fourth (\texttt{s4}) solution?
+\item
+  Try setting the penalty value to 0.000000001 (i.e. \texttt{1e-9})
+  instead of 0.001. What is the cost of the solution now? Is it
+  different from the fourth solution (\texttt{s4}) (hint: try plotting
+  the solutions to visualize them)? Is this is a useful penalty value?
+  Why?
+\item
+  Try setting the penalty value to 0.5. What is the cost of the solution
+  now? Is it different from the fourth solution (\texttt{s4}) (hint: try
+  plotting the solutions to visualize them)? Is this a useful penalty
+  value? Why?
+\end{enumerate}
+\EndKnitrBlock{rmdquestion}
 
 \section{Budget limited
 prioritizations}\label{budget-limited-prioritizations}
@@ -1912,8 +2021,8 @@ a budget.
 ##   objective:      Maximum representation objective [budget (9475.56009869836)]
 ##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
 ##   decisions:      Binary decision 
-##   constraints:    <Locked out planning units [51 locked units]
-##                    Locked in planning units [257 locked units]>
+##   constraints:    <Locked in planning units [257 locked units]
+##                    Locked out planning units [51 locked units]>
 ##   penalties:      <none>
 ##   portfolio:      default
 ##   solver:         Lpsymphony [first_feasible (0), gap (0.1), time_limit (-1), verbose (0)]
@@ -1929,7 +2038,7 @@ a budget.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-39-1} \end{center}
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-43-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1941,19 +2050,19 @@ a budget.
 
 \begin{verbatim}
 ##  [1] "vegetation.1"  "vegetation.2"  "vegetation.3"  "vegetation.4" 
-##  [5] "vegetation.5"  "vegetation.6"  "vegetation.8"  "vegetation.9" 
-##  [9] "vegetation.10" "vegetation.11" "vegetation.12" "vegetation.14"
-## [13] "vegetation.15" "vegetation.16" "vegetation.17" "vegetation.18"
-## [17] "vegetation.19" "vegetation.20" "vegetation.21" "vegetation.22"
-## [21] "vegetation.24" "vegetation.25" "vegetation.26" "vegetation.28"
-## [25] "vegetation.29" "vegetation.30" "vegetation.31" "vegetation.32"
-## [29] "vegetation.33" "vegetation.34" "vegetation.35" "vegetation.36"
-## [33] "vegetation.37" "vegetation.38" "vegetation.39" "vegetation.40"
-## [37] "vegetation.41" "vegetation.42" "vegetation.44" "vegetation.45"
-## [41] "vegetation.47" "vegetation.48" "vegetation.49" "vegetation.50"
-## [45] "vegetation.51" "vegetation.52" "vegetation.53" "vegetation.55"
-## [49] "vegetation.56" "vegetation.57" "vegetation.58" "vegetation.59"
-## [53] "vegetation.60" NA              "vegetation.62"
+##  [5] "vegetation.5"  "vegetation.6"  "vegetation.9"  "vegetation.10"
+##  [9] "vegetation.11" "vegetation.12" "vegetation.14" "vegetation.15"
+## [13] "vegetation.16" "vegetation.17" "vegetation.18" "vegetation.19"
+## [17] "vegetation.20" "vegetation.21" "vegetation.22" "vegetation.24"
+## [21] "vegetation.25" "vegetation.26" "vegetation.28" "vegetation.29"
+## [25] "vegetation.30" "vegetation.31" "vegetation.32" "vegetation.33"
+## [29] "vegetation.34" "vegetation.35" "vegetation.36" "vegetation.37"
+## [33] "vegetation.38" "vegetation.39" "vegetation.40" "vegetation.41"
+## [37] "vegetation.42" "vegetation.44" "vegetation.45" "vegetation.47"
+## [41] "vegetation.48" "vegetation.49" "vegetation.50" "vegetation.51"
+## [45] "vegetation.52" "vegetation.53" "vegetation.55" "vegetation.56"
+## [49] "vegetation.57" "vegetation.58" "vegetation.59" "vegetation.60"
+## [53] NA              "vegetation.62"
 \end{verbatim}
 
 We can also add weights to specify that it is more important to meet the
@@ -1999,7 +2108,7 @@ features changes our prioritization.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-40-1} \end{center}
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-44-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2026,8 +2135,8 @@ features changes our prioritization.
 ##   objective:      Maximum representation objective [budget (9475.56009869836)]
 ##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
 ##   decisions:      Binary decision 
-##   constraints:    <Locked out planning units [51 locked units]
-##                    Locked in planning units [257 locked units]>
+##   constraints:    <Locked in planning units [257 locked units]
+##                    Locked out planning units [51 locked units]>
 ##   penalties:      <Feature weights [weights (min: 1, max: 10)]>
 ##   portfolio:      default
 ##   solver:         Lpsymphony [first_feasible (0), gap (0.1), time_limit (-1), verbose (0)]
@@ -2043,7 +2152,7 @@ features changes our prioritization.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-40-2} \end{center}
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-44-2} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2055,19 +2164,19 @@ features changes our prioritization.
 
 \begin{verbatim}
 ##  [1] "vegetation.1"  "vegetation.2"  "vegetation.3"  "vegetation.4" 
-##  [5] "vegetation.5"  "vegetation.6"  "vegetation.9"  "vegetation.10"
-##  [9] "vegetation.11" "vegetation.12" "vegetation.14" "vegetation.15"
-## [13] "vegetation.16" "vegetation.17" "vegetation.18" "vegetation.19"
-## [17] "vegetation.20" "vegetation.21" "vegetation.22" "vegetation.24"
-## [21] "vegetation.25" "vegetation.26" "vegetation.28" "vegetation.29"
-## [25] "vegetation.30" "vegetation.31" "vegetation.32" "vegetation.33"
-## [29] "vegetation.34" "vegetation.35" "vegetation.36" "vegetation.37"
-## [33] "vegetation.38" "vegetation.39" "vegetation.40" "vegetation.41"
-## [37] "vegetation.42" "vegetation.43" "vegetation.44" "vegetation.45"
-## [41] "vegetation.47" "vegetation.48" "vegetation.49" "vegetation.50"
-## [45] "vegetation.51" "vegetation.52" "vegetation.53" "vegetation.55"
-## [49] "vegetation.56" "vegetation.57" "vegetation.58" "vegetation.59"
-## [53] "vegetation.60" NA              "vegetation.62"
+##  [5] "vegetation.5"  "vegetation.6"  "vegetation.8"  "vegetation.9" 
+##  [9] "vegetation.10" "vegetation.11" "vegetation.12" "vegetation.13"
+## [13] "vegetation.14" "vegetation.15" "vegetation.16" "vegetation.17"
+## [17] "vegetation.18" "vegetation.19" "vegetation.20" "vegetation.21"
+## [21] "vegetation.22" "vegetation.24" "vegetation.25" "vegetation.26"
+## [25] "vegetation.28" "vegetation.29" "vegetation.30" "vegetation.31"
+## [29] "vegetation.32" "vegetation.33" "vegetation.34" "vegetation.35"
+## [33] "vegetation.36" "vegetation.37" "vegetation.38" "vegetation.39"
+## [37] "vegetation.40" "vegetation.41" "vegetation.42" "vegetation.44"
+## [41] "vegetation.45" "vegetation.47" "vegetation.48" "vegetation.49"
+## [45] "vegetation.50" "vegetation.51" "vegetation.52" "vegetation.53"
+## [49] "vegetation.55" "vegetation.56" "vegetation.57" "vegetation.58"
+## [53] "vegetation.59" "vegetation.60" NA              "vegetation.62"
 \end{verbatim}
 
 \BeginKnitrBlock{rmdquestion}
@@ -2106,7 +2215,7 @@ default gap value is 0.1).
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# make problem with a cuts portfolio}
+\CommentTok{# make problem with a shuffle portfolio}
 \NormalTok{p8 <-}\StringTok{ }\KeywordTok{problem}\NormalTok{(pu_data, veg_data, }\DataTypeTok{cost_column =} \StringTok{"cost"}\NormalTok{) }\OperatorTok{%>%}
 \StringTok{      }\KeywordTok{add_max_features_objective}\NormalTok{(budget) }\OperatorTok{%>%}
 \StringTok{      }\KeywordTok{add_relative_targets}\NormalTok{(}\FloatTok{0.2}\NormalTok{) }\OperatorTok{%>%}
@@ -2165,7 +2274,7 @@ default gap value is 0.1).
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-43-1} \end{center}
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-47-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2177,7 +2286,7 @@ default gap value is 0.1).
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-43-2} \end{center}
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-47-2} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2198,7 +2307,7 @@ default gap value is 0.1).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 2139.831
+## [1] 2172.271
 \end{verbatim}
 
 \begin{Shaded}
@@ -2210,7 +2319,7 @@ default gap value is 0.1).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.9646018
+## [1] 0.9752212
 \end{verbatim}
 
 \BeginKnitrBlock{rmdquestion}
@@ -2411,7 +2520,23 @@ areas}\label{feature-representation-by-protected-areas-1}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  TODO.
+  The cost of the fourth solution is
+  \texttt{sum(s4\$solution\_1\ *\ s4\$cost)} and the cost of the fifth
+  solution is \texttt{sum(s5\$solution\_1\ *\ s5\$cost)}. The fifth
+  solution (\texttt{s5}) costs more than the fourth solution
+  (\texttt{s4}) because we have added penalties to the conservation
+  planning problem to indicate that we are willing to accept a slightly
+  more costly solution if it means that we can reduce fragmentation.
+\item
+  The solution is now nearly identical to the fourth solution
+  (\texttt{s4}) and so has nearly the same cost. This penalty value is
+  too low and is not useful because it does not reduce the fragmentation
+  in our solution.
+\item
+  The solution now contains a lot of extra planning units that are not
+  needed to meet our targets. In fact, nearly every planning unit in the
+  study is now selected. This penalty value is too high and is not
+  useful.
 \end{enumerate}
 \EndKnitrBlock{rmdanswer}
 

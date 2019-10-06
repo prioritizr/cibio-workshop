@@ -281,7 +281,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <div class="rmdanswer">
 <ol style="list-style-type: decimal">
-<li>TODO.</li>
+<li>The cost of the fourth solution is <code>sum(s4$solution_1 * s4$cost)</code> and the cost of the fifth solution is <code>sum(s5$solution_1 * s5$cost)</code>. The fifth solution (<code>s5</code>) costs more than the fourth solution (<code>s4</code>) because we have added penalties to the conservation planning problem to indicate that we are willing to accept a slightly more costly solution if it means that we can reduce fragmentation.</li>
+<li>The solution is now nearly identical to the fourth solution (<code>s4</code>) and so has nearly the same cost. This penalty value is too low and is not useful because it does not reduce the fragmentation in our solution.</li>
+<li>The solution now contains a lot of extra planning units that are not needed to meet our targets. In fact, nearly every planning unit in the study is now selected. This penalty value is too high and is not useful.</li>
 </ol>
 </div>
 
