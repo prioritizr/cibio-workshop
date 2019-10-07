@@ -24,7 +24,7 @@
 <meta name="author" content="Jeffrey O. Hanson" />
 
 
-<meta name="date" content="2019-10-06" />
+<meta name="date" content="2019-10-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -188,13 +188,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><code>mean(pu_data$locked_in)</code></li>
 <li><code>sum(pu_data$locked_out)</code></li>
 <li><code>mean(pu_data$locked_out)</code></li>
-<li><code>assert_that(min(c(pu_data$locked_in, pu_data$locked_out)) == 0)</code>  <code>assert_that(max(c(pu_data$locked_in, pu_data$locked_out)) == 1)</code></li>
+<li><code>assert_that(min(c(pu_data$locked_in, pu_data$locked_out)) == 0)</code> <code>assert_that(max(c(pu_data$locked_in, pu_data$locked_out)) == 1)</code></li>
 <li><code>all(is.finite(pu_data$cost))</code></li>
 <li><code>assert_that(sum(duplicated(pu_data$id)) == 0)</code></li>
 <li>Yes, the eastern side of Tasmania is generally much cheaper than the western side.</li>
 <li>Yes, most planning units covered by protected areas are located in the south-western side of Tasmania.</li>
 </ol>
 </div>
+
 
 </div>
 <div id="vegetation-data-1" class="section level3">
@@ -205,6 +206,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>Central-north Tasmania</li>
 <li><code>cellStats(veg_data[[12]], &quot;mean&quot;)</code></li>
 <li><code>names(veg_data)[which.max(cellStats(veg_data, &quot;sum&quot;))]</code></li>
+<li>Yes, they are the same.</li>
 </ol>
 </div>
 
@@ -236,7 +238,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><code>repr_data$feature[which.max(repr_data$relative_held)]</code></li>
 <li><code>repr_data$feature[which.max(repr_data$absolute_held)]</code></li>
 <li>No, just because a vegetation class is widespread does not necessarily mean that it has the greatest overlap with protected areas. In fact, due to biases in the establishment of protected areas this can often be the case.</li>
-<li>Yes, the largest protected areas tend to have the great representation (broadly speaking). See <code>plot(x = abundance_data$absolute_abundance, y = repr_data$relative_held)</code></li>
+<li>Yes, the largest protected areas tend to have the great representation (broadly speaking). <code>plot(abundance_data$absolute_abundance, repr_data$relative_held)</code></li>
 <li><code>sum(repr_data$absolute_held &lt; 1e-10)</code> (floating point errors)</li>
 <li><code>sum(repr_data$relative_held &gt; 0.1)</code></li>
 <li><code>sum(repr_data$relative_held &gt; 0.2)</code></li>
@@ -255,7 +257,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><code>sum(s1$solution_1)</code>  <code>mean(s1$solution_1)</code></li>
 <li>Yes, the planning units are generally spread out across most of the study area and they are not biased towards specific areas.</li>
 <li><code>all(feature_representation(p1, s1[, &quot;solution_1&quot;])$relative_held &gt;= 0.2)</code></li>
-<li>This prioritization (i) does not account for existing protected areas, (ii) does not account for the spatial fragmentation of priority areas, or (iii) is not likely conserve enough habitat for each vegetation type (i.e. 5% is pretty small).</li>
 </ol>
 </div>
 
@@ -269,7 +270,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><code>sum(s2$solution_1)</code>  <code>sum(s3$solution_1)</code>  <code>sum(s4$solution_1)</code></li>
 <li>No, just because a solution a solution has more planning units does not mean that it will cost less.</li>
 <li>This is because the planning units covered by existing protected areas have a non-zero cost and locking in these planning units introduces inefficiencies into the solution. This is very common in real-world conservation prioritizations because existing protected areas are often in places that do little to benefit biodiversity <span class="citation">(Fuller <em>et al.</em> <a href="#ref-r3">2010</a>)</span>.</li>
-<li>This is because some of the planning units that are highly degraded – based on just the planning unit costs and vegetation data – provide cost-efficient opportunities for meeting the targets and excluding them from the reserve selection process means that other more costly planning units are needed to meet the targets.</li>
+<li>This is because some of the planning units that are highly degraded—based on just the planning unit costs and vegetation data—provide cost-efficient opportunities for meeting the targets and excluding them from the reserve selection process means that other more costly planning units are needed to meet the targets.</li>
 <li><code>sum(s4$cost * s4$solution_1) - sum(s4$cost * s4$locked_in)</code></li>
 <li>We get an error message stating the the problem is infeasible because there is no valid solution—even if we selected all the planning units the study area we would still not meet the targets.</li>
 </ol>
@@ -295,10 +296,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <ol style="list-style-type: decimal">
 <li><code>names(veg_data)[which.min(wts)]</code></li>
 <li><code>sum(s6$cost * s6$solution_1)</code>  <code>sum(s7$cost * s7$solution_1)</code></li>
-<li>No, the sixth (<code>s6</code>) and seventh (<code>s7</code>) solutions both share many of the same selected planning units and there does not appear to be specific difference in the spatial location of the planning units which they do not share.</li>
-<li>Yes. Although both of these solutions are meeting the targets for <code>r6$feature[r6$relative_held &gt; 0.2 &amp; r7$relative_held &gt; 0.2]</code> vegetation communities, the sixth (<code>s6</code>) is also adequately representing <code>r6$feature[r6$relative_held &gt; 0.2 &amp; !r7$relative_held &gt; 0.2]</code> additional community and the seventh (<code>s7</code>) solution is adequately representing <code>r6$feature[!r6$relative_held &gt; 0.2 &amp; r7$relative_held &gt; 0.2]</code> different additional community.</li>
+<li>No, the sixth (<code>s6</code>) and seventh (<code>s7</code>) solutions both share many of the same selected planning units and there does not appear to be an obvious difference in the spatial location of the planning units which they do not share.</li>
+<li>Yes. Both solutions contain adequately represent these features: <code>r6$feature[r6$relative_held &gt; 0.2 &amp; r7$relative_held &gt; 0.2]</code> The sixth (<code>s6</code>) is adequately represents these features too: <code>r6$feature[r6$relative_held &gt; 0.2 &amp; !r7$relative_held &gt; 0.2]</code> The seventh (<code>s7</code>) is adequately represents these features too: <code>r7$feature[r7$relative_held &gt; 0.2 &amp; !r6$relative_held &gt; 0.2]</code></li>
 </ol>
 </div>
+
 
 </div>
 <div id="solution-portfolios-1" class="section level3">

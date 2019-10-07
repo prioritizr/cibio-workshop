@@ -129,7 +129,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2019-10-06}
+    \date{2019-10-07}
 
 % load packages
 \usepackage{caption}
@@ -279,8 +279,8 @@ they can. You can also ask the people sitting next to you for help too.
 this workshop are almost always located in the same section as the
 question. So if you are stuck, try rereading the example code and see if
 you can modify it to answer the question.} Please note that the first
-thing an instructor will ask you will (probably) be ``what have you
-tried so far?''. We can't help you if you haven't tried anything.
+thing an instructor will ask you will be ``what have you tried so
+far?''. We can't help you if you haven't tried anything.
 
 \hypertarget{setup}{\section{Setting up your computer}\label{setup}}
 
@@ -288,19 +288,18 @@ You will need to have both \href{https://www.r-project.org}{R} and
 \href{https://www.rstudio.com/}{RStudio} installed on your computer to
 complete this workshop. Although it is not imperative that you have the
 latest version of RStudio installed, \textbf{you will need the latest
-version of R installed (i.e.~version 3.6.1)}. Please note that you meed
-need administrative permissions to complete install these programs.
-After installing them, you will also need to install various R packages
-too.
+version of R installed (i.e.~version 3.6.1)}. Please note that you might
+need administrative permissions to install these programs. After
+installing them, you will also need to install some R packages too.
 
 \subsection{R}\label{r}
 
 The \href{https://www.r-project.org}{R statistical computing
 environment} can be downloaded from the Comprehensive R Archive Network
-(CRAN). You can download the latest version of R (version 3.6.1) from
-here: \url{https://cloud.r-project.org}. Please note that you will need
-to download the correct file for your operating system (i.e.~Linux, Mac
-OSX, Windows).
+(CRAN). Specifically, you can download the latest version of R (version
+3.6.1) from here: \url{https://cloud.r-project.org}. Please note that
+you will need to download the correct file for your operating system
+(i.e.~Linux, Mac OSX, Windows).
 
 \subsection{RStudio}\label{rstudio}
 
@@ -308,22 +307,22 @@ OSX, Windows).
 environment (IDE). In other words, it is a program that is designed to
 make your R programming experience more enjoyable. During this workshop,
 you will interact with R through RStudio---meaning that you will open
-RStudio when you want to code in R. You can download the latest version
-of RStudio here: \url{http://www.rstudio.com/download}. When you start
-RStudio, you will see two main parts of the interface:
+RStudio to code in R. You can download the latest version of RStudio
+here: \url{http://www.rstudio.com/download}. When you start RStudio, you
+will see two main parts of the interface:
 
-\begin{center}\includegraphics[width=0.9\linewidth]{images/rstudio-console} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{images/rstudio-console} \end{center}
 
-You can type R code into the \emph{Console} part of the interface and
-press the enter key to run the code.
+You can type R code into the \emph{Console} and press the enter key to
+run code.
 
 \subsection{R packages}\label{r-packages}
 
 An R package is a collection of R code and documentation that can be
 installed to enhance the standard R environment with additional
-functionality. Currently, there are over ten thousand R packages
-available on CRAN. Each of these R packages (mostly) aim to serve a
-specific need, such as
+functionality. Currently, there are over fifteen thousand R packages
+available on CRAN. Each of these R packages are developed to perform a
+specific task, such as
 \href{https://cran.r-project.org/web/packages/readxl/index.html}{reading
 Excel spreadsheets},
 \href{https://cran.r-project.org/web/packages/MODIStsp/index.html}{downloading
@@ -332,19 +331,19 @@ satellite imagery data},
 and cleaning protected area data}, or
 \href{https://cran.r-project.org/web/packages/ENMeval/index.html}{fitting
 environmental niche models}. In fact, R has such a diverse ecosystem of
-R packages, that the question is (generally) not ``can I use R to do
+R packages, that the question is almost always not ``can I use R to
 \ldots{}?'' but ``what R package can I use to \ldots{}?''. During this
-workshop, we will use various R packages. To install these R packages,
-please run enter the code below in the \emph{Console} part of the
-RStudio interface and press enter. Please note that you will require an
-internet connection to install the packages and the installation process
-may take a while to complete.
+workshop, we will use several R packages. To install these R packages,
+please enter the code below in the \emph{Console} part of the RStudio
+interface and press enter. Note that you will require an Internet
+connection and the installation process may take some time to complete.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{install.packages}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"sf"}\NormalTok{, }\StringTok{"tidyverse"}\NormalTok{, }\StringTok{"sp"}\NormalTok{, }\StringTok{"rgeos"}\NormalTok{, }\StringTok{"rgdal"}\NormalTok{, }\StringTok{"raster"}\NormalTok{, }\StringTok{"units"}\NormalTok{,}
-                   \StringTok{"prioritizr"}\NormalTok{, }\StringTok{"prioritizrdata"} \StringTok{"Rsymphony"}\NormalTok{, }\StringTok{"mapview"}\NormalTok{,}
-                   \StringTok{"assertthat"}\NormalTok{, }\StringTok{"velox"}\NormalTok{, }\StringTok{"remotes"}\NormalTok{, }\StringTok{"gridExtra"}\NormalTok{))}
+\KeywordTok{install.packages}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"sf"}\NormalTok{, }\StringTok{"tidyverse"}\NormalTok{, }\StringTok{"sp"}\NormalTok{, }\StringTok{"rgeos"}\NormalTok{, }\StringTok{"rgdal"}\NormalTok{, }\StringTok{"raster"}\NormalTok{,}
+                   \StringTok{"units"}\NormalTok{, }\StringTok{"prioritizr"}\NormalTok{, }\StringTok{"prioritizrdata"} \StringTok{"Rsymphony"}\NormalTok{,}
+                   \StringTok{"mapview"}\NormalTok{, }\StringTok{"assertthat"}\NormalTok{, }\StringTok{"velox"}\NormalTok{, }\StringTok{"remotes"}\NormalTok{,}
+                   \StringTok{"gridExtra"}\NormalTok{))}
 \NormalTok{remotes}\OperatorTok{::}\KeywordTok{install_bioc}\NormalTok{(}\StringTok{"lpsymphony"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -357,10 +356,10 @@ you read \href{https://r4ds.had.co.nz/}{\emph{R for Data Science} by
 Garrett Grolemund and Hadley Wickham}. \textbf{This veritable trove of R
 goodness is freely available online.} If you spend a week going through
 this book then you will save months debugging and rerunning incorrect
-code. I would urge any and all ecologists -- especially those working on
-Masters or PhD degrees -- to read this book. I even bought this book as
-a Christmas present for my sister---and, yes, she was happy to receive
-it! For intermediate users looking to skill-up, I would recommend the
+code. I would urge any and all ecologists, especially those working on
+Masters or PhD degrees, to read this book. I even bought this book as a
+Christmas present for my sister---and, yes, she was happy to receive it!
+For intermediate users looking to skill-up, I would recommend the
 \href{http://shop.oreilly.com/product/9781593273842.do}{\emph{The Art of
 R Programming: A Tour of Statistical Software Design} by Norman Matloff}
 and \href{https://adv-r.hadley.nz/}{\emph{Advanced R} by Hadley
@@ -383,29 +382,30 @@ this already, then please see the \protect\hyperlink{setup}{Setting up
 your computer} section. \textbf{During this workshop, please do not copy
 and paste code from the workshop manual into RStudio. Instead, please
 write it out yourself in an R script.} When programming, you will spend
-a lot of time fixing coding mistakes -- that is, debugging your code --
-so it is best to get used to making mistakes now when you have people
-here to help you. You can create a new R script by clicking on
-\emph{File} in the RStudio menu bar and then \emph{R Script}.
+a lot of time fixing coding mistakes---that is, debugging your code---so
+it is best to get used to making mistakes now when you have people here
+to help you. You can create a new R script by clicking on \emph{File} in
+the RStudio menu bar, then \emph{New File}, and then \emph{R Script}.
 
 \begin{center}\includegraphics[width=0.7\linewidth]{images/rstudio-new-script} \end{center}
 
 After creating a new script, you will notice that a new \emph{Source}
-panel has appeared. In this new \emph{Source} panel, you can type and
-edit code. You can run code in the \emph{Source} panel by placing the
-cursor (i.e.~the blinking line) on the desired line of code and pressing
-\texttt{Control\ +\ Enter} on your keyboard (or \texttt{CMD\ +\ Enter}
-if you are using an Apple computer). You can save the code in the
-\emph{Source} panel by pressing \texttt{Control\ +\ s} on your keyboard
-(or \texttt{CMD\ +\ s} if you are using an Apple computer).
+panel has appeared. In the \emph{Source} panel, you can type and edit
+code before you run it. You can run code in the \emph{Source} panel by
+placing the cursor (i.e.~the blinking line) on the desired line of code
+and pressing \texttt{Control\ +\ Enter} on your keyboard (or
+\texttt{CMD\ +\ Enter} if you are using an Apple computer). You can save
+the code in the \emph{Source} panel by pressing \texttt{Control\ +\ s}
+on your keyboard (or \texttt{CMD\ +\ s} if you are using an Apple
+computer).
 
 \begin{center}\includegraphics[width=0.7\linewidth]{images/rstudio-source} \end{center}
 
 You can also make notes and write your answers to the workshop questions
-inside the \emph{Source} panel. When writing notes and answers, add a
-\texttt{\#} symbol so that the text following the \texttt{\#} symbol is
-treated as a comment and not code. This means that you don't have to
-worry about highlighting specific parts of the script to avoid errors.
+inside the R script. When writing notes and answers, add a \texttt{\#}
+symbol so that the text following the \texttt{\#} symbol is treated as a
+comment and not code. This means that you don't have to worry about
+highlighting specific parts of the script to avoid errors.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -436,7 +436,7 @@ lose anything in the event that RStudio crashes (e.g.~using
 
 \section{Attaching packages}\label{attaching-packages}
 
-Now we will setup our R session for the workshop. Specifically, enter
+Now we will set up our R session for the workshop. Specifically, enter
 the following R code to attach the R packages used in this workshop.
 
 \begin{Shaded}
@@ -462,10 +462,12 @@ here:
 After downloading the data, you can unzip the data into a new folder.
 Next, you will need to set the working directory to this new folder. To
 achieve this, click on the \emph{Session} button on the RStudio menu
-bar, then click \emph{Set working directory}, and then \emph{Choose
+bar, then click \emph{Set Working Directory}, and then \emph{Choose
 Directory}.
 
 \begin{center}\includegraphics[width=0.7\linewidth]{images/rstudio-wd} \end{center}
+
+\clearpage
 
 Now navigate to the folder where you unzipped the data and select
 \emph{Open}. You can verify that you have correctly set the working
@@ -521,6 +523,8 @@ our R session using the following code.
 \end{Highlighting}
 \end{Shaded}
 
+\clearpage
+
 \section{Planning unit data}\label{planning-unit-data}
 
 The planning unit data contains spatial data describing the geometry for
@@ -546,8 +550,7 @@ contain the following information:
 \item
   \texttt{locked\_out}: logical values (i.e.
   \texttt{TRUE}/\texttt{FALSE}) indicating if planning units cannot be
-  managed as a protected area because they contain too much
-  anthropologically altered land.
+  managed as a protected area because they contain are too degraded.
 \end{itemize}
 
 \begin{Shaded}
@@ -801,11 +804,10 @@ Now, you can try and answer some questions about the planning unit data.
   What is the proportion of the planning units that are covered by the
   protected areas (hint: \texttt{mean(x)})?
 \item
-  How many planning units are dominated by anthropologically altered
-  land (hint: \texttt{sum(x)})?
+  How many planning units are highly degraded (hint: \texttt{sum(x)})?
 \item
-  What is the proportion of planning units dominated by
-  anthropologically altered land (hint: \texttt{mean(x)})?
+  What is the proportion of planning units are highly degraded (hint:
+  \texttt{mean(x)})?
 \item
   Can you verify that all values in the \texttt{locked\_in} and
   \texttt{locked\_out} columns are zero or one (hint: \texttt{min(x)}
@@ -831,17 +833,17 @@ Now, you can try and answer some questions about the planning unit data.
 
 The vegetation data describes the spatial distribution of 62 vegetation
 classes in the study area. This data is in a raster format and so the
-data are organized using a regular spatial grid with square grid cells.
-In our case, our raster data contains multiple layers (also called
-``bands'') and each layer has corresponds to a spatial grid with exactly
-the same area and has exactly the same dimensionality (i.e.~number of
-rows, columns, and cells). In this dataset, there are 62 different
-regular spatial grids layered on top of each other -- with each layer
-corresponding to a different vegetation class -- and each of these
-layers contains a grid with 343 columns, 320 rows, and 109760 cells.
-Within each layer, each cell corresponds to a 1 by 1 km square. The
-values associated with each grid cell contain values (i.e.~one or zero)
-indicating the presence or absence of a given vegetation class in the
+data are organized using a square grid comprising square grid cells that
+are each the same size. In our case, the raster data contains multiple
+layers (also called ``bands'') and each layer has corresponds to a
+spatial grid with exactly the same area and has exactly the same
+dimensionality (i.e.~number of rows, columns, and cells). In this
+dataset, there are 62 different regular spatial grids layered on top of
+each other -- with each layer corresponding to a different vegetation
+class -- and each of these layers contains a grid with 343 rows, 320
+columns, and 109760 cells. Within each layer, each cell corresponds to a
+1 by 1 km square. The values associated with each grid cell indicate the
+(one) presence or (zero) absence of a given vegetation class in the
 cell.
 
 \begin{figure}
@@ -1107,6 +1109,9 @@ Now, you can try and answer some questions about the vegetation data.
   What proportion of cells contain the 12th vegetation class?
 \item
   Which vegetation class is present in the greatest number of cells?
+\item
+  The planning unit data and the vegetation data should have the same
+  coordinate reference system. Can you check if they are the same?
 \end{enumerate}
 \EndKnitrBlock{rmdquestion}
 
@@ -1133,12 +1138,12 @@ based on an estimate of how much area or habitat is needed for ecosystem
 function or species persistence. In practice, targets are generally set
 using simple rules of thumb (e.g.~10\% or 20\%), policy (17\%;
 \url{https://www.cbd.int/sp/targets/rationale/target-11}) or standard
-practices \citep[e.g.~setting targets for species based on
-range-size;][]{r1, r2}.
+practices (e.g.~setting targets for species based on geographic range
+size) \citep{r1, r2}.
 
 \section{Feature abundance}\label{feature-abundance}
 
-Now we will perform some preliminary calculations for the gap analysis.
+Now we will perform some preliminary calculations to explore the data.
 First, we will calculate how much of each vegetation feature occurs
 inside each planning unit (i.e.~the abundance of the features). To
 achieve this, we will use the \texttt{problem} function to create an
@@ -1301,7 +1306,7 @@ in the \texttt{relative\_abundance} column are equal to one (meaning
 100\%)---except for the 61st feature which has a value on \texttt{NaN}
 because it does not occur in the study area at all (i.e.~all of its
 raster values are zeros). Now let's add a new column with the feature
-abundances expressed in aerial units (i.e.~km\textsuperscript{2}).
+abundances expressed in area units (i.e.~km\textsuperscript{2}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1410,8 +1415,7 @@ task using the \texttt{feature\_representation} function. This function
 requires (i) a conservation problem object with the planning unit and
 biodiversity data and also (ii) an object representing a solution to the
 problem (i.e an object in the same format as the planning unit data with
-zeros and ones indicating if the planning units are contained in the
-prioritization problem or not).
+values indicating if the planning units are selected or not).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1453,8 +1457,8 @@ proportion of each feature held in the solution (i.e.~the proportion of
 each feature's spatial distribution held in protected areas). Since the
 \texttt{absolute\_held} values correspond to the number of grid cells in
 the \texttt{veg\_data} object with overlap with protected areas, let's
-convert them to aerial-based units (i.e.~km\textsuperscript{2}) so we
-can report them.
+convert them to area units (i.e.~km\textsuperscript{2}) so we can report
+them.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1502,11 +1506,10 @@ Now let's investigate how well the species are represented.
   What is the name of the feature with the greatest proportionate
   coverage by protected areas?
 \item
-  What is the name of the feature with the greatest aerial coverage by
+  What is the name of the feature with the greatest area coverage by
   protected areas?
 \item
-  Do questions two and three have the same answer? If not, why could
-  this be?
+  Do questions two and three have the same answer? Why could this be?
 \item
   Is there a relationship between the total abundance of a feature and
   how well it is represented by protected areas (hint:
@@ -1533,28 +1536,30 @@ protected area establishment. Its worth noting that
 \href{https://prioritizr.net/}{prioritizr},
 \href{http://marxan.org/}{Marxan}, and
 \href{https://www.helsinki.fi/en/researchgroups/digital-geography-lab/software-developed-in-cbig\#section-52992}{Zonation}
-are all decision \emph{support} tools. This means that these tools are
-all designed to \emph{help} you make decisions---they can't make
-decisions for you.
+are all decision support tools. This means that they are designed to
+help you make decisions---they can't make decisions for you.
 
 \section{Starting out simple}\label{starting-out-simple}
 
 To start things off, let's keep things simple. Let's create a
 prioritization using the
 \href{https://prioritizr.net/reference/add_min_set_objective.html}{minimum
-set problem formulation of the reserve selection problem}. This problem
-will have 5\% targets for each vegetation class and use the data in the
-\texttt{cost} column to specify acquisition costs. Although we strongly
-recommend using \href{https://www.gurobi.com/}{Gurobi} to solve problems
-(with
+set formulation of the reserve selection problem}. This formulation
+means that we want a solution that will meet the targets for our
+biodiversity features for minimum cost. Here, we will set 5\% targets
+for each vegetation class and use the data in the \texttt{cost} column
+to specify acquisition costs. Unlike Marxan, we do not have to calibrate
+species penalty factors (SPFs) to ensure that our target are
+met---prioritizr should always return solutions to minimum set problems
+where all the targets are met. Although we strongly recommend using
+\href{https://www.gurobi.com/}{Gurobi} to solve problems (with
 \href{https://prioritizr.net/reference/add_gurobi_solver.html}{\texttt{add\_gurobi\_solver}}),
 we will use the
 \href{https://prioritizr.net/reference/add_lsymphony_solver.html}{lpsymphony
-solver} in this workshop since it is much easier to install. The Gurobi
-solver is the fastest solver that prioritizr can use to generate
-solutions and it is much, much, much faster than the lpsymphony solver
+solver} in this workshop since it is easier to install. The Gurobi
+solver is much faster than the lpsymphony solver
 (\href{https://prioritizr.net/articles/gurobi_installation.html}{see
-here for Gurobi installation instructions}).
+here for installation instructions}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1607,9 +1612,8 @@ here for Gurobi installation instructions}).
 \CommentTok{# solve problem}
 \NormalTok{s1 <-}\StringTok{ }\KeywordTok{solve}\NormalTok{(p1)}
 
-\CommentTok{# print solution,}
-\CommentTok{# the solution_1 column contains the solution values with binary values}
-\CommentTok{# indicating if a planning unit was selected as a (1) priority area or (0) not}
+\CommentTok{# print solution, the solution_1 column contains the solution values}
+\CommentTok{# indicating if a planning unit is (1) selected or (0) not}
 \KeywordTok{print}\NormalTok{(s1)}
 \end{Highlighting}
 \end{Shaded}
@@ -1671,8 +1675,6 @@ Now let's examine the solution.
   Can you verify that all of the targets were met in the prioritization
   (hint:
   \texttt{feature\_representation(p1,\ s1{[},\ "solution\_1"{]})})?
-\item
-  What are limitations of this prioritization?
 \end{enumerate}
 \EndKnitrBlock{rmdquestion}
 
@@ -1680,7 +1682,13 @@ Now let's examine the solution.
 
 Our first prioritization suffers many limitations, so let's add
 additional constraints to the problem to make it more useful. First,
-let's lock in planing units that are already inside protected areas.
+let's lock in planing units that are already by covered protected areas.
+If some vegetation communities are already secured inside existing
+protected areas, then we might not need to add as many new protected
+areas to the existing protected area system to meet their targets. Since
+our planning unit data (\texttt{pu\_da}) already contains this
+information in the \texttt{locked\_in} column, we can use this column
+name to specify which planning units should be locked in.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1723,10 +1731,10 @@ let's lock in planing units that are already inside protected areas.
 
 \begin{center}\includegraphics[width=0.65\linewidth]{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-36-1} \end{center}
 
-Let's pretend we talked to an expert on the vegetation communities in
-our study system and they recommended that a 20\% target was needed. So,
-now let's set the targets to 20\% of their total distribution in the
-study area.
+Let's pretend that we talked to an expert on the vegetation communities
+in our study system and they recommended that a 20\% target was needed
+for each vegetation class. So, armed with this information, let's set
+the targets to 20\%.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1769,7 +1777,9 @@ study area.
 
 \begin{center}\includegraphics[width=0.65\linewidth]{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-37-1} \end{center}
 
-Next, let's lock out highly degraded areas.
+Next, let's lock out highly degraded areas. Similar to before, this data
+is present in our planning unit data so we can use the
+\texttt{locked\_out} column name to achieve this.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1799,8 +1809,8 @@ Next, let's lock out highly degraded areas.
 ##   objective:      Minimum set objective 
 ##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
 ##   decisions:      Binary decision 
-##   constraints:    <Locked in planning units [257 locked units]
-##                    Locked out planning units [51 locked units]>
+##   constraints:    <Locked out planning units [51 locked units]
+##                    Locked in planning units [257 locked units]>
 ##   penalties:      <none>
 ##   portfolio:      default
 ##   solver:         Lpsymphony [first_feasible (0), gap (0.1), time_limit (-1), verbose (0)]
@@ -1864,20 +1874,23 @@ to the Marxan decision support tool, we can add penalties to our
 conservation planning problem to penalize fragmentation (i.e.~total
 exposed boundary length) and we also need to set a useful penalty value
 when adding such penalties (akin to Marxan's boundary length multiplier
-value; BLM). If we set our penalty value too low, then we end up with a
-solution that is identical to the solution with no added penalties. If
-we set our penalty value too high, then prioritizr will take a long time
-to solve the problem and we will end up with a solution that contains
-lots of extra planning units that are not needed (since the penalty
-value is so high that minimizing fragmentation is more important than
-cost). As a rule of thumb, we generally want penalty values between
-0.00001 and 0.01 but finding a useful penalty value requires
-calibration. The ``correct'' penalty value depends on the size of the
-planning units, the main objective values (e.g.~cost values), and the
-effect of fragmentation on biodiversity persistence. Let's create a new
-problem that is similar to our previous problem (\texttt{p4}) -- except
-that it contains boundary length penalties and a slightly higher
-optimality gap to reduce runtime (default is 0.1) -- and solve it.
+value; BLM). If we set our penalty value too low, then we will end up
+with a solution that is identical to the solution with no added
+penalties. If we set our penalty value too high, then prioritizr will
+take a long time to solve the problem and we will end up with a solution
+that contains lots of extra planning units that are not needed (since
+the penalty value is so high that minimizing fragmentation is more
+important than cost). As a rule of thumb, we generally want penalty
+values between 0.00001 and 0.01 but finding a useful penalty value
+requires calibration. The ``correct'' penalty value depends on the size
+of the planning units, the main objective values (e.g.~cost values), and
+the effect of fragmentation on biodiversity persistence. Let's create a
+new problem that is similar to our previous problem
+(\texttt{p4})---except that it contains boundary length penalties and a
+slightly higher optimality gap to reduce runtime (default is 0.1)---and
+solve it. Since our planning unit data is in a spatial format
+(i.e.~vector or raster data), prioritizr can automatically calculate the
+boundary data for us.
 
 \clearpage
 
@@ -1957,7 +1970,7 @@ without (\texttt{s4}) the boundary length penalties.
   the fourth (\texttt{s4}) solution?
 \item
   Try setting the penalty value to 0.000000001 (i.e. \texttt{1e-9})
-  instead of 0.001. What is the cost of the solution now? Is it
+  instead of 0.0005. What is the cost of the solution now? Is it
   different from the fourth solution (\texttt{s4}) (hint: try plotting
   the solutions to visualize them)? Is this is a useful penalty value?
   Why?
@@ -1980,21 +1993,21 @@ where the total cost of priority areas does not exceed a budget. In our
 fourth prioritization (\texttt{s4}), we found that we would need to
 spend an additional \$909 million AUD to ensure that each vegetation
 community is adequately represented in the protected area system. But
-what if the funds available for protecting new land were limited to
-\$100 million AUD? In this case, we need a ``budget limited
+what if the funds available for establishing new protected areas were
+limited to \$100 million AUD? In this case, we need a ``budget limited
 prioritization''. Budget limited prioritizations aim to maximize some
 measure of conservation benefit subject to a budget (e.g.
 \href{https://prioritizr.net/reference/add_max_cover_objective.html}{number
 of species with at least one occurrence in the protected area system},
 or
 \href{https://prioritizr.net/reference/add_max_phylo_div_objective.html}{phylogenetic
-diversity}). Let's create a budget limited prioritization that aims to
-adequately represent as many targets as possible whilst remaining within
-a budget.
+diversity}). Let's create a prioritization by maximizing the number of
+adequately represented features whilst keeping within a pre-specified
+budget.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# set the funds for additional land acquisition}
+\CommentTok{# funds for additional land acquisition (same units as cost data)}
 \NormalTok{funds <-}\StringTok{ }\DecValTok{100}
 
 \CommentTok{# calculate the total budget for the prioritization}
@@ -2056,29 +2069,31 @@ a budget.
 \NormalTok{r6 <-}\StringTok{ }\KeywordTok{feature_representation}\NormalTok{(p6, s6[, }\StringTok{"solution_1"}\NormalTok{])}
 
 \CommentTok{# calculate number of features with targets met}
-\KeywordTok{sum}\NormalTok{(r6}\OperatorTok{$}\NormalTok{relative_held }\OperatorTok{>}\StringTok{ }\FloatTok{0.2}\NormalTok{, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
+\KeywordTok{sum}\NormalTok{(r6}\OperatorTok{$}\NormalTok{relative_held }\OperatorTok{>=}\StringTok{ }\FloatTok{0.2}\NormalTok{, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 25
+## [1] 28
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# find out which features have their targets met when we add weights}
-\KeywordTok{print}\NormalTok{(r6}\OperatorTok{$}\NormalTok{feature[r6}\OperatorTok{$}\NormalTok{relative_held }\OperatorTok{>}\StringTok{ }\FloatTok{0.2}\NormalTok{])}
+\CommentTok{# find out which features have their targets met when we add weights,}
+\CommentTok{# note that NA is for vegetation.61}
+\KeywordTok{print}\NormalTok{(r6}\OperatorTok{$}\NormalTok{feature[r6}\OperatorTok{$}\NormalTok{relative_held }\OperatorTok{>=}\StringTok{ }\FloatTok{0.2}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ##  [1] "vegetation.1"  "vegetation.2"  "vegetation.3"  "vegetation.4" 
-##  [5] "vegetation.5"  "vegetation.6"  "vegetation.11" "vegetation.12"
-##  [9] "vegetation.14" "vegetation.15" "vegetation.17" "vegetation.25"
-## [13] "vegetation.28" "vegetation.29" "vegetation.30" "vegetation.32"
-## [17] "vegetation.33" "vegetation.34" "vegetation.35" "vegetation.36"
-## [21] "vegetation.37" "vegetation.38" "vegetation.39" "vegetation.40"
-## [25] "vegetation.45" NA
+##  [5] "vegetation.5"  "vegetation.6"  "vegetation.7"  "vegetation.8" 
+##  [9] "vegetation.11" "vegetation.12" "vegetation.13" "vegetation.14"
+## [13] "vegetation.15" "vegetation.17" "vegetation.25" "vegetation.28"
+## [17] "vegetation.29" "vegetation.30" "vegetation.32" "vegetation.33"
+## [21] "vegetation.34" "vegetation.35" "vegetation.36" "vegetation.37"
+## [25] "vegetation.38" "vegetation.39" "vegetation.40" "vegetation.45"
+## [29] NA
 \end{verbatim}
 
 We can also add weights to specify that it is more important to meet the
@@ -2151,8 +2166,8 @@ features changes our prioritization.
 ##   objective:      Maximum representation objective [budget (8575.56009869836)]
 ##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
 ##   decisions:      Binary decision 
-##   constraints:    <Locked in planning units [257 locked units]
-##                    Locked out planning units [51 locked units]>
+##   constraints:    <Locked out planning units [51 locked units]
+##                    Locked in planning units [257 locked units]>
 ##   penalties:      <Feature weights [weights (min: 1, max: 10)]>
 ##   portfolio:      default
 ##   solver:         Lpsymphony [first_feasible (0), gap (0.1), time_limit (-1), verbose (0)]
@@ -2176,18 +2191,19 @@ features changes our prioritization.
 \NormalTok{r7 <-}\StringTok{ }\KeywordTok{feature_representation}\NormalTok{(p7, s7[, }\StringTok{"solution_1"}\NormalTok{])}
 
 \CommentTok{# calculate number of features with targets met}
-\KeywordTok{sum}\NormalTok{(r7}\OperatorTok{$}\NormalTok{relative_held }\OperatorTok{>}\StringTok{ }\FloatTok{0.2}\NormalTok{, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
+\KeywordTok{sum}\NormalTok{(r7}\OperatorTok{$}\NormalTok{relative_held }\OperatorTok{>=}\StringTok{ }\FloatTok{0.2}\NormalTok{, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 25
+## [1] 26
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# find out which features have their targets met when we add weights}
-\KeywordTok{print}\NormalTok{(r7}\OperatorTok{$}\NormalTok{feature[r7}\OperatorTok{$}\NormalTok{relative_held }\OperatorTok{>}\StringTok{ }\FloatTok{0.2}\NormalTok{])}
+\CommentTok{# find out which features have their targets met when we add weights,}
+\CommentTok{# note that NA is for vegetation.61}
+\KeywordTok{print}\NormalTok{(r7}\OperatorTok{$}\NormalTok{feature[r7}\OperatorTok{$}\NormalTok{relative_held }\OperatorTok{>=}\StringTok{ }\FloatTok{0.2}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2198,7 +2214,7 @@ features changes our prioritization.
 ## [13] "vegetation.34" "vegetation.35" "vegetation.36" "vegetation.37"
 ## [17] "vegetation.38" "vegetation.39" "vegetation.40" "vegetation.45"
 ## [21] "vegetation.49" "vegetation.50" "vegetation.52" "vegetation.53"
-## [25] "vegetation.55" NA
+## [25] "vegetation.54" "vegetation.55" NA
 \end{verbatim}
 
 \BeginKnitrBlock{rmdquestion}
@@ -2217,7 +2233,7 @@ features changes our prioritization.
 \item
   Is there a difference between which features are adequately
   represented in the sixth (\texttt{s6}) and seventh (\texttt{s7})
-  solutions?
+  solutions? If so, what is the difference?
 \end{enumerate}
 \EndKnitrBlock{rmdquestion}
 
@@ -2229,7 +2245,7 @@ interested in conserving. As a consequence, it is often useful to
 generate a portfolio of near optimal solutions to present to decision
 makers to guide the reserve selection process. Generally we would want
 many solutions in our portfolio (e.g.~1000) to ensure that our portfolio
-contains a range of highly different solutions, but here we will
+contains a range of spatially distinct solutions, but here we will
 generate a portfolio containing just six near-optimal solutions so the
 code doesn't take too long to run. We will also increase the optimality
 gap to obtain solutions that are more suboptimal than earlier (the
@@ -2246,7 +2262,13 @@ default gap value is 0.1).
 \StringTok{      }\KeywordTok{add_shuffle_portfolio}\NormalTok{(}\DataTypeTok{number_solutions =} \DecValTok{6}\NormalTok{,}
                             \DataTypeTok{remove_duplicates =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{%>%}
 \StringTok{      }\KeywordTok{add_lpsymphony_solver}\NormalTok{(}\DataTypeTok{verbose =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{gap =} \DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
+\clearpage
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{# print problem}
 \KeywordTok{print}\NormalTok{(p8)}
 \end{Highlighting}
@@ -2290,28 +2312,6 @@ default gap value is 0.1).
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# plot first solution}
-\KeywordTok{spplot}\NormalTok{(s8, }\StringTok{"solution_1"}\NormalTok{, }\DataTypeTok{col.regions =} \KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{),}
-       \DataTypeTok{main =} \StringTok{"s8 (solution 1)"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=0.65\linewidth]{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-46-1} \end{center}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# plot all solutions}
-\NormalTok{s8_plots <-}\StringTok{ }\KeywordTok{lapply}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"solution_"}\NormalTok{, }\KeywordTok{seq_len}\NormalTok{(}\DecValTok{6}\NormalTok{)), }\ControlFlowTok{function}\NormalTok{(x) \{}
-  \KeywordTok{spplot}\NormalTok{(s8, x, }\DataTypeTok{main =}\NormalTok{ x, }\DataTypeTok{col.regions =} \KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{))}
-\NormalTok{\})}
-\KeywordTok{do.call}\NormalTok{(grid.arrange, }\KeywordTok{append}\NormalTok{(s8_plots, }\KeywordTok{list}\NormalTok{(}\DataTypeTok{ncol =} \DecValTok{3}\NormalTok{)))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-47-1} \end{center}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \CommentTok{# calculate the cost of the first solution}
 \KeywordTok{sum}\NormalTok{(s8}\OperatorTok{$}\NormalTok{solution_}\DecValTok{1} \OperatorTok{*}\StringTok{ }\NormalTok{s8}\OperatorTok{$}\NormalTok{cost)}
 \end{Highlighting}
@@ -2329,7 +2329,7 @@ default gap value is 0.1).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 2165.149
+## [1] 2143.698
 \end{verbatim}
 
 \begin{Shaded}
@@ -2341,8 +2341,32 @@ default gap value is 0.1).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.9743363
+## [1] 0.9699115
 \end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# plot first solution}
+\KeywordTok{spplot}\NormalTok{(s8, }\StringTok{"solution_1"}\NormalTok{, }\DataTypeTok{col.regions =} \KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{),}
+       \DataTypeTok{main =} \StringTok{"s8 (solution 1)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.65\linewidth]{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-47-1} \end{center}
+
+\clearpage
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# plot all solutions}
+\NormalTok{s8_plots <-}\StringTok{ }\KeywordTok{lapply}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"solution_"}\NormalTok{, }\KeywordTok{seq_len}\NormalTok{(}\DecValTok{6}\NormalTok{)), }\ControlFlowTok{function}\NormalTok{(x) \{}
+  \KeywordTok{spplot}\NormalTok{(s8, x, }\DataTypeTok{main =}\NormalTok{ x, }\DataTypeTok{col.regions =} \KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{))}
+\NormalTok{\})}
+\KeywordTok{do.call}\NormalTok{(grid.arrange, }\KeywordTok{append}\NormalTok{(s8_plots, }\KeywordTok{list}\NormalTok{(}\DataTypeTok{ncol =} \DecValTok{3}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-48-1} \end{center}
 
 \BeginKnitrBlock{rmdquestion}
 \begin{enumerate}
@@ -2386,8 +2410,6 @@ answers are correct.
   \texttt{mean(pu\_data\$locked\_out)}
 \item
   \texttt{assert\_that(min(c(pu\_data\$locked\_in,\ pu\_data\$locked\_out))\ ==\ 0)}
-  \newline
-
   \texttt{assert\_that(max(c(pu\_data\$locked\_in,\ pu\_data\$locked\_out))\ ==\ 1)}
 \item
   \texttt{all(is.finite(pu\_data\$cost))}
@@ -2402,6 +2424,8 @@ answers are correct.
 \end{enumerate}
 \EndKnitrBlock{rmdanswer}
 
+\clearpage
+
 \subsection{Vegetation data}\label{vegetation-data-1}
 
 \BeginKnitrBlock{rmdanswer}
@@ -2414,6 +2438,8 @@ answers are correct.
   \texttt{cellStats(veg\_data{[}{[}12{]}{]},\ "mean")}
 \item
   \texttt{names(veg\_data){[}which.max(cellStats(veg\_data,\ "sum")){]}}
+\item
+  Yes, they are the same.
 \end{enumerate}
 \EndKnitrBlock{rmdanswer}
 
@@ -2461,8 +2487,7 @@ areas}\label{feature-representation-by-protected-areas-1}
 \item
   Yes, the largest protected areas tend to have the great representation
   (broadly speaking). \newline
-  See
-  \texttt{plot(x\ =\ abundance\_data\$absolute\_abundance,\ y\ =\ repr\_data\$relative\_held)}
+  \texttt{plot(abundance\_data\$absolute\_abundance,\ repr\_data\$relative\_held)}
 \item
   \texttt{sum(repr\_data\$absolute\_held\ \textless{}\ 1e-10)} (floating
   point errors)
@@ -2489,11 +2514,6 @@ areas}\label{feature-representation-by-protected-areas-1}
   study area and they are not biased towards specific areas.
 \item
   \texttt{all(feature\_representation(p1,\ s1{[},\ "solution\_1"{]})\$relative\_held\ \textgreater{}=\ 0.2)}
-\item
-  This prioritization (i) does not account for existing protected areas,
-  (ii) does not account for the spatial fragmentation of priority areas,
-  or (iii) is not likely conserve enough habitat for each vegetation
-  type (i.e.~5\% is pretty small).
 \end{enumerate}
 \EndKnitrBlock{rmdanswer}
 
@@ -2521,11 +2541,11 @@ areas}\label{feature-representation-by-protected-areas-1}
   conservation prioritizations because existing protected areas are
   often in places that do little to benefit biodiversity \citep{r3}.
 \item
-  This is because some of the planning units that are highly degraded --
-  based on just the planning unit costs and vegetation data -- provide
-  cost-efficient opportunities for meeting the targets and excluding
-  them from the reserve selection process means that other more costly
-  planning units are needed to meet the targets.
+  This is because some of the planning units that are highly
+  degraded---based on just the planning unit costs and vegetation
+  data---provide cost-efficient opportunities for meeting the targets
+  and excluding them from the reserve selection process means that other
+  more costly planning units are needed to meet the targets.
 \item
   \texttt{sum(s4\$cost\ *\ s4\$solution\_1)\ -\ sum(s4\$cost\ *\ s4\$locked\_in)}
 \item
@@ -2577,20 +2597,24 @@ prioritizations}\label{budget-limited-prioritizations-1}
 \item
   No, the sixth (\texttt{s6}) and seventh (\texttt{s7}) solutions both
   share many of the same selected planning units and there does not
-  appear to be specific difference in the spatial location of the
+  appear to be an obvious difference in the spatial location of the
   planning units which they do not share.
 \item
-  Yes. Although both of these solutions are meeting the targets for
+  Yes. Both solutions contain adequately represent these features:
+  \newline
   \texttt{r6\$feature{[}r6\$relative\_held\ \textgreater{}\ 0.2\ \&\ r7\$relative\_held\ \textgreater{}\ 0.2{]}}
-  vegetation communities, the sixth (\texttt{s6}) is also adequately
-  representing
+  \newline
+  The sixth (\texttt{s6}) is adequately represents these features too:
+  \newline
   \texttt{r6\$feature{[}r6\$relative\_held\ \textgreater{}\ 0.2\ \&\ !r7\$relative\_held\ \textgreater{}\ 0.2{]}}
-  additional community and the seventh (\texttt{s7}) solution is
-  adequately representing
-  \texttt{r6\$feature{[}!r6\$relative\_held\ \textgreater{}\ 0.2\ \&\ r7\$relative\_held\ \textgreater{}\ 0.2{]}}
-  different additional community.
+  \newline
+  The seventh (\texttt{s7}) is adequately represents these features too:
+  \newline
+  \texttt{r7\$feature{[}r7\$relative\_held\ \textgreater{}\ 0.2\ \&\ !r6\$relative\_held\ \textgreater{}\ 0.2{]}}
 \end{enumerate}
 \EndKnitrBlock{rmdanswer}
+
+\clearpage
 
 \subsection{Solution portfolios}\label{solution-portfolios-1}
 
@@ -2620,7 +2644,9 @@ prioritizations}\label{budget-limited-prioritizations-1}
 Many thanks to \href{https://icons8.com}{Icons8} for providing the icons
 used in this manual and to Yihui Xie for developing the
 \href{http://bookdown.org}{bookdown R package} that underpins this
-manual.
+manual. We also thank Garrett Grolemund and Hadley Wickham for creating
+one of the Rstudio screenshots used in this manual that was originally a
+part of their \emph{R for Data Science} book.
 
 \chapter{Session information}\label{session-information}
 

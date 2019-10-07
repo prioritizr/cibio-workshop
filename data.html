@@ -24,7 +24,7 @@
 <meta name="author" content="Jeffrey O. Hanson" />
 
 
-<meta name="date" content="2019-10-06" />
+<meta name="date" content="2019-10-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -176,11 +176,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">Chapter 3</span> Data</h1>
 <div id="starting-out" class="section level2">
 <h2><span class="header-section-number">3.1</span> Starting out</h2>
-<p>We will start by opening RStudio. Ideally, you will have already installed both R and Rstudio before the workshop. If you have not done this already, then please see the <a href="introduction.html#setup">Setting up your computer</a> section. <strong>During this workshop, please do not copy and paste code from the workshop manual into RStudio. Instead, please write it out yourself in an R script.</strong> When programming, you will spend a lot of time fixing coding mistakes – that is, debugging your code – so it is best to get used to making mistakes now when you have people here to help you. You can create a new R script by clicking on <em>File</em> in the RStudio menu bar and then <em>R Script</em>.</p>
+<p>We will start by opening RStudio. Ideally, you will have already installed both R and Rstudio before the workshop. If you have not done this already, then please see the <a href="introduction.html#setup">Setting up your computer</a> section. <strong>During this workshop, please do not copy and paste code from the workshop manual into RStudio. Instead, please write it out yourself in an R script.</strong> When programming, you will spend a lot of time fixing coding mistakes—that is, debugging your code—so it is best to get used to making mistakes now when you have people here to help you. You can create a new R script by clicking on <em>File</em> in the RStudio menu bar, then <em>New File</em>, and then <em>R Script</em>.</p>
 <p><img src="images/rstudio-new-script.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>After creating a new script, you will notice that a new <em>Source</em> panel has appeared. In this new <em>Source</em> panel, you can type and edit code. You can run code in the <em>Source</em> panel by placing the cursor (i.e. the blinking line) on the desired line of code and pressing <code>Control + Enter</code> on your keyboard (or <code>CMD + Enter</code> if you are using an Apple computer). You can save the code in the <em>Source</em> panel by pressing <code>Control + s</code> on your keyboard (or <code>CMD + s</code> if you are using an Apple computer).</p>
+<p>After creating a new script, you will notice that a new <em>Source</em> panel has appeared. In the <em>Source</em> panel, you can type and edit code before you run it. You can run code in the <em>Source</em> panel by placing the cursor (i.e. the blinking line) on the desired line of code and pressing <code>Control + Enter</code> on your keyboard (or <code>CMD + Enter</code> if you are using an Apple computer). You can save the code in the <em>Source</em> panel by pressing <code>Control + s</code> on your keyboard (or <code>CMD + s</code> if you are using an Apple computer).</p>
 <p><img src="images/rstudio-source.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>You can also make notes and write your answers to the workshop questions inside the <em>Source</em> panel. When writing notes and answers, add a <code>#</code> symbol so that the text following the <code>#</code> symbol is treated as a comment and not code. This means that you don’t have to worry about highlighting specific parts of the script to avoid errors.</p>
+<p>You can also make notes and write your answers to the workshop questions inside the R script. When writing notes and answers, add a <code>#</code> symbol so that the text following the <code>#</code> symbol is treated as a comment and not code. This means that you don’t have to worry about highlighting specific parts of the script to avoid errors.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this is a comment and R will ignore this text if you run it</span>
 <span class="co"># R will run the code below because it does not start with a # symbol</span>
 <span class="kw">print</span>(<span class="st">&quot;this is not a comment&quot;</span>)</code></pre></div>
@@ -192,7 +192,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="attaching-packages" class="section level2">
 <h2><span class="header-section-number">3.2</span> Attaching packages</h2>
-<p>Now we will setup our R session for the workshop. Specifically, enter the following R code to attach the R packages used in this workshop.</p>
+<p>Now we will set up our R session for the workshop. Specifically, enter the following R code to attach the R packages used in this workshop.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load packages</span>
 <span class="kw">library</span>(tidyverse)
 <span class="kw">library</span>(prioritizr)
@@ -204,8 +204,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">library</span>(scales)
 <span class="kw">library</span>(assertthat)
 <span class="kw">library</span>(gridExtra)</code></pre></div>
-<p>You should have already downloaded the data for the prioritizr module of this workshop. If you have not already done so, you can download it from here: <a href="https://github.com/prioritizr/cibio-workshop/raw/master/data.zip" class="uri">https://github.com/prioritizr/cibio-workshop/raw/master/data.zip</a>. After downloading the data, you can unzip the data into a new folder. Next, you will need to set the working directory to this new folder. To achieve this, click on the <em>Session</em> button on the RStudio menu bar, then click <em>Set working directory</em>, and then <em>Choose Directory</em>.</p>
+<p>You should have already downloaded the data for the prioritizr module of this workshop. If you have not already done so, you can download it from here: <a href="https://github.com/prioritizr/cibio-workshop/raw/master/data.zip" class="uri">https://github.com/prioritizr/cibio-workshop/raw/master/data.zip</a>. After downloading the data, you can unzip the data into a new folder. Next, you will need to set the working directory to this new folder. To achieve this, click on the <em>Session</em> button on the RStudio menu bar, then click <em>Set Working Directory</em>, and then <em>Choose Directory</em>.</p>
 <p><img src="images/rstudio-wd.png" width="70%" style="display: block; margin: auto;" /></p>
+
 <p>Now navigate to the folder where you unzipped the data and select <em>Open</em>. You can verify that you have correctly set the working directory using the following R code. You should see the output <code>TRUE</code> in the <em>Console</em> panel.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">file.exists</span>(<span class="st">&quot;data/pu.shp&quot;</span>)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
@@ -225,6 +226,7 @@ pu_data<span class="op">$</span>locked_out &lt;-<span class="st"> </span><span c
 
 <span class="co"># import vegetation data</span>
 veg_data &lt;-<span class="st"> </span><span class="kw">stack</span>(<span class="st">&quot;data/vegetation.tif&quot;</span>)</code></pre></div>
+
 </div>
 <div id="planning-unit-data" class="section level2">
 <h2><span class="header-section-number">3.4</span> Planning unit data</h2>
@@ -234,7 +236,7 @@ veg_data &lt;-<span class="st"> </span><span class="kw">stack</span>(<span class
 <li><code>cost</code>: acquisition cost values for each planning unit (millions of Australian dollars).</li>
 <li><code>status</code>: status information for each planning unit (only relevant with Marxan)</li>
 <li><code>locked_in</code>: logical values (i.e. <code>TRUE</code>/<code>FALSE</code>) indicating if planning units are covered by protected areas or not.</li>
-<li><code>locked_out</code>: logical values (i.e. <code>TRUE</code>/<code>FALSE</code>) indicating if planning units cannot be managed as a protected area because they contain too much anthropologically altered land.</li>
+<li><code>locked_out</code>: logical values (i.e. <code>TRUE</code>/<code>FALSE</code>) indicating if planning units cannot be managed as a protected area because they contain are too degraded.</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># print a short summary of the data</span>
 <span class="kw">print</span>(pu_data)</code></pre></div>
@@ -360,8 +362,8 @@ pu_data<span class="op">@</span>polygons[[<span class="dv">80</span>]]</code></p
 <li>What is the highest cost value?</li>
 <li>How many planning units are covered by the protected areas (hint: <code>sum(x)</code>)?</li>
 <li>What is the proportion of the planning units that are covered by the protected areas (hint: <code>mean(x)</code>)?</li>
-<li>How many planning units are dominated by anthropologically altered land (hint: <code>sum(x)</code>)?</li>
-<li>What is the proportion of planning units dominated by anthropologically altered land (hint: <code>mean(x)</code>)?</li>
+<li>How many planning units are highly degraded (hint: <code>sum(x)</code>)?</li>
+<li>What is the proportion of planning units are highly degraded (hint: <code>mean(x)</code>)?</li>
 <li>Can you verify that all values in the <code>locked_in</code> and <code>locked_out</code> columns are zero or one (hint: <code>min(x)</code> and <code>max(x)</code>)?.</li>
 <li>Can you verify that none of the planning units are missing cost values (hint: <code>all(is.finite(x))</code>)?.</li>
 <li>Can you very that none of the planning units have duplicated identifiers? (hint: <code>sum(duplicated(x))</code>)?</li>
@@ -374,7 +376,7 @@ pu_data<span class="op">@</span>polygons[[<span class="dv">80</span>]]</code></p
 </div>
 <div id="vegetation-data" class="section level2">
 <h2><span class="header-section-number">3.5</span> Vegetation data</h2>
-<p>The vegetation data describes the spatial distribution of 62 vegetation classes in the study area. This data is in a raster format and so the data are organized using a regular spatial grid with square grid cells. In our case, our raster data contains multiple layers (also called “bands”) and each layer has corresponds to a spatial grid with exactly the same area and has exactly the same dimensionality (i.e. number of rows, columns, and cells). In this dataset, there are 62 different regular spatial grids layered on top of each other – with each layer corresponding to a different vegetation class – and each of these layers contains a grid with 343 columns, 320 rows, and 109760 cells. Within each layer, each cell corresponds to a 1 by 1 km square. The values associated with each grid cell contain values (i.e. one or zero) indicating the presence or absence of a given vegetation class in the cell.</p>
+<p>The vegetation data describes the spatial distribution of 62 vegetation classes in the study area. This data is in a raster format and so the data are organized using a square grid comprising square grid cells that are each the same size. In our case, the raster data contains multiple layers (also called “bands”) and each layer has corresponds to a spatial grid with exactly the same area and has exactly the same dimensionality (i.e. number of rows, columns, and cells). In this dataset, there are 62 different regular spatial grids layered on top of each other – with each layer corresponding to a different vegetation class – and each of these layers contains a grid with 343 rows, 320 columns, and 109760 cells. Within each layer, each cell corresponds to a 1 by 1 km square. The values associated with each grid cell indicate the (one) presence or (zero) absence of a given vegetation class in the cell.</p>
 <div class="figure">
 <img src="images/rasterbands.png" />
 
@@ -481,6 +483,7 @@ pu_data<span class="op">@</span>polygons[[<span class="dv">80</span>]]</code></p
 <li>What part of the study area is the 51st vegetation class found in (hint: make a map)?</li>
 <li>What proportion of cells contain the 12th vegetation class?</li>
 <li>Which vegetation class is present in the greatest number of cells?</li>
+<li>The planning unit data and the vegetation data should have the same coordinate reference system. Can you check if they are the same?</li>
 </ol>
 </div>
 
