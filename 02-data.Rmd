@@ -2,19 +2,20 @@
 
 ## Starting out
 
-We will start by opening RStudio. Ideally, you will have already installed both R and Rstudio before the workshop. If you have not done this already, then please see the [Setting up your computer] section. **During this workshop, please do not copy and paste code from the workshop manual into RStudio. Instead, please write it out yourself in an R script.** When programming, you will spend a lot of time fixing coding mistakes -- that is, debugging your code -- so it is best to get used to making mistakes now when you have people here to help you. You can create a new R script by clicking on _File_ in the RStudio menu bar and then _R Script_.
+
+We will start by opening RStudio. Ideally, you will have already installed both R and Rstudio before the workshop. If you have not done this already, then please see the [Setting up your computer] section. **During this workshop, please do not copy and paste code from the workshop manual into RStudio. Instead, please write it out yourself in an R script.** When programming, you will spend a lot of time fixing coding mistakes---that is, debugging your code---so it is best to get used to making mistakes now when you have people here to help you. You can create a new R script by clicking on _File_ in the RStudio menu bar, then _New File_, and then _R Script_.
 
 ```{r, out.width = "70%", echo = FALSE}
 knitr::include_graphics("images/rstudio-new-script.png")
 ```
 
-After creating a new script, you will notice that a new _Source_ panel has appeared. In this new _Source_ panel, you can type and edit code. You can run code in the _Source_ panel by placing the cursor (i.e. the blinking line) on the desired line of code and pressing `Control + Enter` on your keyboard (or `CMD + Enter` if you are using an Apple computer). You can save the code in the _Source_ panel by pressing `Control + s` on your keyboard (or `CMD + s` if you are using an Apple computer).
+After creating a new script, you will notice that a new _Source_ panel has appeared. In the _Source_ panel, you can type and edit code before you run it. You can run code in the _Source_ panel by placing the cursor (i.e. the blinking line) on the desired line of code and pressing `Control + Enter` on your keyboard (or `CMD + Enter` if you are using an Apple computer). You can save the code in the _Source_ panel by pressing `Control + s` on your keyboard (or `CMD + s` if you are using an Apple computer).
 
 ```{r, out.width = "70%", echo = FALSE}
 knitr::include_graphics("images/rstudio-source.png")
 ```
 
-You can also make notes and write your answers to the workshop questions inside the _Source_ panel. When writing notes and answers, add a `#` symbol so that the text following the `#` symbol is treated as a comment and not code. This means that you don't have to worry about highlighting specific parts of the script to avoid errors.
+You can also make notes and write your answers to the workshop questions inside the R script. When writing notes and answers, add a `#` symbol so that the text following the `#` symbol is treated as a comment and not code. This means that you don't have to worry about highlighting specific parts of the script to avoid errors.
 
 ```{r}
 # this is a comment and R will ignore this text if you run it
@@ -29,7 +30,7 @@ print("this is also not a comment") # but this is a comment
 
 ## Attaching packages
 
-Now we will setup our R session for the workshop. Specifically, enter the following R code to attach the R packages used in this workshop.
+Now we will set up our R session for the workshop. Specifically, enter the following R code to attach the R packages used in this workshop.
 
 ```{r, message = FALSE}
 # load packages
@@ -45,11 +46,13 @@ library(assertthat)
 library(gridExtra)
 ```
 
-You should have already downloaded the data for the prioritizr module of this workshop. If you have not already done so, you can download it from here: https://github.com/prioritizr/cibio-workshop/raw/master/data.zip. After downloading the data, you can unzip the data into a new folder. Next, you will need to set the working directory to this new folder. To achieve this, click on the _Session_ button on the RStudio menu bar, then click _Set working directory_, and then _Choose Directory_.
+You should have already downloaded the data for the prioritizr module of this workshop. If you have not already done so, you can download it from here: https://github.com/prioritizr/cibio-workshop/raw/master/data.zip. After downloading the data, you can unzip the data into a new folder. Next, you will need to set the working directory to this new folder. To achieve this, click on the _Session_ button on the RStudio menu bar, then click _Set Working Directory_, and then _Choose Directory_.
 
 ```{r, out.width = "70%", echo = FALSE}
 knitr::include_graphics("images/rstudio-wd.png")
 ```
+
+\clearpage
 
 Now navigate to the folder where you unzipped the data and select _Open_. You can verify that you have correctly set the working directory using the following R code. You should see the output `TRUE` in the _Console_ panel.
 
@@ -88,6 +91,8 @@ assert_that(sum(pu_data$locked_in) > 0, sum(pu_data$locked_out) > 0,
             sum(pu_data$locked_in & pu_data$locked_out) == 0)
 ```
 
+\clearpage
+
 ## Planning unit data
 
 The planning unit data contains spatial data describing the geometry for each planning unit and attribute data with information about each planning unit (e.g. cost values). Let's investigate the `pu_data` object. The attribute data contains `r ncol(pu_data)` columns with contain the following information:
@@ -96,7 +101,7 @@ The planning unit data contains spatial data describing the geometry for each pl
 * `cost`: acquisition cost values for each planning unit (millions of Australian dollars).
 * `status`: status information for each planning unit (only relevant with Marxan)
 * `locked_in`: logical values (i.e. `TRUE`/`FALSE`) indicating if planning units are covered by protected areas or not.
-* `locked_out`: logical values (i.e. `TRUE`/`FALSE`) indicating if planning units cannot be managed as a protected area because they contain too much anthropologically altered land.
+* `locked_out`: logical values (i.e. `TRUE`/`FALSE`) indicating if planning units cannot be managed as a protected area because they contain are too degraded.
 
 ```{r}
 # print a short summary of the data
@@ -161,8 +166,8 @@ Now, you can try and answer some questions about the planning unit data.
 2. What is the highest cost value?
 3. How many planning units are covered by the protected areas (hint: `sum(x)`)?
 4. What is the proportion of the planning units that are covered by the protected areas (hint: `mean(x)`)?
-5. How many planning units are dominated by anthropologically altered land (hint: `sum(x)`)?
-6. What is the proportion of planning units dominated by anthropologically altered land (hint: `mean(x)`)?
+5. How many planning units are highly degraded (hint: `sum(x)`)?
+6. What is the proportion of planning units are highly degraded (hint: `mean(x)`)?
 7. Can you verify that all values in the `locked_in` and `locked_out` columns are zero or one (hint: `min(x)` and `max(x)`)?.
 8. Can you verify that none of the planning units are missing cost values (hint: `all(is.finite(x))`)?.
 9. Can you very that none of the planning units have duplicated identifiers? (hint: `sum(duplicated(x))`)?
@@ -175,7 +180,7 @@ Now, you can try and answer some questions about the planning unit data.
 
 ## Vegetation data
 
-The vegetation data describes the spatial distribution of 62 vegetation classes in the study area. This data is in a raster format and so the data are organized using a regular spatial grid with square grid cells. In our case, our raster data contains multiple layers (also called "bands") and each layer has corresponds to a spatial grid with exactly the same area and has exactly the same dimensionality (i.e. number of rows, columns, and cells). In this dataset, there are 62 different regular spatial grids layered on top of each other -- with each layer corresponding to a different vegetation class -- and each of these layers contains a grid with `r nrow(veg_data)` columns, `r ncol(veg_data)` rows, and `r nrow(veg_data) * ncol(veg_data)` cells. Within each layer, each cell corresponds to a `r xres(veg_data)/1000` by `r yres(veg_data)/1000` km square. The values associated with each grid cell contain values (i.e. one or zero) indicating the presence or absence of a given vegetation class in the cell.
+The vegetation data describes the spatial distribution of 62 vegetation classes in the study area. This data is in a raster format and so the data are organized using a square grid comprising square grid cells that are each the same size. In our case, the raster data contains multiple layers (also called "bands") and each layer has corresponds to a spatial grid with exactly the same area and has exactly the same dimensionality (i.e. number of rows, columns, and cells). In this dataset, there are 62 different regular spatial grids layered on top of each other -- with each layer corresponding to a different vegetation class -- and each of these layers contains a grid with `r nrow(veg_data)` rows, `r ncol(veg_data)` columns, and `r nrow(veg_data) * ncol(veg_data)` cells. Within each layer, each cell corresponds to a `r xres(veg_data)/1000` by `r yres(veg_data)/1000` km square. The values associated with each grid cell indicate the (one) presence or (zero) absence of a given vegetation class in the cell.
 
 ![](images/rasterbands.png)
 
@@ -255,6 +260,7 @@ Now, you can try and answer some questions about the vegetation data.
 1. What part of the study area is the 51st vegetation class found in (hint: make a map)?
 2. What proportion of cells contain the 12th vegetation class?
 3. Which vegetation class is present in the greatest number of cells?
+4. The planning unit data and the vegetation data should have the same coordinate reference system. Can you check if they are the same?
 
 ```
 

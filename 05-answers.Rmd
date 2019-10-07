@@ -13,7 +13,7 @@ This chapter contains the answers to the questions presented in the earlier chap
 4. `mean(pu_data$locked_in)`
 5. `sum(pu_data$locked_out)`
 6. `mean(pu_data$locked_out)`
-7. `assert_that(min(c(pu_data$locked_in, pu_data$locked_out)) == 0)` \newline
+7. `assert_that(min(c(pu_data$locked_in, pu_data$locked_out)) == 0)`
       `assert_that(max(c(pu_data$locked_in, pu_data$locked_out)) == 1)`
 8. `all(is.finite(pu_data$cost))`
 9. `assert_that(sum(duplicated(pu_data$id)) == 0)`
@@ -22,12 +22,15 @@ This chapter contains the answers to the questions presented in the earlier chap
 
 ```
 
+\clearpage
+
 ### Vegetation data
 
 ```{block2, type="rmdanswer"}
 1. Central-north Tasmania
 2. `cellStats(veg_data[[12]], "mean")`
 3. `names(veg_data)[which.max(cellStats(veg_data, "sum"))]`
+4. Yes, they are the same.
 
 ```
 
@@ -53,7 +56,7 @@ This chapter contains the answers to the questions presented in the earlier chap
 4. `repr_data$feature[which.max(repr_data$absolute_held)]`
 5. No, just because a vegetation class is widespread does not necessarily mean that it has the greatest overlap with protected areas. In fact, due to biases in the establishment of protected areas this can often be the case.
 6. Yes, the largest protected areas tend to have the great representation (broadly speaking). \newline
-    See `plot(x = abundance_data$absolute_abundance, y = repr_data$relative_held)`
+    `plot(abundance_data$absolute_abundance, repr_data$relative_held)`
 7. `sum(repr_data$absolute_held < 1e-10)` (floating point errors)
 8. `sum(repr_data$relative_held > 0.1)`
 9. `sum(repr_data$relative_held > 0.2)`
@@ -69,7 +72,6 @@ This chapter contains the answers to the questions presented in the earlier chap
    `mean(s1$solution_1)`
 2. Yes, the planning units are generally spread out across most of the study area and they are not biased towards specific areas.
 3. `all(feature_representation(p1, s1[, "solution_1"])$relative_held >= 0.2)`
-4. This prioritization (i) does not account for existing protected areas, (ii) does not account for the spatial fragmentation of priority areas, or (iii) is not likely conserve enough habitat for each vegetation type (i.e. 5% is pretty small).
 
 ```
 
@@ -84,7 +86,7 @@ This chapter contains the answers to the questions presented in the earlier chap
    `sum(s4$solution_1)`
 3. No, just because a solution a solution has more planning units does not mean that it will cost less.
 4. This is because the planning units covered by existing protected areas have a non-zero cost and locking in these planning units introduces inefficiencies into the solution. This is very common in real-world conservation prioritizations because existing protected areas are often in places that do little to benefit biodiversity [@r3].
-5. This is because some of the planning units that are highly degraded -- based on just the planning unit costs and vegetation data -- provide cost-efficient opportunities for meeting the targets and excluding them from the reserve selection process means that other more costly planning units are needed to meet the targets.
+5. This is because some of the planning units that are highly degraded---based on just the planning unit costs and vegetation data---provide cost-efficient opportunities for meeting the targets and excluding them from the reserve selection process means that other more costly planning units are needed to meet the targets.
 6. `sum(s4$cost * s4$solution_1) - sum(s4$cost * s4$locked_in)`
 7. We get an error message stating the the problem is infeasible because there is no valid solution---even if we selected all the planning units the study area we would still not meet the targets.
 
@@ -105,10 +107,17 @@ This chapter contains the answers to the questions presented in the earlier chap
 1. `names(veg_data)[which.min(wts)]`
 2. `sum(s6$cost * s6$solution_1)` \newline
    `sum(s7$cost * s7$solution_1)`
-3. No, the sixth (`s6`) and seventh (`s7`) solutions both share many of the same selected planning units and there does not appear to be specific difference in the spatial location of the planning units which they do not share.
-4. Yes. Although both of these solutions are meeting the targets for `r6$feature[r6$relative_held > 0.2 & r7$relative_held > 0.2]` vegetation communities, the sixth (`s6`) is also adequately representing `r6$feature[r6$relative_held > 0.2 & !r7$relative_held > 0.2]` additional community and the seventh (`s7`) solution is adequately representing `r6$feature[!r6$relative_held > 0.2 & r7$relative_held > 0.2]` different additional community.
+3. No, the sixth (`s6`) and seventh (`s7`) solutions both share many of the same selected planning units and there does not appear to be an obvious difference in the spatial location of the planning units which they do not share.
+4. Yes. Both solutions contain adequately represent these features: \newline
+    `r6$feature[r6$relative_held > 0.2 & r7$relative_held > 0.2]` \newline
+    The sixth (`s6`) is adequately represents these features too: \newline
+    `r6$feature[r6$relative_held > 0.2 & !r7$relative_held > 0.2]` \newline
+    The seventh (`s7`) is adequately represents these features too: \newline
+    `r7$feature[r7$relative_held > 0.2 & !r6$relative_held > 0.2]`
 
 ```
+
+\clearpage
 
 ### Solution portfolios
 
@@ -121,7 +130,9 @@ This chapter contains the answers to the questions presented in the earlier chap
    `sum(s8$solution_5 * s8$cost)` \newline
    `sum(s8$solution_6 * s8$cost)`
 2. No the status of the planning units are very similar in the all of the solutions in the portfolio. \newline
-    `mean((s8$solution_1 == s8$solution_2) & (s8$solution_1 == s8$solution_3) & (s8$solution_1 == s8$solution_4) & (s8$solution_1 == s8$solution_5) & (s8$solution_1 == s8$solution_6))`
+    `mean((s8$solution_1 == s8$solution_2) & (s8$solution_1 == s8$solution_3) &
+    (s8$solution_1 == s8$solution_4) & (s8$solution_1 == s8$solution_5) &
+    (s8$solution_1 == s8$solution_6))`
 3. We should increase the number of the solutions in the portfolio.
 
 ```
