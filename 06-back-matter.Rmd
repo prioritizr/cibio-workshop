@@ -8,3 +8,5 @@ Many thanks to [Icons8](https://icons8.com) for providing the icons used in this
 # print session information
 sessionInfo()
 ```
+
+# References
