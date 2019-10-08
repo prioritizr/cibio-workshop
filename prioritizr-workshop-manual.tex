@@ -343,8 +343,8 @@ connection and the installation process may take some time to complete.
 \KeywordTok{install.packages}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"sf"}\NormalTok{, }\StringTok{"tidyverse"}\NormalTok{, }\StringTok{"sp"}\NormalTok{, }\StringTok{"rgeos"}\NormalTok{, }\StringTok{"rgdal"}\NormalTok{, }\StringTok{"raster"}\NormalTok{,}
                    \StringTok{"units"}\NormalTok{, }\StringTok{"prioritizr"}\NormalTok{, }\StringTok{"prioritizrdata"}\NormalTok{, }\StringTok{"Rsymphony"}\NormalTok{,}
                    \StringTok{"mapview"}\NormalTok{, }\StringTok{"assertthat"}\NormalTok{, }\StringTok{"velox"}\NormalTok{, }\StringTok{"remotes"}\NormalTok{,}
-                   \StringTok{"gridExtra"}\NormalTok{))}
-\NormalTok{remotes}\OperatorTok{::}\KeywordTok{install_bioc}\NormalTok{(}\StringTok{"lpsymphony"}\NormalTok{)}
+                   \StringTok{"gridExtra"}\NormalTok{, }\StringTok{"BiocManager"}\NormalTok{))}
+\NormalTok{BiocManager}\OperatorTok{::}\KeywordTok{install}\NormalTok{(}\StringTok{"lpsymphony"}\NormalTok{, }\DataTypeTok{version =} \StringTok{"3.9"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1809,8 +1809,8 @@ is present in our planning unit data so we can use the
 ##   objective:      Minimum set objective 
 ##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
 ##   decisions:      Binary decision 
-##   constraints:    <Locked in planning units [257 locked units]
-##                    Locked out planning units [51 locked units]>
+##   constraints:    <Locked out planning units [51 locked units]
+##                    Locked in planning units [257 locked units]>
 ##   penalties:      <none>
 ##   portfolio:      default
 ##   solver:         Lpsymphony [first_feasible (0), gap (0.1), time_limit (-1), verbose (0)]
@@ -2166,8 +2166,8 @@ features changes our prioritization.
 ##   objective:      Maximum representation objective [budget (8575.56009869836)]
 ##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
 ##   decisions:      Binary decision 
-##   constraints:    <Locked out planning units [51 locked units]
-##                    Locked in planning units [257 locked units]>
+##   constraints:    <Locked in planning units [257 locked units]
+##                    Locked out planning units [51 locked units]>
 ##   penalties:      <Feature weights [weights (min: 1, max: 10)]>
 ##   portfolio:      default
 ##   solver:         Lpsymphony [first_feasible (0), gap (0.1), time_limit (-1), verbose (0)]
@@ -2329,7 +2329,7 @@ default gap value is 0.1).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 2153.141
+## [1] 2166.076
 \end{verbatim}
 
 \begin{Shaded}
@@ -2341,7 +2341,7 @@ default gap value is 0.1).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.9840708
+## [1] 0.9672566
 \end{verbatim}
 
 \begin{Shaded}
