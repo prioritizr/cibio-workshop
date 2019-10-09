@@ -114,7 +114,7 @@ Now let's investigate how well the species are represented.
 5. Do questions two and three have the same answer? Why could this be?
 6. Is there a relationship between the total abundance of a feature and how well it is represented by protected areas (hint: `plot(abundances ~ relative_held)`)?
 7. Are any features entirely missing from protected areas (hint: `sum(x == 0)`)?
-8. If we set a target of 10% coverage by protected areas, how many features fail to meet this target (hint: `sum(relative_held >= target)`)?
+8. If we set a target of 10% coverage by protected areas, how many features fail to meet this target (hint: `sum(relative_held >= target, na.rm = TRUE)`)?
 9. If we set a target of 20% coverage by protected areas, how many features fail to meet this target?
 
 ```
