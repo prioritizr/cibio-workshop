@@ -24,7 +24,7 @@
 <meta name="author" content="Jeffrey O. Hanson" />
 
 
-<meta name="date" content="2019-10-08" />
+<meta name="date" content="2019-10-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -241,8 +241,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>No, just because a vegetation class is widespread does not necessarily mean that it has the greatest overlap with protected areas. In fact, due to biases in the establishment of protected areas this can often be the case.</li>
 <li>Yes, the largest protected areas tend to have the great representation (broadly speaking). <code>plot(abundance_data$absolute_abundance, repr_data$relative_held)</code></li>
 <li><code>sum(repr_data$absolute_held &lt; 1e-10)</code> (floating point errors)</li>
-<li><code>sum(repr_data$relative_held &gt; 0.1)</code></li>
-<li><code>sum(repr_data$relative_held &gt; 0.2)</code></li>
+<li><code>sum(repr_data$relative_held &gt; 0.1, na.rm = TRUE)</code></li>
+<li><code>sum(repr_data$relative_held &gt; 0.2, na.rm = TRUE)</code></li>
 </ol>
 </div>
 

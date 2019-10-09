@@ -129,7 +129,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2019-10-08}
+    \date{2019-10-09}
 
 % load packages
 \usepackage{caption}
@@ -1520,7 +1520,7 @@ Now let's investigate how well the species are represented.
 \item
   If we set a target of 10\% coverage by protected areas, how many
   features fail to meet this target (hint:
-  \texttt{sum(relative\_held\ \textgreater{}=\ target)})?
+  \texttt{sum(relative\_held\ \textgreater{}=\ target,\ na.rm\ =\ TRUE)})?
 \item
   If we set a target of 20\% coverage by protected areas, how many
   features fail to meet this target?
@@ -1919,8 +1919,8 @@ boundary data for us.
 ##   objective:      Minimum set objective 
 ##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
 ##   decisions:      Binary decision 
-##   constraints:    <Locked out planning units [51 locked units]
-##                    Locked in planning units [257 locked units]>
+##   constraints:    <Locked in planning units [257 locked units]
+##                    Locked out planning units [51 locked units]>
 ##   penalties:      <Boundary penalties [edge factor (min: 0.5, max: 0.5), penalty (5e-04), zones]>
 ##   portfolio:      default
 ##   solver:         Lpsymphony [first_feasible (0), gap (1), time_limit (-1), verbose (0)]
@@ -2329,7 +2329,7 @@ default gap value is 0.1).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 2166.076
+## [1] 2133.983
 \end{verbatim}
 
 \begin{Shaded}
@@ -2492,9 +2492,9 @@ areas}\label{feature-representation-by-protected-areas-1}
   \texttt{sum(repr\_data\$absolute\_held\ \textless{}\ 1e-10)} (floating
   point errors)
 \item
-  \texttt{sum(repr\_data\$relative\_held\ \textgreater{}\ 0.1)}
+  \texttt{sum(repr\_data\$relative\_held\ \textgreater{}\ 0.1,\ na.rm\ =\ TRUE)}
 \item
-  \texttt{sum(repr\_data\$relative\_held\ \textgreater{}\ 0.2)}
+  \texttt{sum(repr\_data\$relative\_held\ \textgreater{}\ 0.2,\ na.rm\ =\ TRUE)}
 \end{enumerate}
 \EndKnitrBlock{rmdanswer}
 
@@ -2678,7 +2678,7 @@ part of their \emph{R for Data Science} book.
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] gridExtra_2.3    assertthat_0.2.1 scales_1.0.0     units_0.6-4     
+##  [1] gridExtra_2.3    assertthat_0.2.1 scales_1.0.0     units_0.6-5     
 ##  [5] mapview_2.7.0    rgeos_0.5-2      rgdal_1.4-6      prioritizr_4.1.4
 ##  [9] proto_1.0.0      raster_3.0-7     sp_1.3-1         forcats_0.4.0   
 ## [13] stringr_1.4.0    dplyr_0.8.3      purrr_0.3.2      readr_1.3.1     

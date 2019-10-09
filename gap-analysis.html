@@ -24,7 +24,7 @@
 <meta name="author" content="Jeffrey O. Hanson" />
 
 
-<meta name="date" content="2019-10-08" />
+<meta name="date" content="2019-10-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -400,7 +400,7 @@ repr_data<span class="op">$</span>absolute_held_km2 &lt;-
 <li>Do questions two and three have the same answer? Why could this be?</li>
 <li>Is there a relationship between the total abundance of a feature and how well it is represented by protected areas (hint: <code>plot(abundances ~ relative_held)</code>)?</li>
 <li>Are any features entirely missing from protected areas (hint: <code>sum(x == 0)</code>)?</li>
-<li>If we set a target of 10% coverage by protected areas, how many features fail to meet this target (hint: <code>sum(relative_held &gt;= target)</code>)?</li>
+<li>If we set a target of 10% coverage by protected areas, how many features fail to meet this target (hint: <code>sum(relative_held &gt;= target, na.rm = TRUE)</code>)?</li>
 <li>If we set a target of 20% coverage by protected areas, how many features fail to meet this target?</li>
 </ol>
 </div>
