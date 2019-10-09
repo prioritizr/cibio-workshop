@@ -58,8 +58,8 @@ This chapter contains the answers to the questions presented in the earlier chap
 6. Yes, the largest protected areas tend to have the great representation (broadly speaking). \newline
     `plot(abundance_data$absolute_abundance, repr_data$relative_held)`
 7. `sum(repr_data$absolute_held < 1e-10)` (floating point errors)
-8. `sum(repr_data$relative_held > 0.1)`
-9. `sum(repr_data$relative_held > 0.2)`
+8. `sum(repr_data$relative_held > 0.1, na.rm = TRUE)`
+9. `sum(repr_data$relative_held > 0.2, na.rm = TRUE)`
 
 ```
 
