@@ -129,7 +129,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2019-10-09}
+    \date{2019-10-10}
 
 % load packages
 \usepackage{caption}
@@ -1809,7 +1809,7 @@ is present in our planning unit data so we can use the
 ##   objective:      Minimum set objective 
 ##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
 ##   decisions:      Binary decision 
-##   constraints:    <Locked out planning units [51 locked units]
+##   constraints:    <Locked out planning units [132 locked units]
 ##                    Locked in planning units [257 locked units]>
 ##   penalties:      <none>
 ##   portfolio:      default
@@ -1920,7 +1920,7 @@ boundary data for us.
 ##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
 ##   decisions:      Binary decision 
 ##   constraints:    <Locked in planning units [257 locked units]
-##                    Locked out planning units [51 locked units]>
+##                    Locked out planning units [132 locked units]>
 ##   penalties:      <Boundary penalties [edge factor (min: 0.5, max: 0.5), penalty (5e-04), zones]>
 ##   portfolio:      default
 ##   solver:         Lpsymphony [first_feasible (0), gap (1), time_limit (-1), verbose (0)]
@@ -1955,7 +1955,7 @@ boundary data for us.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.65\linewidth]{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-41-1} \end{center}
+\begin{center}\includegraphics[width=0.65\linewidth]{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-42-1} \end{center}
 
 Now let's compare the solutions to the problems with (\texttt{s5}) and
 without (\texttt{s4}) the boundary length penalties.
@@ -2044,8 +2044,8 @@ budget.
 ##   objective:      Maximum representation objective [budget (8575.56009869836)]
 ##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
 ##   decisions:      Binary decision 
-##   constraints:    <Locked in planning units [257 locked units]
-##                    Locked out planning units [51 locked units]>
+##   constraints:    <Locked out planning units [132 locked units]
+##                    Locked in planning units [257 locked units]>
 ##   penalties:      <none>
 ##   portfolio:      default
 ##   solver:         Lpsymphony [first_feasible (0), gap (0.1), time_limit (-1), verbose (0)]
@@ -2167,7 +2167,7 @@ features changes our prioritization.
 ##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
 ##   decisions:      Binary decision 
 ##   constraints:    <Locked in planning units [257 locked units]
-##                    Locked out planning units [51 locked units]>
+##                    Locked out planning units [132 locked units]>
 ##   penalties:      <Feature weights [weights (min: 1, max: 10)]>
 ##   portfolio:      default
 ##   solver:         Lpsymphony [first_feasible (0), gap (0.1), time_limit (-1), verbose (0)]
@@ -2329,7 +2329,7 @@ default gap value is 0.1).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 2133.983
+## [1] 2139.89
 \end{verbatim}
 
 \begin{Shaded}
@@ -2341,7 +2341,7 @@ default gap value is 0.1).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.9672566
+## [1] 0.9752212
 \end{verbatim}
 
 \begin{Shaded}
@@ -2352,7 +2352,7 @@ default gap value is 0.1).
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.65\linewidth]{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-47-1} \end{center}
+\begin{center}\includegraphics[width=0.65\linewidth]{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-48-1} \end{center}
 
 \clearpage
 
@@ -2366,7 +2366,7 @@ default gap value is 0.1).
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-48-1} \end{center}
+\begin{center}\includegraphics{prioritizr-workshop-manual_files/figure-latex/unnamed-chunk-49-1} \end{center}
 
 \BeginKnitrBlock{rmdquestion}
 \begin{enumerate}
@@ -2694,23 +2694,23 @@ part of their \emph{R for Data Science} book.
 ## [19] cli_1.1.0          rvest_0.3.4        xml2_1.2.2        
 ## [22] bookdown_0.14.1    classInt_0.4-1     digest_0.6.21     
 ## [25] rmarkdown_1.16     base64enc_0.1-3    pkgconfig_2.0.3   
-## [28] htmltools_0.4.0    lpsymphony_1.12.0  htmlwidgets_1.5.1 
-## [31] rlang_0.4.0        readxl_1.3.1       rstudioapi_0.10   
-## [34] shiny_1.3.2        generics_0.0.2     jsonlite_1.6      
-## [37] crosstalk_1.0.0    magrittr_1.5       Matrix_1.2-17     
-## [40] Rcpp_1.0.2         munsell_0.5.0      fansi_0.4.0       
-## [43] lifecycle_0.1.0    stringi_1.4.3      yaml_2.2.0        
-## [46] plyr_1.8.4         grid_3.6.1         parallel_3.6.1    
-## [49] promises_1.1.0     crayon_1.3.4       lattice_0.20-38   
-## [52] haven_2.1.1        hms_0.5.1          zeallot_0.1.0     
-## [55] knitr_1.25         pillar_1.4.2       uuid_0.1-2        
-## [58] velox_0.2.0        codetools_0.2-16   stats4_3.6.1      
-## [61] glue_1.3.1         evaluate_0.14      modelr_0.1.5      
-## [64] png_0.1-7          vctrs_0.2.0        httpuv_1.5.2      
-## [67] cellranger_1.1.0   gtable_0.3.0       xfun_0.10         
-## [70] mime_0.7           xtable_1.8-4       broom_0.5.2       
-## [73] e1071_1.7-2        later_1.0.0        class_7.3-15      
-## [76] viridisLite_0.3.0
+## [28] htmltools_0.4.0    lpsymphony_1.12.0  fastmap_1.0.1     
+## [31] htmlwidgets_1.5.1  rlang_0.4.0        readxl_1.3.1      
+## [34] rstudioapi_0.10    shiny_1.4.0        generics_0.0.2    
+## [37] jsonlite_1.6       crosstalk_1.0.0    magrittr_1.5      
+## [40] Matrix_1.2-17      Rcpp_1.0.2         munsell_0.5.0     
+## [43] fansi_0.4.0        lifecycle_0.1.0    stringi_1.4.3     
+## [46] yaml_2.2.0         plyr_1.8.4         grid_3.6.1        
+## [49] parallel_3.6.1     promises_1.1.0     crayon_1.3.4      
+## [52] lattice_0.20-38    haven_2.1.1        hms_0.5.1         
+## [55] zeallot_0.1.0      knitr_1.25         pillar_1.4.2      
+## [58] uuid_0.1-2         velox_0.2.0        codetools_0.2-16  
+## [61] stats4_3.6.1       glue_1.3.1         evaluate_0.14     
+## [64] modelr_0.1.5       png_0.1-7          vctrs_0.2.0       
+## [67] httpuv_1.5.2       cellranger_1.1.0   gtable_0.3.0      
+## [70] xfun_0.10          mime_0.7           xtable_1.8-4      
+## [73] broom_0.5.2        e1071_1.7-2        later_1.0.0       
+## [76] class_7.3-15       viridisLite_0.3.0
 \end{verbatim}
 
 \chapter{References}\label{references}
