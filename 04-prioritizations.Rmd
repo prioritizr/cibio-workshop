@@ -116,6 +116,11 @@ s4 <- solve(p4)
 spplot(s4, "solution_1", col.regions = c("white", "darkgreen"), main = "s4")
 ```
 
+```{r, include=FALSE}
+assert_that(!identical(s3$solution_1, s4$solution_1),
+            sum(s3$solution_1 * s3$cost) > sum(s4$solution_1 * s4$cost))
+```
+
 \clearpage
 
 Now, let's compare the solutions.
